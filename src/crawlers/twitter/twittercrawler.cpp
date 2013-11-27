@@ -60,3 +60,20 @@ std::size_t TwitterCrawler::writeRequestData(void *ptr, std::size_t size, std::s
 
     return memory->size();
 }
+
+void TwitterCrawler::setBearerToken(const std::string& json)
+{
+    Json::Value root;
+    Json::Reader reader;
+    bool parsingSuccessful = reader.parse(json, root );
+    
+    if(parsingSuccessful)
+    {
+        token_ = new BearerToken(root["access_token"].asString(), root["token_type"].asString());
+    }
+    else
+    {
+        printf("Error while parsing JSON file");
+    }
+
+}
