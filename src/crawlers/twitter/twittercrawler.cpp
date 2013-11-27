@@ -1,6 +1,7 @@
 #include "twittercrawler.h"
 #include "base64.h"
 #include <curl/curl.h>
+#include <json/reader.h>
 
 SocialInformationList TwitterCrawler::collect(Location location, float radio) 
 {
