@@ -1,4 +1,5 @@
-SRC = testrunner.cpp 
+SRC = structs/trietest.cpp \
+      testrunner.cpp 
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
