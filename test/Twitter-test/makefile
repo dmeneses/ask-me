@@ -7,8 +7,10 @@ OUT = twittertest
 #include directories
 INCLUDES = -I../src \
            -I../../third-party/GMock-1.7.0/Include \
-           -I../../third-party/GTest-1.7.0/Include
-
+           -I../../third-party/GTest-1.7.0/Include \
+	   -I../../src/crawlers/Twitter-lib \
+	   -I../../include
+	
 #library paths
 LIBS = -L/user/local/lib -L../../third-party/GMock-1.7.0/Lib \
 	-L../../third-party/GTest-1.7.0/Lib -L../../third-party/GMock-1.7.0/Lib64 \

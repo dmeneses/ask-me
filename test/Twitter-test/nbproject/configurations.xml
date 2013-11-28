@@ -31,12 +31,14 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>twittertest</executablePath>
           <ccTool>
             <incDir>
               <pElem>../src</pElem>
               <pElem>../../third-party/GMock-1.7.0/Include</pElem>
               <pElem>../../third-party/GTest-1.7.0/Include</pElem>
+              <pElem>../../src/crawlers/Twitter-lib</pElem>
+              <pElem>../../include</pElem>
             </incDir>
           </ccTool>
         </makeTool>
