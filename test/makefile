@@ -1,4 +1,5 @@
 SRC = structs/trietest.cpp \
+      textpreprocessor/textcleanertest.cpp \
       testrunner.cpp 
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
@@ -8,12 +9,14 @@ OUT = askmetest
 #include directories
 INCLUDES = -I../src \
            -I../third-party/GMock-1.7.0/Include \
-           -I../third-party/GTest-1.7.0/Include
+           -I../third-party/GTest-1.7.0/Include \
+	   -I../third-party/boost_1_54_0
 
 #library paths
 LIBS = -L/user/local/lib -L../src/lib -L../third-party/GMock-1.7.0/Lib \
 	-L../third-party/GTest-1.7.0/Lib -L../third-party/GMock-1.7.0/Lib64 \
-	-L../third-party/GTest-1.7.0/Lib64 -laskme -lgtest -lgmock -lm -lpthread
+	-L../third-party/GTest-1.7.0/Lib64 -laskme -lgtest -lgmock -lm -lpthread \
+	-L../third-party/boost_1_54_0/lib/regex/ -lboost_regex-gcc-1_53
 
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall

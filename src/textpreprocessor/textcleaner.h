@@ -17,7 +17,11 @@ public:
     
     TextCleaner();
     
-    void clean(std::string text);
+    std::string clean(std::string text);
+    
+    void removeSymbolsAndNumbers(std::string& text);
+    
+    std::string removeStopWords(std::string& text);
     
 private:
     
