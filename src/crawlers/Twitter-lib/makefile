@@ -5,7 +5,7 @@ SRC = twittercrawler.cpp\
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
-OUT = libTwitterCrawler.so
+OUT = libTwitterCrawler.a
 
 
 #library paths
@@ -13,7 +13,7 @@ LIBS = -L/user/local/lib -lm -lcurl -L../../../third-party/curl-7.33.0/lib -lcur
 
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall
-LDFLAGS = 
+LDFLAGS = rcs
 
 INCLUDES = -I.\
            -I../../../include\
@@ -22,6 +22,7 @@ INCLUDES = -I.\
 
 #compiler
 CCC = g++
+AR = ar
 
 default: $(OUT)
 
@@ -38,7 +39,7 @@ obj/%.o : %.cpp
 #archive the library
 $(OUT):$(OBJ)
 	@mkdir -p lib
-	$(CCC) -shared $(LDFLAGS) -o lib/$(OUT) $(OBJ)
+	$(AR) $(LDFLAGS) lib/$(OUT) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
