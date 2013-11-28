@@ -12,7 +12,7 @@ INCLUDES = -I../src \
 #library paths
 LIBS = -L/user/local/lib -L../../third-party/GMock-1.7.0/Lib \
 	-L../../third-party/GTest-1.7.0/Lib -L../../third-party/GMock-1.7.0/Lib64 \
-	-L../../third-party/GTest-1.7.0/Lib64 -L../../src/crawlers/twitter/lib\
+	-L../../third-party/GTest-1.7.0/Lib64 -L../../src/crawlers/Twitter-lib/lib\
 	-L../../third-party/curl-7.33.0/lib -L../../third-party/jsoncpp-src-0.5.0/lib\
 	-lgtest -lgmock -lm -lpthread -lTwitterCrawler -ljson -lcurl
 
