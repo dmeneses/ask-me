@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="../twitter" name="twitter">
-      <in>base64.cpp</in>
-      <in>base64.h</in>
-      <in>twittercrawler.cpp</in>
-      <in>twittercrawler.h</in>
-    </df>
+    <logicalFolder name="Twitter-lib"
+                   displayName="Twitter-lib"
+                   projectFiles="true"
+                   root=".">
+      <itemPath>base64.cpp</itemPath>
+      <itemPath>base64.h</itemPath>
+      <itemPath>makefile</itemPath>
+      <itemPath>twittercrawler.cpp</itemPath>
+      <itemPath>twittercrawler.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -16,7 +20,7 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>../twitter</Elem>
+    <Elem>.</Elem>
   </sourceRootList>
   <projectmakefile>../twitter/makefile</projectmakefile>
   <confs>
@@ -31,13 +35,13 @@
       </codeAssistance>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>../twitter</buildCommandWorkingDir>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
           <executablePath>../twitter/lib/libTwitterCrawler.so</executablePath>
           <ccTool>
             <incDir>
-              <pElem>../twitter</pElem>
+              <pElem>.</pElem>
               <pElem>../../../include</pElem>
               <pElem>../../../third-party/curl-7.33.0/include</pElem>
               <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
@@ -45,13 +49,13 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="../twitter/base64.cpp" ex="false" tool="1" flavor2="0">
+      <item path="base64.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../twitter/base64.h" ex="false" tool="3" flavor2="0">
+      <item path="base64.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../twitter/twittercrawler.cpp" ex="false" tool="1" flavor2="0">
+      <item path="twittercrawler.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../twitter/twittercrawler.h" ex="false" tool="3" flavor2="0">
+      <item path="twittercrawler.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
