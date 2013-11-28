@@ -1,6 +1,7 @@
 #include <iostream>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include "twittercrawler.h"
 
 int main(int argc, char **argv)
 {
