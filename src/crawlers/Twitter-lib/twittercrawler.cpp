@@ -5,6 +5,11 @@
 
 SocialInformationList TwitterCrawler::collect(Location location, float radio) 
 {
+    if(!this->token_)
+    {
+        connect();
+    }
+    
     SocialInformationList collectedInformation;
 
     return collectedInformation;
@@ -46,6 +51,8 @@ void TwitterCrawler::connect()
         printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
+    
+    setBearerToken(readData);
 }
 
 const std::string TwitterCrawler::encodeRFC1738(const std::string str) 
