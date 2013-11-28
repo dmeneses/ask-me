@@ -1,4 +1,4 @@
-#include "TrieNode.h"
+#include "trienode.h"
 
 TrieNode::TrieNode() : content_(' '), marker_(false)
 {
@@ -26,7 +26,7 @@ void TrieNode::setWordMarker()
 
 TrieNode* TrieNode::findChild(char c)
 {
-    for (int i = 0; i < chidren_.size(); i++)
+    for (unsigned int i = 0; i < chidren_.size(); i++)
     {
         TrieNode* tmp = chidren_.at(i);
         if (tmp->content() == c)

@@ -1,4 +1,4 @@
-#include "Trie.h"
+#include "trie.h"
 
 Trie::Trie()
 {
@@ -15,7 +15,7 @@ void Trie::addWord(std::string s)
         return;
     }
 
-    for (int i = 0; i < s.length(); i++)
+    for (unsigned int i = 0; i < s.length(); i++)
     {
         TrieNode* child = current->findChild(s[i]);
         if (child != NULL)
@@ -40,7 +40,7 @@ bool Trie::searchWord(std::string s)
 
     while (current != NULL)
     {
-        for (int i = 0; i < s.length(); i++)
+        for (unsigned int i = 0; i < s.length(); i++)
         {
             TrieNode* tmp = current->findChild(s[i]);
             if (tmp == NULL)

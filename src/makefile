@@ -1,14 +1,18 @@
 # source files
 
-SRC = askme.cpp
+SRC = structs/trienode.cpp \
+      structs/trie.cpp \
+      textpreprocessor/textcleaner.cpp \
+      askme.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
 OUT = libaskme.a
 
+INCLUDES = -I../third-party/boost_1_54_0
 
 #library paths
-LIBS = -L/user/local/lib -lm 
+LIBS = -L/user/local/lib -lm -L../third-party/boost_1_54_0/lib/regex/ -lboost_regex-gcc-1_53
 
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall
