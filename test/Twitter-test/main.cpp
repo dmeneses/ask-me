@@ -5,6 +5,9 @@
 
 int main(int argc, char **argv)
 {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    TwitterCrawler c;
+    Location lo;
+    lo.latitude_ = 234324;
+    lo.longitude_ = 234324;
+    c.collect(lo, 121);
 }
