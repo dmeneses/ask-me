@@ -8,7 +8,7 @@
 #ifndef TRIE_H
 #define	TRIE_H
 
-#include "TrieNode.h"
+#include "trienode.h"
 
 /**
  * Trie structure that will be used to load the dictionary for the stop words.
