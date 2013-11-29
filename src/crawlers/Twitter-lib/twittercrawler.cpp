@@ -106,7 +106,6 @@ SocialInformation TwitterCrawler::parse(const char* jsonFile)
             const char* value = plugins[index]["text"].asCString();
             printf("Value : %s\n", value);
         }
-        
     }
     else
     {

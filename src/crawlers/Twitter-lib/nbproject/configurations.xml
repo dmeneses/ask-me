@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="Twitter-lib"
-                   displayName="Twitter-lib"
-                   projectFiles="true"
-                   root=".">
-      <itemPath>base64.cpp</itemPath>
-      <itemPath>base64.h</itemPath>
-      <itemPath>makefile</itemPath>
-      <itemPath>twittercrawler.cpp</itemPath>
-      <itemPath>twittercrawler.h</itemPath>
-      <itemPath>utils.h</itemPath>
-    </logicalFolder>
+    <df root="." name="Twitter-lib">
+      <in>base64.cpp</in>
+      <in>base64.h</in>
+      <in>twittercrawler.cpp</in>
+      <in>twittercrawler.h</in>
+      <in>utils.h</in>
+    </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
     <Elem>.</Elem>
   </sourceRootList>
-  <projectmakefile>../twitter/makefile</projectmakefile>
+  <projectmakefile>makefile</projectmakefile>
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
@@ -38,7 +35,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
-          <executablePath>../twitter/lib/libTwitterCrawler.so</executablePath>
+          <executablePath></executablePath>
           <ccTool>
             <incDir>
               <pElem>.</pElem>
