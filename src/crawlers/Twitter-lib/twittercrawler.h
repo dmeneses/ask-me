@@ -19,7 +19,7 @@ public:
 private:
     void connect();
     SocialInformationList search(Location location, float radio);
-    SocialInformation parse(const std::string jsonFile);
+    SocialInformation parse(const char* jsonFile);
     
     const std::string encodeRFC1738(const std::string str);
     static std::size_t writeRequestData(void *ptr, std::size_t size, std::size_t nmemb, void *data);
