@@ -88,6 +88,9 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
 
     curl_easy_cleanup(curl);
     printf("\n\nRead Message: %s\n", readData.c_str());
+    
+    SocialInformationList collectedInformation;
+    return collectedInformation;
 }
 
 const std::string TwitterCrawler::encodeRFC1738(const std::string str) 
