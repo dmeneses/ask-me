@@ -10,8 +10,9 @@ SocialInformationList TwitterCrawler::collect(Location location, float radio)
         connect();
     }
     
+    search(location, radio);
+    
     SocialInformationList collectedInformation;
-
     return collectedInformation;
 }
 
@@ -42,7 +43,7 @@ void TwitterCrawler::connect()
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
     curl_easy_setopt(curl, CURLOPT_HEADER, 0);
     curl_easy_setopt(curl, CURLOPT_POST, 1);
-    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, 0);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
 
     CURLcode res = curl_easy_perform(curl);
@@ -53,6 +54,40 @@ void TwitterCrawler::connect()
     curl_easy_cleanup(curl);
     
     setBearerToken(readData);
+}
+
+SocialInformationList TwitterCrawler::search(Location location, float radio)
+{
+    printf("Searching!!!\n");
+    std::string url = "https://api.twitter.com/1.1/search/tweets.json?q=&geocode=-17.365978,-66.175462,1km&lang=es";
+    struct curl_slist *chunk = NULL;
+    chunk = curl_slist_append(chunk, "GET /1.1/search/tweets.json?q=&geocode=-17.365978,-66.175462,1km&lang=es");
+    chunk = curl_slist_append(chunk, "Host: api.twitter.com");
+    chunk = curl_slist_append(chunk, "User-Agent: TweetsFound App v0.1");
+    std::string authoization = "Authorization: ";
+    authoization += this->token_->type_ + " ";
+    authoization += this->token_->token_;
+    chunk = curl_slist_append(chunk, authoization.c_str());
+    printf("Password: %s\n", authoization.c_str());
+
+    std::string readData;
+    CURL* curl = curl_easy_init();
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, TwitterCrawler::writeRequestData);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&readData);
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
+    curl_easy_setopt(curl, CURLOPT_HEADER, 0);
+    curl_easy_setopt(curl, CURLOPT_HTTPGET, 1);
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
+    curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
+
+    CURLcode res = curl_easy_perform(curl);
+
+    if (res != CURLE_OK)
+        printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+
+    curl_easy_cleanup(curl);
+    printf("\n\nRead Message: %s\n", readData.c_str());
 }
 
 const std::string TwitterCrawler::encodeRFC1738(const std::string str) 
