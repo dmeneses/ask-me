@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
     TwitterCrawler c;
     Location lo;
-    lo.latitude_ = -17.365978;
-    lo.longitude_ = -66.175462;
+    lo.latitude_ = -17.369828;
+    lo.longitude_ = -66.176915;
     c.collect(lo, 1);
 }

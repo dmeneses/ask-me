@@ -62,14 +62,16 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
     std::string url = stringFormat("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es", 
             location.latitude_, location.longitude_, radio);
     struct curl_slist *chunk = 0;
+    chunk = curl_slist_append(chunk, "GET /1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es");
     chunk = curl_slist_append(chunk, "Host: api.twitter.com");
     chunk = curl_slist_append(chunk, "User-Agent: TweetsFound App v0.1");
     std::string authoization = stringFormat("Authorization: %s %s", this->token_->type_.c_str(), this->token_->token_.c_str());
     chunk = curl_slist_append(chunk, authoization.c_str());
 
-    std::string readData;
+    string readData;
+    init_string(&readData);
     CURL* curl = curl_easy_init();
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, TwitterCrawler::writeRequestData);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&readData);
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
@@ -84,9 +86,35 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
         printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
-    
+    //printf("\n\nRead Message: %s\n", readData.c_str());
+    parse(readData.ptr);
     SocialInformationList collectedInformation;
     return collectedInformation;
+}
+
+SocialInformation TwitterCrawler::parse(const char* jsonFile)
+{
+    Json::Value root;
+    Json::Reader reader;
+    bool parsingSuccessful = reader.parse(jsonFile, root );
+    
+    if(parsingSuccessful)
+    {
+        const Json::Value plugins = root["statuses"];
+        for ( unsigned int index = 0; index < plugins.size(); ++index )
+        {
+            const char* value = plugins[index]["text"].asCString();
+            printf("Value : %s\n", value);
+        }
+        
+    }
+    else
+    {
+        printf("Error while parsing JSON file");
+    }
+    
+    SocialInformation info;
+    return info;
 }
 
 const std::string TwitterCrawler::encodeRFC1738(const std::string str) 
