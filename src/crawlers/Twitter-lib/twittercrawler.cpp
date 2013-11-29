@@ -1,5 +1,6 @@
 #include "twittercrawler.h"
 #include "base64.h"
+#include "utils.h"
 #include <curl/curl.h>
 #include <json/reader.h>
 
@@ -58,17 +59,13 @@ void TwitterCrawler::connect()
 
 SocialInformationList TwitterCrawler::search(Location location, float radio)
 {
-    printf("Searching!!!\n");
-    std::string url = "https://api.twitter.com/1.1/search/tweets.json?q=&geocode=-17.365978,-66.175462,1km&lang=es";
-    struct curl_slist *chunk = NULL;
-    chunk = curl_slist_append(chunk, "GET /1.1/search/tweets.json?q=&geocode=-17.365978,-66.175462,1km&lang=es");
+    std::string url = stringFormat("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es", 
+            location.latitude_, location.longitude_, radio);
+    struct curl_slist *chunk = 0;
     chunk = curl_slist_append(chunk, "Host: api.twitter.com");
     chunk = curl_slist_append(chunk, "User-Agent: TweetsFound App v0.1");
-    std::string authoization = "Authorization: ";
-    authoization += this->token_->type_ + " ";
-    authoization += this->token_->token_;
+    std::string authoization = stringFormat("Authorization: %s %s", this->token_->type_.c_str(), this->token_->token_.c_str());
     chunk = curl_slist_append(chunk, authoization.c_str());
-    printf("Password: %s\n", authoization.c_str());
 
     std::string readData;
     CURL* curl = curl_easy_init();
@@ -87,7 +84,6 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
         printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
-    printf("\n\nRead Message: %s\n", readData.c_str());
     
     SocialInformationList collectedInformation;
     return collectedInformation;

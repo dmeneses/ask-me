@@ -10,6 +10,7 @@
       <itemPath>makefile</itemPath>
       <itemPath>twittercrawler.cpp</itemPath>
       <itemPath>twittercrawler.h</itemPath>
+      <itemPath>utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -55,6 +56,8 @@
       <item path="twittercrawler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="twittercrawler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="utils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
