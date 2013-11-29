@@ -4,6 +4,20 @@
 #include <curl/curl.h>
 #include <json/reader.h>
 
+TwitterCrawler::TwitterCrawler()
+{
+    this->token_ = 0;
+}
+
+TwitterCrawler::~TwitterCrawler()
+{
+    if(token_)
+    {
+        delete token_;
+        token_ = 0;
+    }
+}
+
 SocialInformationList TwitterCrawler::collect(Location location, float radio) 
 {
     if(!this->token_)
@@ -11,10 +25,7 @@ SocialInformationList TwitterCrawler::collect(Location location, float radio)
         connect();
     }
     
-    search(location, radio);
-    
-    SocialInformationList collectedInformation;
-    return collectedInformation;
+    return search(location, radio);
 }
 
 void TwitterCrawler::connect()
@@ -86,25 +97,33 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
         printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
-    //printf("\n\nRead Message: %s\n", readData.c_str());
-    parse(readData.ptr);
-    SocialInformationList collectedInformation;
-    return collectedInformation;
+    
+    return parse(readData.ptr);;
 }
 
-SocialInformation TwitterCrawler::parse(const char* jsonFile)
+SocialInformationList TwitterCrawler::parse(const char* jsonFile)
 {
     Json::Value root;
     Json::Reader reader;
-    bool parsingSuccessful = reader.parse(jsonFile, root );
+    bool parsingSuccessful = reader.parse(jsonFile, root);
+    SocialInformationList tweets;
     
     if(parsingSuccessful)
     {
         const Json::Value plugins = root["statuses"];
+        Json::Value tweet;
+        
         for ( unsigned int index = 0; index < plugins.size(); ++index )
         {
-            const char* value = plugins[index]["text"].asCString();
-            printf("Value : %s\n", value);
+            tweet = plugins[index];
+            SocialInformation info;
+            info.message_ =  tweet["text"].asCString();
+            printf("\nTweet: %s\n", info.message_.c_str());
+            Json::Value location = tweet["coordinates"]["coordinates"];
+            info.location_.longitude_ = location[0u].asDouble();
+            info.location_.latitude_ = location[0u].asDouble();
+            info.source_ = "twitter";
+            tweets.push_back(info);
         }
     }
     else
@@ -112,8 +131,8 @@ SocialInformation TwitterCrawler::parse(const char* jsonFile)
         printf("Error while parsing JSON file");
     }
     
-    SocialInformation info;
-    return info;
+    
+    return tweets;
 }
 
 const std::string TwitterCrawler::encodeRFC1738(const std::string str) 

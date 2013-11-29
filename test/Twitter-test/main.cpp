@@ -9,5 +9,5 @@ int main(int argc, char **argv)
     Location lo;
     lo.latitude_ = -17.369828;
     lo.longitude_ = -66.176915;
-    c.collect(lo, 1);
+    printf("Tweets amound: %d", c.collect(lo, 1).size());
 }

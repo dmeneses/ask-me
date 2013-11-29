@@ -8,8 +8,8 @@ struct Location
 {
 	Location() : latitude_(0), longitude_(0){}
 
-	float latitude_;
-	float longitude_;
+	double latitude_;
+	double longitude_;
 };
 
 struct SocialInformation
