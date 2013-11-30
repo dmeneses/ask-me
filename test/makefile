@@ -1,5 +1,6 @@
 SRC = structs/trietest.cpp \
       textpreprocessor/textcleanertest.cpp \
+      textpreprocessor/textpreprocessortest.cpp \
       testrunner.cpp 
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
