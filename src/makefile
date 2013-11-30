@@ -3,6 +3,7 @@
 SRC = structs/trienode.cpp \
       structs/trie.cpp \
       textpreprocessor/textcleaner.cpp \
+      textpreprocessor/textpreprocessor.cpp \
       askme.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
