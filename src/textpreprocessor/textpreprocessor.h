@@ -29,7 +29,7 @@ public:
     
     TextPreprocessor();
     
-    std::vector<Tweet> process(std::vector<Tweet> );
+    std::vector<Tweet> process(std::vector<Tweet> tweets, std::string toFind);
 };
 
 #endif	/* TEXTPREPROCESSOR_H */

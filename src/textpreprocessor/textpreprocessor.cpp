@@ -7,7 +7,7 @@ TextPreprocessor::TextPreprocessor()
 {
 }
 
-vector<Tweet> TextPreprocessor::process(vector<Tweet> tweets)
+vector<Tweet> TextPreprocessor::process(vector<Tweet> tweets, string toFind)
 {
     vector<Tweet> textProcessed;
     vector<Tweet>::iterator it;
