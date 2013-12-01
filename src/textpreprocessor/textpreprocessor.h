@@ -11,6 +11,10 @@
 #include <string>
 #include <vector>
 
+#include "textcleaner.h"
+#include "matcher.h"
+#include "../stemmer/stemmer.h"
+
 struct Tweet
 {
     Tweet(std::string sentence, int latitude, int longitude) : sentence(sentence), latitude(latitude), 
@@ -30,6 +34,10 @@ public:
     TextPreprocessor();
     
     std::vector<Tweet> process(std::vector<Tweet> tweets, std::string toFind);
+    
+    TextCleaner* cleaner_;
+    Matcher* matcher_;
+    Stemmer* stemmer_;
 };
 
 #endif	/* TEXTPREPROCESSOR_H */
