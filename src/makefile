@@ -4,6 +4,7 @@ SRC = structs/trienode.cpp \
       structs/trie.cpp \
       textpreprocessor/textcleaner.cpp \
       textpreprocessor/textpreprocessor.cpp \
+      textpreprocessor/matcher.cpp \
       stemmer/stemmer.cpp \
       askme.cpp
 
