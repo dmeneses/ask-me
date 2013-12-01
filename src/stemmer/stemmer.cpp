@@ -3,26 +3,41 @@
 #include <stdio.h>
 #include <string.h>
 
-Stemmer::Stemmer(const std::string& language) : language_(language)
-{
+#define TO_STEM_WORD_SIZE 10
 
+Stemmer::Stemmer(const std::string& language)
+{
+    stemmer_ = sb_stemmer_new(language.c_str(), NULL);
+    toStemSize_ = TO_STEM_WORD_SIZE;
+    toStem_ = new sb_symbol[toStemSize_];
+}
+
+Stemmer::~Stemmer()
+{
+    if(toStem_){
+        delete toStem_;
+        toStem_ = 0;
+    }
+    
+    sb_stemmer_delete(stemmer_);
 }
 
 std::string Stemmer::stem(const std::string& word)
 {
-    sb_stemmer* stemmer = sb_stemmer_new(language_.c_str(), NULL);
-    sb_symbol * b = convertToUnsignedChar(word);
-    const sb_symbol* stemmed = sb_stemmer_stem(stemmer, b, word.size());
+    copyToBaseStruct(word);
+    const sb_symbol* stemmed = sb_stemmer_stem(stemmer_, toStem_, word.size());
     std::string result((char*) stemmed);
-    sb_stemmer_delete(stemmer);
-    delete b;
     return result;
 }
 
-sb_symbol* Stemmer::convertToUnsignedChar(const std::string& word)
+void Stemmer::copyToBaseStruct(const std::string& word)
 {
-    sb_symbol * result = new sb_symbol[word.size() + 1];
-    strcpy((char*) result, word.c_str());
-    return result;
+    if (word.size() > toStemSize_)
+    {
+        delete toStem_;
+        toStem_ = new sb_symbol[word.size() + 1];
+    }
+
+    strcpy((char*) toStem_, word.c_str());
 }
 

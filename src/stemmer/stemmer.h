@@ -23,7 +23,9 @@ public:
      * @param language Language to steam words. Must be in lower case.
      */
     Stemmer(const std::string& language);
-
+    
+    ~Stemmer();
+    
     /**
      * Apply stemming to a word.
      * 
@@ -33,10 +35,11 @@ public:
     std::string stem(const std::string& word);
 
 private:
-    sb_symbol* convertToUnsignedChar(const std::string& word);
-    std::string convertToString(const sb_symbol* word);
+    void copyToBaseStruct(const std::string& word);
     
-    const std::string language_;
+    sb_symbol* toStem_;
+    unsigned int toStemSize_;
+    sb_stemmer* stemmer_;
 };
 
 #endif	/* STEMMER_H */
