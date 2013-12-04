@@ -10,18 +10,20 @@ TextPreprocessor::TextPreprocessor()
     matcher_ = new Matcher(stemmer_);
 }
 
-vector<Tweet> TextPreprocessor::process(vector<Tweet> tweets, string toFind)
+std::vector<SocialInformation> TextPreprocessor::process(std::vector<SocialInformation> tweets, 
+        std::string toFind)
 {
-    vector<Tweet> results;
-    vector<Tweet>::iterator tweetIterator;
+    vector<SocialInformation> results;
+    vector<SocialInformation>::iterator messagesIt;
     string wordToFind = stemmer_->stem(toFind);
-    for (tweetIterator = tweets.begin(); tweetIterator != tweets.end(); tweetIterator++)
+    
+    for (messagesIt = tweets.begin(); messagesIt != tweets.end(); messagesIt++)
     {
-        string textcleaned = cleaner_->clean(tweetIterator->sentence);
-        std::vector<std::string> splittedTweet;
-        boost::split(splittedTweet, textcleaned, boost::is_any_of("\t "));
-        if(matcher_->match(splittedTweet, wordToFind)){
-            results.push_back(*tweetIterator);
+        string textcleaned = cleaner_->clean(messagesIt->message_);
+        std::vector<std::string> splittedMessages;
+        boost::split(splittedMessages, textcleaned, boost::is_any_of("\t "));
+        if(matcher_->match(splittedMessages, wordToFind)){
+            results.push_back(*messagesIt);
         }
     }
 

@@ -14,6 +14,15 @@ struct Location
 
 struct SocialInformation
 {
+        SocialInformation()
+        {
+        }
+        
+        SocialInformation(std::string message, double latitude, double longitude) : message_(message)
+        {
+            location_.latitude_ = latitude;
+            location_.longitude_ = longitude;
+        }
 	/***
 	* Infomartion message i.e. "Delighting a piece of chessecake on Dumbo"
 	*/
