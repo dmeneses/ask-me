@@ -14,18 +14,7 @@
 #include "textcleaner.h"
 #include "matcher.h"
 #include "../stemmer/stemmer.h"
-
-struct Tweet
-{
-    Tweet(std::string sentence, int latitude, int longitude) : sentence(sentence), latitude(latitude), 
-    longitude(longitude)
-    {
-    }
-    
-    std::string sentence;
-    int latitude;
-    int longitude;
-};
+#include "socialinformation.h"
 
 class TextPreprocessor
 {
@@ -33,7 +22,9 @@ public:
     
     TextPreprocessor();
     
-    std::vector<Tweet> process(std::vector<Tweet> tweets, std::string toFind);
+    std::vector<SocialInformation> process(std::vector<SocialInformation> tweets, std::string toFind);
+    
+private:
     
     TextCleaner* cleaner_;
     Matcher* matcher_;
