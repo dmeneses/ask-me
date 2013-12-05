@@ -1,4 +1,5 @@
-SRC = main.cpp 
+SRC = main.cpp \
+      twittertest.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
