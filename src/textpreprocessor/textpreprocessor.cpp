@@ -10,10 +10,15 @@ TextPreprocessor::TextPreprocessor()
     matcher_ = new Matcher(stemmer_);
 }
 
-std::vector<SocialInformation> TextPreprocessor::process(std::vector<SocialInformation> tweets, 
+bool rank(const Result& result1, const Result& result2)
+{
+    return result1.matchesCount > result2.matchesCount;
+}
+
+std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> tweets, 
         std::string toFind)
 {
-    vector<SocialInformation> results;
+    vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
     string wordToFind = stemmer_->stem(toFind);
     
@@ -22,11 +27,13 @@ std::vector<SocialInformation> TextPreprocessor::process(std::vector<SocialInfor
         string textcleaned = cleaner_->clean(messagesIt->message_);
         std::vector<std::string> splittedMessages;
         boost::split(splittedMessages, textcleaned, boost::is_any_of("\t "));
-        if(matcher_->match(splittedMessages, wordToFind)){
-            results.push_back(*messagesIt);
+        int matches = matcher_->match(splittedMessages, wordToFind);
+        if(matches > 0)
+        {
+            results.push_back(Result(*messagesIt, matches));
         }
     }
-
+    sort(results.begin(), results.end(), rank);
     return results;
 }
 

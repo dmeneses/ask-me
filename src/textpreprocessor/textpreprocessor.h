@@ -16,13 +16,47 @@
 #include "../stemmer/stemmer.h"
 #include "socialinformation.h"
 
+/**
+ * Wrapper for the information found
+ */
+struct Result
+{
+    /**
+     * Constructor for the wrapper
+     * 
+     * @param information Social information
+     * @param matchesCount Matches count
+     */
+    Result(SocialInformation information, int matchesCount) : information(information), 
+    matchesCount(matchesCount)
+    {
+    }
+    
+    SocialInformation information;
+    int matchesCount;
+};
+
+/**
+ * Class to prepare the text for the search and matchs the valuable information.
+ */
 class TextPreprocessor
 {
 public:
     
+    /**
+     * Constructor
+     */
     TextPreprocessor();
     
-    std::vector<SocialInformation> process(std::vector<SocialInformation> tweets, std::string toFind);
+    /**
+     * Process the information and returns it ranked.
+     * 
+     * @param tweets Information messages
+     * @param toFind Word or words to find in the messages
+     * 
+     * @return A ranked list with the results
+     */
+    std::vector<Result> process(std::vector<SocialInformation> tweets, std::string toFind);
     
 private:
     
