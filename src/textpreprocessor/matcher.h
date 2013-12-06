@@ -17,7 +17,7 @@ public:
     Matcher(Stemmer* stemmer);
     Matcher(const Matcher& orig);
     virtual ~Matcher();
-    bool match(std::vector<std::string>, std::string);
+    int match(std::vector<std::string>, std::string);
 private:
     Stemmer* stemmer_;
 };
