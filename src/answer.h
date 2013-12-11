@@ -20,9 +20,9 @@ enum SocialSource
 
 class Answer {
 public:
-    std::vector<Result> ask(const std::string word, const Location location, const float radius, SocialSource source);
+    std::vector<Result> ask(const std::string word, const Location location, const float radio, SocialSource source);
 private:
-    SocialInformationList recollect(const Location location, const float radius);
+    SocialInformationList recollect(const Location location, const float radio, SocialSource& crawler);
 };
 
 #endif	/* ANSWER_H */
