@@ -6,7 +6,7 @@ SRC = structs/trienode.cpp \
       textpreprocessor/textpreprocessor.cpp \
       textpreprocessor/matcher.cpp \
       stemmer/stemmer.cpp \
-      askme.cpp
+      answer.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
