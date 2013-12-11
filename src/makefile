@@ -12,10 +12,13 @@ OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
 OUT = libaskme.a
 
-INCLUDES = -I../third-party/boost_1_54_0 -I../third-party/libstemmer/include -I../include
+INCLUDES = -I../third-party/boost_1_54_0 -I../third-party/libstemmer/include \
+	   -I../include -Icrawlers/Twitter-lib
 
 #library paths
-LIBS = -L/user/local/lib -lm -L../third-party/boost_1_54_0/lib/regex/ -lboost_regex-gcc-1_53 -L../third-party/libstemmer/lib -lstemmer
+LIBS = -L/user/local/lib -lm -L../third-party/boost_1_54_0/lib/regex/ \
+       -lboost_regex-gcc-1_53 -L../third-party/libstemmer/lib -lstemmer \
+       -Lcrawlers/Twitter-lib/lib -lTwitterCrawler
 
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall

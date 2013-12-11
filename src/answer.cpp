@@ -6,28 +6,33 @@
  */
 
 #include "answer.h"
+#include "twittercrawler.h"
 
-std::vector<Result> Answer::ask(const std::string word, const Location location, const float radius, SocialSource source)
+std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, SocialSource source)
 {
-    SocialInformationList info;
-    switch(source)
-    {
-        case TWITTER:
-            info = recollect(location, radius);
-            break;
-        case FACEBOOK:
-            //Not implemented
-            break;
-    }
+    std::vector<SocialInformation> info = recollect(location, radio, source);
     TextPreprocessor processor;
     
     return processor.process(info, word);
 }
 
 
-SocialInformationList Answer::recollect(const Location location, const float radius)
+SocialInformationList Answer::recollect(const Location location, const float radio, SocialSource& source)
 {
-    SocialInformationList info;
-    
-    return info;
+    switch(source)
+    {
+        case TWITTER:
+        {
+            TwitterCrawler twitterCrawler;
+            return twitterCrawler.collect(location, radio);
+        }
+        case FACEBOOK:
+        {
+            return std::vector<SocialInformation>();
+        }
+        default:
+        {
+            return std::vector<SocialInformation>();
+        }
+    }
 }
