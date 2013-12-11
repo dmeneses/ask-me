@@ -59,6 +59,7 @@ public:
     std::vector<Result> process(std::vector<SocialInformation> tweets, std::string toFind);
     
 private:
+    std::vector<std::string> split(std::string text);
     
     TextCleaner* cleaner_;
     Matcher* matcher_;
