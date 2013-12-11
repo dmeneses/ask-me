@@ -12,9 +12,17 @@
 #include "textpreprocessor/textpreprocessor.h"
 #include "crawler.h"
 
+enum SocialSource
+{
+    TWITTER,
+    FACEBOOK
+};
+
 class Answer {
 public:
-    std::vector<Result> ask(const std::string word,const Location location,const float radius,Crawler& crawler);
+    std::vector<Result> ask(const std::string word, const Location location, const float radius, SocialSource source);
+private:
+    SocialInformationList recollect(const Location location, const float radius);
 };
 
 #endif	/* ANSWER_H */
