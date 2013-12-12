@@ -5,7 +5,7 @@
 using namespace v8;
 
 void InitAll(Handle<Object> exports) {
-  Answer::Init(exports);
+  AnswerJS::Init(exports);
 }
 
 NODE_MODULE(addon, InitAll)
