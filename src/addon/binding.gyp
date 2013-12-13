@@ -7,12 +7,17 @@
 	["../stemmer", 
 	 "../textpreprocessor", 
 	 "../../third-party/libstemmer/include",
-	 "../../include"
+	 "../../include",
+	 "../crawlers/Twitter-lib",
+	 "../../third-party/curl-7.33.0/include"
 	], 
 
       "libraries" : 
 	["-laskme", "-L../../lib", 
-	 "-lstemmer", "-L../../../third-party/libstemmer/lib"]
+	 "-lstemmer", "-L../../../third-party/libstemmer/lib",
+	 "-lTwitterCrawler", "-L../../crawlers/Twitter-lib/lib",
+	 "-lcurl", "-L../../../third-party/curl-7.33.0/lib"
+	]
     }
   ]
 }

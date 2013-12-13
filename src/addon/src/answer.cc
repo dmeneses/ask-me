@@ -20,20 +20,25 @@ void AnswerJS::Init(v8::Handle<v8::Object> target)
 
 v8::Handle<v8::Value> AnswerJS::New(const v8::Arguments& args)
 {
+	HandleScope scope;
+	Answer* answer = new Answer();
+//	answer->Wrap(args.This());	
+
+    return args.This();
 }
 v8::Handle<v8::Value> AnswerJS::Reply(const v8::Arguments& args)
 {
 	HandleScope scope;
 	if(!args[0]->IsString() && !args[1]->IsNumber() && !args[2]->IsNumber() && !args[3]->IsNumber())
 		return scope.Close(Array::New(0));
-
-	Answer answer;
+	
 	Location location;
 	String::Utf8Value value(args[0]->ToString());
 	std::string word = *value;
 	location.latitude_ = Handle<Number>::Cast(args[1])->Value();
 	location.longitude_ = Handle<Number>::Cast(args[2])->Value();
 	float radio = Handle<Number>::Cast(args[3])->Value();
+	Answer answer;
 	std::vector<Result> results = answer.ask(word, location, radio, TWITTER);	
 	
 	Handle<Array> messages = Array::New(results.size());
