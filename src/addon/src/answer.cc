@@ -14,8 +14,8 @@ void AnswerJS::Init(v8::Handle<v8::Object> target)
     tpl->PrototypeTemplate()->Set(String::NewSymbol("reply"),
       FunctionTemplate::New(Reply)->GetFunction());
 
-  Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("Answer"), constructor);
+    Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
+    target->Set(String::NewSymbol("Answer"), constructor);
 }
 
 v8::Handle<v8::Value> AnswerJS::New(const v8::Arguments& args)
@@ -34,17 +34,10 @@ v8::Handle<v8::Value> AnswerJS::Reply(const v8::Arguments& args)
 	location.latitude_ = Handle<Number>::Cast(args[1])->Value();
 	location.longitude_ = Handle<Number>::Cast(args[2])->Value();
 	float radio = Handle<Number>::Cast(args[3])->Value();
-
 	std::vector<Result> results = answer.ask(word, location, radio, TWITTER);	
-
-	return scope.Close(ConvertVectorToArrayJS(results));
-}
-
-v8::Handle<v8::Array> ConvertVectorToArrayJS(std::vector<Result>& results)
-{
-	HandleScope scope;
-	Handle<Array> messages = Array::New(results.size());
 	
+	Handle<Array> messages = Array::New(results.size());
+
 	for(int i = 0; i < results.size(); i++)
 	{
 		SocialInformation info = results.at(i).information;
@@ -55,7 +48,7 @@ v8::Handle<v8::Array> ConvertVectorToArrayJS(std::vector<Result>& results)
 		jsobject->Set(String::NewSymbol("source"), String::New(info.source_.c_str()));
 		messages->Set(i, jsobject);
 	}
-	
+
 	return scope.Close(messages);
 }
 
