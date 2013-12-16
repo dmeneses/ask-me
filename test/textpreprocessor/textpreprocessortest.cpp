@@ -1,5 +1,6 @@
 #include "textpreprocessor/textpreprocessor.h"
 #include <gtest/gtest.h>
+#include <algorithm>
 
 TEST(TextPreProcessor, GivenAOneTweet)
 {
@@ -41,12 +42,12 @@ TEST(TextPreProcessor, GivenASeveralTweetsWithoutRootTerms)
     std::vector<Result> results = processor->process(tweets, "bloqueo");
     int size = results.size();
     EXPECT_EQ(2, size);
-    EXPECT_EQ(tweets.at(0).message_, results.at(0).information.message_);
-    EXPECT_EQ(tweets.at(1).message_, results.at(1).information.message_);
+    EXPECT_TRUE(std::find(results.begin(), results.end(), tweets.at(0).message_) != results.end());    
+    EXPECT_TRUE(std::find(results.begin(), results.end(), tweets.at(1).message_) != results.end());    
     delete processor;
 }
 
-TEST(TextPreprocessor, rank)
+TEST(TextPreprocessor, Rank)
 {
     TextPreprocessor* processor = new TextPreprocessor();
     std::vector<SocialInformation> tweets;
@@ -61,5 +62,40 @@ TEST(TextPreprocessor, rank)
     EXPECT_EQ(2, size);
     EXPECT_EQ(tweets.at(1).message_, results.at(0).information.message_);
     EXPECT_EQ(tweets.at(2).message_, results.at(1).information.message_);
+    delete processor;
+}
+
+TEST(TextPreprocessor, RelatedWords)
+{
+    TextPreprocessor* processor = new TextPreprocessor();
+    std::vector<SocialInformation> tweets;
+    tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
+    tweets.push_back(SocialInformation("La comidita que comimos ayer no se compara con la COMIDA!! q comimos hoy",
+            17, 65));
+    tweets.push_back(SocialInformation("La comida del estadio es malisima", 17, 64));
+    tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
+    
+    std::vector<Result> results = processor->process(tweets, "tostada");
+    int size = results.size();
+    EXPECT_EQ(1, size);
+    EXPECT_EQ(tweets.at(0).message_, results.at(0).information.message_);
+    delete processor;
+}
+
+TEST(TextPreprocessor, RelatedWordsWithRanking)
+{
+    TextPreprocessor* processor = new TextPreprocessor();
+    std::vector<SocialInformation> tweets;
+    tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
+    tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.",
+            17, 65));
+    tweets.push_back(SocialInformation("La comida del estadio es malisima", 17, 64));
+    tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
+    
+    std::vector<Result> results = processor->process(tweets, "tostada");
+    int size = results.size();
+    EXPECT_EQ(2, size);
+    EXPECT_EQ(tweets.at(0).message_, results.at(1).information.message_);
+    EXPECT_EQ(tweets.at(1).message_, results.at(0).information.message_);
     delete processor;
 }
