@@ -13,7 +13,8 @@ OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 OUT = libaskme.a
 
 INCLUDES = -I../third-party/boost_1_54_0 -I../third-party/libstemmer/include \
-	   -I../include -Icrawlers/Twitter-lib
+	   -I../include -Icrawlers/Twitter-lib \
+	   -Icrawlers/Concept-lib
 
 #library paths
 LIBS = -L/user/local/lib -lm -L../third-party/boost_1_54_0/lib/regex/ \
@@ -25,7 +26,7 @@ CCFLAGS = -fPIC -g -Wall
 LDFLAGS = rcs
 
 #compiler
-CCC = g++
+CCC = g++ -m32
 AR = ar
 
 default: $(OUT)

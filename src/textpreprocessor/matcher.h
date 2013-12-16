@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include "../stemmer/stemmer.h"
+#include <set>
 
 class Matcher
 {
@@ -18,6 +19,7 @@ public:
     Matcher(const Matcher& orig);
     virtual ~Matcher();
     int match(std::vector<std::string>, std::string);
+    int matchWholeWords(std::set<std::string> words, const std::string& sentence);
 private:
     Stemmer* stemmer_;
 };

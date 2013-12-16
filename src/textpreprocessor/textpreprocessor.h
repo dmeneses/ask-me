@@ -34,6 +34,11 @@ struct Result
     
     SocialInformation information;
     int matchesCount;
+    
+    bool operator==(const std::string& message) const 
+    {
+        return this->information.message_ == message;
+    }
 };
 
 /**
