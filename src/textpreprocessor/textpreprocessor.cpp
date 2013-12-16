@@ -3,7 +3,7 @@
 #include <sstream>
 #include <algorithm>
 #include <stdio.h>     
-#include <conceptnetcrawler.h>
+#include "../ConceptNet/conceptnetcrawler.h"
         
 using namespace std;
 

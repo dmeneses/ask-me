@@ -2,6 +2,11 @@
 <configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
+      <df name="crawlers">
+        <df name="ConceptNet">
+          <in>conceptnetcrawler.cpp</in>
+        </df>
+      </df>
       <df name="stemmer">
         <in>stemmer.cpp</in>
       </df>
@@ -15,7 +20,6 @@
         <in>textpreprocessor.cpp</in>
       </df>
       <in>answer.cpp</in>
-      <in>askme.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -49,6 +53,9 @@
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
               <pElem>../include</pElem>
+              <pElem>crawlers/Twitter-lib</pElem>
+              <pElem>../third-party/curl-7.33.0/include</pElem>
+              <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>
@@ -60,23 +67,25 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="answer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="answer.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="crawlers/ConceptNet/conceptnetcrawler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <folder path="0/crawlers">
         <ccTool>
           <incDir>
-            <pElem>crawlers/Twitter-lib</pElem>
-            <pElem>crawlers/Concept-lib</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
-      </item>
-      <item path="askme.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool>
-        </ccTool>
-      </item>
+      </folder>
       <folder path="0/stemmer">
         <ccTool>
           <incDir>
-            <pElem>crawlers/Twitter-lib</pElem>
-            <pElem>crawlers/Concept-lib</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -84,8 +93,6 @@
       <folder path="0/structs">
         <ccTool>
           <incDir>
-            <pElem>crawlers/Twitter-lib</pElem>
-            <pElem>crawlers/Concept-lib</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -93,19 +100,21 @@
       <folder path="0/textpreprocessor">
         <ccTool>
           <incDir>
-            <pElem>crawlers/Twitter-lib</pElem>
-            <pElem>crawlers/Concept-lib</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <item path="stemmer/stemmer.cpp" ex="false" tool="1" flavor2="0">
+      <item path="stemmer/stemmer.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="structs/trie.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="structs/trienode.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="textpreprocessor/matcher.cpp" ex="false" tool="1" flavor2="0">
+      <item path="textpreprocessor/matcher.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="textpreprocessor/textcleaner.cpp" ex="false" tool="1" flavor2="0">
       </item>

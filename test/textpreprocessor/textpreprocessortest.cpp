@@ -87,8 +87,7 @@ TEST(TextPreprocessor, RelatedWordsWithRanking)
     TextPreprocessor* processor = new TextPreprocessor();
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
-    tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.",
-            17, 65));
+    tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.", 17, 65));
     tweets.push_back(SocialInformation("La comida del estadio es malisima", 17, 64));
     tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
     
