@@ -15,7 +15,6 @@ INCLUDES = -I../src \
 	   -I../third-party/boost_1_54_0 \
 	   -I../third-party/libstemmer/include \
 	   -I../include \
-	   -I../src/crawlers/Concept-lib \
 	   -I../../../third-party/curl-7.33.0/include \
 	   -I../../../third-party/jsoncpp-src-0.5.0/include
 	
@@ -25,7 +24,6 @@ LIBS = -L/user/local/lib -L../src/lib -L../third-party/GMock-1.7.0/Lib \
 	-L../third-party/GTest-1.7.0/Lib64 -laskme -lgtest -lgmock -lm -lpthread \
 	-L../third-party/boost_1_54_0/lib/regex/ -lboost_regex-gcc-1_53 \
 	-L../third-party/libstemmer/lib -lstemmer \
-	-L../src/crawlers/Concept-lib/lib -lConceptNetCrawler \
 	-L../third-party/curl-7.33.0/lib -lcurl \
 	-L../third-party/jsoncpp-src-0.5.0/lib -ljson 
 	

@@ -6,6 +6,7 @@ SRC = structs/trienode.cpp \
       textpreprocessor/textpreprocessor.cpp \
       textpreprocessor/matcher.cpp \
       stemmer/stemmer.cpp \
+      crawlers/ConceptNet/conceptnetcrawler.cpp \
       answer.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
@@ -14,12 +15,12 @@ OUT = libaskme.a
 
 INCLUDES = -I../third-party/boost_1_54_0 -I../third-party/libstemmer/include \
 	   -I../include -Icrawlers/Twitter-lib \
-	   -Icrawlers/Concept-lib
-
+	   -I../third-party/curl-7.33.0/include \
+	   -I../third-party/jsoncpp-src-0.5.0/include
+	
 #library paths
 LIBS = -L/user/local/lib -lm -L../third-party/boost_1_54_0/lib/regex/ \
-       -lboost_regex-gcc-1_53 -L../third-party/libstemmer/lib -lstemmer \
-       -Lcrawlers/Twitter-lib/lib -lTwitterCrawler
+       -lboost_regex-gcc-1_53 -L../third-party/libstemmer/lib -lstemmer
 
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall

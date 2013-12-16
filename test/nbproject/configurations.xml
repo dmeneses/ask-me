@@ -49,7 +49,6 @@
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
               <pElem>../include</pElem>
-              <pElem>../src/crawlers/Concept-lib</pElem>
               <pElem>../../../third-party/curl-7.33.0/include</pElem>
               <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
