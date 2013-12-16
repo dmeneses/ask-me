@@ -118,7 +118,6 @@ SocialInformationList TwitterCrawler::parse(const char* jsonFile)
             tweet = plugins[index];
             SocialInformation info;
             info.message_ =  tweet["text"].asCString();
-            printf("\nTweet: %s\n", info.message_.c_str());
             Json::Value location = tweet["coordinates"]["coordinates"];
             info.location_.longitude_ = location[0u].asDouble();
             info.location_.latitude_ = location[0u].asDouble();
@@ -131,7 +130,7 @@ SocialInformationList TwitterCrawler::parse(const char* jsonFile)
         printf("Error while parsing JSON file");
     }
     
-    
+    printf("Tweets size : %d\n", tweets.size());
     return tweets;
 }
 

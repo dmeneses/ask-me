@@ -16,7 +16,7 @@ app.get('/askme', function(req, res) {
 	console.log("Longitude: " + req.query.longitude);
 	console.log("Radio: " + req.query.radio);
 	var answer = new addon.Answer();
-	var array = answer.reply(req.query.word, req.query.latitude, req.query.logitude, req.query.radio);
+	var array = answer.reply(req.query.word, parseFloat(req.query.latitude), parseFloat(req.query.longitude), parseFloat(req.query.radio));
 	console.log("Size: " + array.length);
     res.send(array);
 });

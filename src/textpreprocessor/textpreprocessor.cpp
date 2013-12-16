@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <stdio.h>
+
 using namespace std;
 
 TextPreprocessor::TextPreprocessor() {
@@ -25,6 +27,7 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> twe
         std::vector<std::string> splittedMessages = split(textcleaned);
         int matches = matcher_->match(splittedMessages, wordToFind);
         if (matches > 0) {
+            printf("Information found : %s\n", textcleaned.c_str());
             results.push_back(Result(*messagesIt, matches));
         }
     }
