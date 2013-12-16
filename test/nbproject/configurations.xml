@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="." name="test">
+    <df root="." name="0">
       <df name="stemmer">
         <in>stemmertests.cpp</in>
       </df>
@@ -29,7 +29,6 @@
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -49,25 +48,36 @@
               <pElem>../third-party/GTest-1.7.0/Include</pElem>
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
+              <pElem>../include</pElem>
+              <pElem>../src/crawlers/Concept-lib</pElem>
+              <pElem>../../../third-party/curl-7.33.0/include</pElem>
+              <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
+            <preprocessorList>
+              <Elem>__PIC__=2</Elem>
+              <Elem>__pic__=2</Elem>
+            </preprocessorList>
+            <undefinedList>
+              <Elem>__GCC_HAVE_DWARF2_CFI_ASM=1</Elem>
+            </undefinedList>
           </ccTool>
         </makeTool>
       </makefileType>
-      <folder path="test/stemmer">
+      <folder path="0/stemmer">
         <ccTool>
           <incDir>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="test/structs">
+      <folder path="0/structs">
         <ccTool>
           <incDir>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="test/textpreprocessor">
+      <folder path="0/textpreprocessor">
         <ccTool>
           <incDir>
             <pElem>.</pElem>
