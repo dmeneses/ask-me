@@ -1,17 +1,16 @@
 #include "textpreprocessor.h"
 #include <string>
-#include <sstream>
 #include <algorithm>
 #include <stdio.h>     
 #include "../ConceptNet/conceptnetcrawler.h"
-        
+
 using namespace std;
 
 TextPreprocessor::TextPreprocessor()
 {
     cleaner_ = new TextCleaner();
     stemmer_ = new Stemmer("spanish");
-    matcher_ = new Matcher(stemmer_);
+    matcher_ = new Matcher();
 }
 
 bool rank(const Result& result1, const Result& result2)
@@ -24,33 +23,36 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> twe
 {
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
-    ConceptNetCrawler concept;
-    set<string> relatedWordsSet = concept.collectRelatedWords(toFind, "es");
-    string wordToFind = stemmer_->stem(toFind);
+    set<string> stemmedWordsToMatch = getStemmedWordsToMatch(toFind);
 
     for (messagesIt = tweets.begin(); messagesIt != tweets.end(); messagesIt++)
     {
-        int matches = matcher_->matchWholeWords(relatedWordsSet, messagesIt->message_);
-        string textcleaned = cleaner_->clean(messagesIt->message_);
-        std::vector<std::string> splittedMessages = split(textcleaned);
-        matches += matcher_->match(splittedMessages, wordToFind);
-        
+        std::string textCleaned = cleaner_->clean(messagesIt->message_);
+        std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
+        int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
+
         if (matches > 0)
         {
-            printf("Information found : %s\n", textcleaned.c_str());
+            printf("Information found : %s\n", stemmedSentence.c_str());
             results.push_back(Result(*messagesIt, matches));
         }
     }
+
     sort(results.begin(), results.end(), rank);
     return results;
 }
 
-std::vector<std::string> TextPreprocessor::split(std::string text)
+set<std::string> TextPreprocessor::getStemmedWordsToMatch(const std::string& keyword)
 {
-    string buffer;
-    stringstream stream(text);
-    vector<string> tokens;
-    while (stream >> buffer)
-        tokens.push_back(buffer);
-    return tokens;
+    ConceptNetCrawler conceptCrawler;
+    std::set<std::string> relatedWords = conceptCrawler.collectRelatedWords(keyword, "es");
+    std::set<std::string> stemmedResult;
+
+    for (set<string>::iterator sentenceIt = relatedWords.begin();
+            sentenceIt != relatedWords.end(); sentenceIt++)
+    {
+        stemmedResult.insert(stemmer_->stemSentence(*sentenceIt));        
+    }
+
+    return stemmedResult;
 }

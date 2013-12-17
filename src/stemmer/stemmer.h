@@ -9,6 +9,9 @@
 #define	STEMMER_H
 
 #include <string>
+#include <vector>
+#include <set>
+
 #include "libstemmer.h"
 
 /**
@@ -33,9 +36,18 @@ public:
      * @return The stemmed word.
      */
     std::string stem(const std::string& word);
+    
+    /**
+     * Apply stemming to each word in a sentence and keeps the sentence order.
+     * @param sentence Sentence to stem.
+     * 
+     * @return Stemmed sentence.
+     */
+    std::string stemSentence(const std::string& sentence);
 
 private:
     void copyToBaseStruct(const std::string& word);
+    std::vector<std::string> split(std::string text);
     
     sb_symbol* toStem_;
     unsigned int toStemSize_;
