@@ -59,9 +59,10 @@ TEST(TextPreprocessor, Rank)
     
     std::vector<Result> results = processor->process(tweets, "comida");
     int size = results.size();
-    EXPECT_EQ(2, size);
+    EXPECT_EQ(3, size);
     EXPECT_EQ(tweets.at(1).message_, results.at(0).information.message_);
-    EXPECT_EQ(tweets.at(2).message_, results.at(1).information.message_);
+    EXPECT_EQ(tweets.at(0).message_, results.at(1).information.message_);
+    EXPECT_EQ(tweets.at(2).message_, results.at(2).information.message_);
     delete processor;
 }
 

@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 #include "textcleaner.h"
 #include "matcher.h"
@@ -65,7 +66,7 @@ public:
     
 private:
     std::vector<std::string> split(std::string text);
-    
+    std::set<std::string> getStemmedWordsToMatch(const std::string& keyword);
     TextCleaner* cleaner_;
     Matcher* matcher_;
     Stemmer* stemmer_;

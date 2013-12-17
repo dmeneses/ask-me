@@ -7,11 +7,10 @@
 
 #include "matcher.h"
 #include "../stemmer/stemmer.h"
-#include <iostream>
+#include <stdio.h>
 
-Matcher::Matcher(Stemmer* stemmer)
+Matcher::Matcher()
 {
-    this->stemmer_ = stemmer;
 }
 
 Matcher::Matcher(const Matcher& orig)
@@ -22,35 +21,23 @@ Matcher::~Matcher()
 {
 }
 
-int Matcher::match(std::vector<std::string> splittedSentence, std::string wordToFind)
-{
-    std::vector<std::string>::iterator wordIterator = splittedSentence.begin();
-    int matches = 0;
-
-    while (wordIterator != splittedSentence.end())
-    {
-        std::string stemmedWord = stemmer_->stem(*wordIterator);
-        if ((stemmedWord).compare(wordToFind) == 0)
-        {
-            matches++;
-
-        }
-        wordIterator++;
-    }
-
-    return matches;
-}
-
-int Matcher::matchWholeWords(std::set<std::string> words, const std::string& sentence)
+int Matcher::match(const std::string& sentence, const std::set<std::string>& wordsToMatch)
 {
     int res = 0;
-
-    for (std::set<std::string>::iterator it = words.begin(); it != words.end(); it++)
+    for (std::set<std::string>::iterator it = wordsToMatch.begin(); it != wordsToMatch.end(); it++)
     {
-        if (sentence.find(*it) != std::string::npos)
+        int partialMatch = 0;
+        unsigned int index = 0;
+        unsigned int newIndex = 0;
+        while ((newIndex = sentence.find(*it, index)) != std::string::npos)
         {
-            res++;
+            //TODO: Match whole word.
+            index += newIndex + it->size();
+            printf("MATCH: %s\n", it->c_str());
+            partialMatch++;
         }
+
+        res += partialMatch;
     }
 
     return res;
