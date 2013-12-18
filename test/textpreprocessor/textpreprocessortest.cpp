@@ -99,3 +99,37 @@ TEST(TextPreprocessor, RelatedWordsWithRanking)
     EXPECT_EQ(tweets.at(1).message_, results.at(0).information.message_);
     delete processor;
 }
+
+TEST(TextPreprocessor, RelatedWordsWithUpperCase)
+{
+    TextPreprocessor* processor = new TextPreprocessor();
+    std::vector<SocialInformation> tweets;
+    tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
+    tweets.push_back(SocialInformation("La comidita que comimos ayer no se compara con la COMIDA!! q comimos hoy",
+            17, 65));
+    tweets.push_back(SocialInformation("La comida del estadio es malisima", 17, 64));
+    tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
+    
+    std::vector<Result> results = processor->process(tweets, "Tostada");
+    int size = results.size();
+    EXPECT_EQ(1, size);
+    EXPECT_EQ(tweets.at(0).message_, results.at(0).information.message_);
+    delete processor;
+}
+
+TEST(TextPreprocessor, RelatedWordsWithTwoWordsSearch)
+{
+    TextPreprocessor* processor = new TextPreprocessor();
+    std::vector<SocialInformation> tweets;
+    tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
+    tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.", 17, 65));
+    tweets.push_back(SocialInformation("La comida del estadio es malisima", 17, 64));
+    tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
+    
+    std::vector<Result> results = processor->process(tweets, "tostada PAN");
+    int size = results.size();
+    EXPECT_EQ(2, size);
+    EXPECT_EQ(tweets.at(0).message_, results.at(0).information.message_);
+    EXPECT_EQ(tweets.at(1).message_, results.at(1).information.message_);
+    delete processor;
+}

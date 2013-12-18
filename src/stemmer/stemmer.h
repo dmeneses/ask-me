@@ -26,9 +26,9 @@ public:
      * @param language Language to steam words. Must be in lower case.
      */
     Stemmer(const std::string& language);
-    
+
     ~Stemmer();
-    
+
     /**
      * Apply stemming to a word.
      * 
@@ -36,7 +36,7 @@ public:
      * @return The stemmed word.
      */
     std::string stem(const std::string& word);
-    
+
     /**
      * Apply stemming to each word in a sentence and keeps the sentence order.
      * @param sentence Sentence to stem.
@@ -45,10 +45,16 @@ public:
      */
     std::string stemSentence(const std::string& sentence);
 
+    /**
+     * Split text by spaces.
+     * @param text Text to split.
+     * 
+     * @return Vector containing each part of the text.
+     */
+    std::vector<std::string> split(std::string text);
 private:
     void copyToBaseStruct(const std::string& word);
-    std::vector<std::string> split(std::string text);
-    
+
     sb_symbol* toStem_;
     unsigned int toStemSize_;
     sb_stemmer* stemmer_;
