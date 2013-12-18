@@ -4,12 +4,6 @@ var app     = express();
 var http    = require("http");
 var server  = http.createServer(app);
 
-app.configure(function () {
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(app.router);
-});
-
 app.get('/askme', function(req, res) {
 	console.log("Word: " + req.query.word);
 	console.log("Latitude: " + req.query.latitude);
@@ -18,7 +12,7 @@ app.get('/askme', function(req, res) {
 	var answer = new addon.Answer();
 	var array = answer.reply(req.query.word, parseFloat(req.query.latitude), parseFloat(req.query.longitude), parseFloat(req.query.radio));
 	console.log("Size: " + array.length);
-    res.send(array);
+    res.jsonp(JSON.stringify(array));
 });
 
 server.listen(3000, function() {
