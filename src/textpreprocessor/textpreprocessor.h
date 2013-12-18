@@ -22,21 +22,22 @@
  */
 struct Result
 {
+
     /**
      * Constructor for the wrapper
      * 
      * @param information Social information
      * @param matchesCount Matches count
      */
-    Result(SocialInformation information, int matchesCount) : information(information), 
+    Result(SocialInformation information, int matchesCount) : information(information),
     matchesCount(matchesCount)
     {
     }
-    
+
     SocialInformation information;
     int matchesCount;
-    
-    bool operator==(const std::string& message) const 
+
+    bool operator==(const std::string& message) const
     {
         return this->information.message_ == message;
     }
@@ -48,12 +49,12 @@ struct Result
 class TextPreprocessor
 {
 public:
-    
+
     /**
      * Constructor
      */
     TextPreprocessor();
-    
+
     /**
      * Process the information and returns it ranked.
      * 
@@ -63,10 +64,11 @@ public:
      * @return A ranked list with the results
      */
     std::vector<Result> process(std::vector<SocialInformation> tweets, std::string toFind);
-    
+
 private:
     std::vector<std::string> split(std::string text);
-    std::set<std::string> getStemmedWordsToMatch(const std::string& keyword);
+    std::vector< std::set<std::string> > getStemmedWordsToMatch(const std::string& keyword);
+    std::vector<std::string> preprocessSearchParameter(const std::string& searchParam);
     TextCleaner* cleaner_;
     Matcher* matcher_;
     Stemmer* stemmer_;
