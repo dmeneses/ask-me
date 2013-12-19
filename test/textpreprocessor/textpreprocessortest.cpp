@@ -4,7 +4,7 @@
 
 TEST(TextPreProcessor, GivenAOneTweet)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("La comida de doña elena estaba rica!!!", 17, 65));
     
@@ -16,7 +16,7 @@ TEST(TextPreProcessor, GivenAOneTweet)
 
 TEST(TextPreProcessor, GivenASeveralTweets)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("La comida de doña elena esta rica!!!", 17, 65));
     tweets.push_back(SocialInformation("Hay bloqueos en el prado", 17, 64));
@@ -32,7 +32,7 @@ TEST(TextPreProcessor, GivenASeveralTweets)
 
 TEST(TextPreProcessor, GivenASeveralTweetsWithoutRootTerms)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Se bloquea todas la entradas en la universidad", 17, 65));
     tweets.push_back(SocialInformation("Tambien hay bloqueos en el prado", 17, 64));
@@ -49,7 +49,7 @@ TEST(TextPreProcessor, GivenASeveralTweetsWithoutRootTerms)
 
 TEST(TextPreprocessor, Rank)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer comi unos anticuchos buenisimos!", 17, 64));
     tweets.push_back(SocialInformation("La comidita que comimos ayer no se compara con la COMIDA!! q comimos hoy",
@@ -68,7 +68,7 @@ TEST(TextPreprocessor, Rank)
 
 TEST(TextPreprocessor, RelatedWords)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
     tweets.push_back(SocialInformation("La comidita que comimos ayer no se compara con la COMIDA!! q comimos hoy",
@@ -85,7 +85,7 @@ TEST(TextPreprocessor, RelatedWords)
 
 TEST(TextPreprocessor, RelatedWordsWithRanking)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
     tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.", 17, 65));
@@ -102,7 +102,7 @@ TEST(TextPreprocessor, RelatedWordsWithRanking)
 
 TEST(TextPreprocessor, RelatedWordsWithUpperCase)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
     tweets.push_back(SocialInformation("La comidita que comimos ayer no se compara con la COMIDA!! q comimos hoy",
@@ -119,7 +119,7 @@ TEST(TextPreprocessor, RelatedWordsWithUpperCase)
 
 TEST(TextPreprocessor, RelatedWordsWithTwoWordsSearch)
 {
-    TextPreprocessor* processor = new TextPreprocessor();
+    TextPreprocessor* processor = new TextPreprocessor("spanish");
     std::vector<SocialInformation> tweets;
     tweets.push_back(SocialInformation("Ayer me compre un tostador para pan!", 17, 64));
     tweets.push_back(SocialInformation("No tengo un tostador para hacer tostadas.", 17, 65));

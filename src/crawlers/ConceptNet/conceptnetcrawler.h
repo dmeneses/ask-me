@@ -16,8 +16,7 @@ using namespace std;
 
 class ConceptNetCrawler {
 public:
-    ConceptNetCrawler();
-    ConceptNetCrawler(const ConceptNetCrawler& orig);
+    ConceptNetCrawler(const std::string& language);
     ~ConceptNetCrawler();
     
     /**
@@ -26,7 +25,7 @@ public:
      * @param language Language to search related words.
      * @return Set of related words
      */
-    std::set<string> collectRelatedWords(string word,string language);
+    std::set<string> collectRelatedWords(string word);
 
 private:
     /**
@@ -58,7 +57,17 @@ private:
      */
     const char* getJsonFilePath();
     
+    /**
+     * Given the full language name in english return its code.
+     * For example: "english" = "en", "spanish" = "es"
+     * 
+     * @param language Language to get the code.
+     * @return Code of a language.
+     */
+    std::string getLanguageCode(const std::string& language);
+    
     char* jsonPath_; 
+    std::string languageCode_;
 };
 
 #endif	/* CONCEPTNETCRAWLER_H */

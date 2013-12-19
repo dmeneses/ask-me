@@ -3,15 +3,30 @@
 #include <algorithm>
 #include <stdio.h>
 #include <bits/stl_vector.h>     
-#include "../ConceptNet/conceptnetcrawler.h"
 
 using namespace std;
 
-TextPreprocessor::TextPreprocessor()
+TextPreprocessor::TextPreprocessor(const std::string& language)
 {
     cleaner_ = new TextCleaner();
-    stemmer_ = new Stemmer("spanish");
+    stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
+    conceptCrawler_ = new ConceptNetCrawler(language);
+}
+
+TextPreprocessor::~TextPreprocessor()
+{
+    if(cleaner_)
+        delete cleaner_;
+    
+    if(stemmer_)
+        delete stemmer_;
+    
+    if(matcher_)
+        delete matcher_;
+    
+    if(conceptCrawler_)
+        delete conceptCrawler_;
 }
 
 bool rank(const Result& result1, const Result& result2)
@@ -19,14 +34,14 @@ bool rank(const Result& result1, const Result& result2)
     return result1.matchesCount > result2.matchesCount;
 }
 
-std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> tweets,
+std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages, 
                                               std::string searchParam)
 {
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
     std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
 
-    for (messagesIt = tweets.begin(); messagesIt != tweets.end(); messagesIt++)
+    for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
     {
         std::string textCleaned = cleaner_->clean(messagesIt->message_);
         std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
@@ -47,13 +62,13 @@ std::vector< std::set<std::string> > TextPreprocessor::getStemmedWordsToMatch(co
 {
     std::vector< std::set<std::string> > result;
     
-    ConceptNetCrawler conceptCrawler;
+    
     std::vector<std::string> keywords = preprocessSearchParameter(searchParam);
 
     for (unsigned int i = 0; i < keywords.size(); i++)
     {
         std::string keyword = keywords.at(i);
-        std::set<std::string> relatedWords = conceptCrawler.collectRelatedWords(keyword, "es");
+        std::set<std::string> relatedWords = conceptCrawler_->collectRelatedWords(keyword);
         relatedWords.insert(keyword);
 
         std::set<std::string> stemmedRelatedWords;
