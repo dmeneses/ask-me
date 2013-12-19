@@ -12,14 +12,26 @@
 #define JSON_PATH getJsonFilePath()
 #define HOME "HOME"
 #define CONCEPT_NET_URL "http://conceptnet5.media.mit.edu/data/5.1/c/"
+#define ENGLISH "english"
+#define SPANISH "spanish"
+#define ENGLISH_CODE "en"
+#define SPANISH_CODE "es"
 
-ConceptNetCrawler::ConceptNetCrawler() {
+
+ConceptNetCrawler::ConceptNetCrawler(const std::string& language)
+{
     const char* text = getJsonFilePath();
     this->jsonPath_ = new char[strlen(text) + 1];
-    strcpy(jsonPath_, text);
+    strcpy(jsonPath_, text); 
+    //TODO: if no language found throw an exception.
+    languageCode_ = getLanguageCode(language);
 }
 
-ConceptNetCrawler::ConceptNetCrawler(const ConceptNetCrawler& orig) {
+std::string ConceptNetCrawler::getLanguageCode(const std::string& language)
+{
+    if(language.compare(SPANISH) == 0) return SPANISH_CODE;
+    
+    return ENGLISH_CODE;
 }
 
 ConceptNetCrawler::~ConceptNetCrawler() {
@@ -27,8 +39,8 @@ ConceptNetCrawler::~ConceptNetCrawler() {
         delete[] jsonPath_;
 }
 
-set<string> ConceptNetCrawler::collectRelatedWords(string word, string language) {
-    string request = language + "/" + word;
+set<string> ConceptNetCrawler::collectRelatedWords(string word) {
+    string request = languageCode_ + "/" + word;
     bool connected = connect(request);
     set<string> collectedWords = parseJsonFile();
     deleteCreatedFile();

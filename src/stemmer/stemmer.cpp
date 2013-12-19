@@ -9,6 +9,7 @@
 
 Stemmer::Stemmer(const std::string& language)
 {
+    //TODO: Throw and exception if the stemmer is null.
     stemmer_ = sb_stemmer_new(language.c_str(), NULL);
     toStemSize_ = TO_STEM_WORD_SIZE;
     toStem_ = new sb_symbol[toStemSize_];

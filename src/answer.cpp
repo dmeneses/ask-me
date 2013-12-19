@@ -8,10 +8,12 @@
 #include "answer.h"
 #include "twittercrawler.h"
 
+#define DEFAULT_LANGUAGE "english"
+
 std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, SocialSource source)
 {
     std::vector<SocialInformation> info = recollect(location, radio, source);
-    TextPreprocessor processor;
+    TextPreprocessor processor(DEFAULT_LANGUAGE);
     
     return processor.process(info, word);
 }
