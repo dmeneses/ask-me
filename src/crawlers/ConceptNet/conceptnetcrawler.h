@@ -10,6 +10,7 @@
 
 #include <set>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -27,6 +28,14 @@ public:
      */
     std::set<string> collectRelatedWords(string word);
 
+    /**
+     * Collect associated words given a list of words from ConceptNet.
+     * 
+     * @param words Words to associate.
+     * @return Set of associated words.
+     */
+    std::set<string> collectAssociatedWords(const std::vector<string>& words);
+
 private:
     /**
      * Function to connect to conceptnet web api and retrieve related words.
@@ -35,7 +44,7 @@ private:
      * 
      * @return Path of json file with the results.
      */
-    bool connect(string request);
+    bool retrieveRelations(string request);
     
     /**
      * Function to parse the json file returned by the query to conceptnet.
@@ -47,15 +56,18 @@ private:
     
     /**
      * Delete the json file after parsing.
+     * 
+     * @param filename File name to delete.
      */
-    void deleteCreatedFile();
+    void deleteCreatedFile(const char* filename);
     
     /**
      * Builds a path in home for the generated json file.
      * 
+     * @param filename File name to build the entire path.
      * @return Json file path.
      */
-    const char* getJsonFilePath();
+    const char* getJsonFilePath(const char* filename);
     
     /**
      * Given the full language name in english return its code.
@@ -66,8 +78,9 @@ private:
      */
     std::string getLanguageCode(const std::string& language);
     
-    char* jsonPath_; 
     std::string languageCode_;
+    char* relationsFile_;
+    char* associationsFile_;
 };
 
 #endif	/* CONCEPTNETCRAWLER_H */
