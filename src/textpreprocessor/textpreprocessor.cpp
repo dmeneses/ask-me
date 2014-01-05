@@ -16,16 +16,16 @@ TextPreprocessor::TextPreprocessor(const std::string& language)
 
 TextPreprocessor::~TextPreprocessor()
 {
-    if(cleaner_)
+    if (cleaner_)
         delete cleaner_;
-    
-    if(stemmer_)
+
+    if (stemmer_)
         delete stemmer_;
-    
-    if(matcher_)
+
+    if (matcher_)
         delete matcher_;
-    
-    if(conceptCrawler_)
+
+    if (conceptCrawler_)
         delete conceptCrawler_;
 }
 
@@ -34,7 +34,7 @@ bool rank(const Result& result1, const Result& result2)
     return result1.matchesCount > result2.matchesCount;
 }
 
-std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages, 
+std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages,
                                               std::string searchParam)
 {
     vector<Result> results;
@@ -61,14 +61,14 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
 std::vector< std::set<std::string> > TextPreprocessor::getStemmedWordsToMatch(const std::string& searchParam)
 {
     std::vector< std::set<std::string> > result;
-    
-    
+
+
     std::vector<std::string> keywords = preprocessSearchParameter(searchParam);
 
     for (unsigned int i = 0; i < keywords.size(); i++)
     {
         std::string keyword = keywords.at(i);
-        std::set<std::string> relatedWords = conceptCrawler_->collectRelatedWords(keyword);
+        std::set<std::string> relatedWords = conceptCrawler_->collectAllRelatedWords(keyword, keywords);
         relatedWords.insert(keyword);
 
         std::set<std::string> stemmedRelatedWords;
@@ -76,18 +76,19 @@ std::vector< std::set<std::string> > TextPreprocessor::getStemmedWordsToMatch(co
         for (set<string>::iterator sentenceIt = relatedWords.begin();
                 sentenceIt != relatedWords.end(); sentenceIt++)
         {
-            stemmedRelatedWords.insert(stemmer_->stemSentence(*sentenceIt));
+            string stemmedSentence = stemmer_->stemSentence(*sentenceIt);
+            if (stemmedSentence.size() > 2)
+                stemmedRelatedWords.insert(stemmedSentence);
         }
-        
+
         result.push_back(stemmedRelatedWords);
     }
 
     return result;
 }
 
-
 std::vector<std::string> TextPreprocessor::preprocessSearchParameter(const std::string& searchParam)
 {
-     std::string textCleaned = cleaner_->clean(searchParam);
-     return stemmer_->split(textCleaned);
+    std::string textCleaned = cleaner_->clean(searchParam);
+    return stemmer_->split(textCleaned);
 }
