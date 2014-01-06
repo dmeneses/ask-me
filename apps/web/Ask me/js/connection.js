@@ -1,10 +1,12 @@
-function connect()
+function ask()
 {
-    var word = document.getElementById("word").value;
-    var url = format("word={0}&latitude=-17.365978&longitude=-66.175486&radio=1", word);
+    getLocation();
+}
 
+function connect(url)
+{
     $.ajax({
-        url: 'http://localhost:3000/askme',
+        url: url,
         type: 'GET',
         dataType: 'jsonp',
         data: '',
@@ -26,13 +28,36 @@ function connect()
     });
 }
 
+function buildURL(latitude, longitude)
+{
+    var word = document.getElementById("word").value;
+    var url = format("word={0}&latitude={1}&longitude={2}&radio=1", word, latitude, longitude);
+
+    return url;
+}
+
 function format() {
-    var s = arguments[0];
+    var format = arguments[0];
 
     for (var i = 0; i < arguments.length - 1; i++) {
         var reg = new RegExp("\\{" + i + "\\}", "gm");             
-        s = s.replace(reg, arguments[i + 1]);
+        format = format.replace(reg, arguments[i + 1]);
     }
 
-    return s;
+    return format;
+}
+
+function getLocation()
+{
+    if (navigator.geolocation) {
+        
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var url = buildURL(position.coords.latitude, position.coords.longitude);
+            connect(url);
+        }
+        );
+    }
+    else {
+        alert("Geolocation is not supported by this browser.");
+    }
 }
