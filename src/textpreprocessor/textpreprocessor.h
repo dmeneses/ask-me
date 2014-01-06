@@ -16,6 +16,7 @@
 #include "matcher.h"
 #include "../stemmer/stemmer.h"
 #include "socialinformation.h"
+#include "../crawlers/ConceptNet/conceptnetcrawler.h"
 
 /**
  * Wrapper for the information found
@@ -44,34 +45,40 @@ struct Result
 };
 
 /**
- * Class to prepare the text for the search and matchs the valuable information.
+ * Class to prepare the text for the search and match the valuable information.
  */
 class TextPreprocessor
 {
 public:
 
     /**
-     * Constructor
+     * Creates a preprocessor for the defined language in lower case.
+     * For example: "spanish"
      */
-    TextPreprocessor();
+    TextPreprocessor(const std::string& language);
+    /**
+     * Clean all the resources to process the text.
+     */
+    ~TextPreprocessor();
 
     /**
      * Process the information and returns it ranked.
      * 
-     * @param tweets Information messages
-     * @param toFind Word or words to find in the messages
+     * @param messages Information messages
+     * @param searchParam Sentence to match with the messages
+     * @param language Language of the received messages and search parameter
      * 
      * @return A ranked list with the results
      */
-    std::vector<Result> process(std::vector<SocialInformation> tweets, std::string toFind);
+    std::vector<Result> process(std::vector<SocialInformation> messages, std::string searchParam);
 
 private:
-    std::vector<std::string> split(std::string text);
     std::vector< std::set<std::string> > getStemmedWordsToMatch(const std::string& keyword);
     std::vector<std::string> preprocessSearchParameter(const std::string& searchParam);
     TextCleaner* cleaner_;
     Matcher* matcher_;
     Stemmer* stemmer_;
+    ConceptNetCrawler* conceptCrawler_;
 };
 
 #endif	/* TEXTPREPROCESSOR_H */
