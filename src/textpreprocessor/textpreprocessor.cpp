@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <bits/stl_vector.h>     
+#include "ranker.h"
 
 using namespace std;
 
@@ -27,11 +28,6 @@ TextPreprocessor::~TextPreprocessor()
 
     if (conceptCrawler_)
         delete conceptCrawler_;
-}
-
-bool rank(const Result& result1, const Result& result2)
-{
-    return result1.matchesCount > result2.matchesCount;
 }
 
 std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages,

@@ -121,6 +121,8 @@ SocialInformationList TwitterCrawler::parse(const char* jsonFile)
             Json::Value location = tweet["coordinates"]["coordinates"];
             info.location_.longitude_ = location[0u].asDouble();
             info.location_.latitude_ = location[0u].asDouble();
+            info.likesCount_ = tweet["favorite_count"].asInt();
+            info.sharedCount_ = tweet["retweet_count"].asInt();
             info.source_ = "twitter";
             tweets.push_back(info);
         }

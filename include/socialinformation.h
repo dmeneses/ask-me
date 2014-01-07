@@ -14,11 +14,12 @@ struct Location
 
 struct SocialInformation
 {
-        SocialInformation()
+        SocialInformation() : sharedCount_(0), likesCount_(0)
         {
         }
         
-        SocialInformation(std::string message, double latitude, double longitude) : message_(message)
+        SocialInformation(std::string message, double latitude, double longitude) : message_(message),
+        sharedCount_(0), likesCount_(0)
         {
             location_.latitude_ = latitude;
             location_.longitude_ = longitude;
@@ -37,6 +38,16 @@ struct SocialInformation
 	* Crawler soruce  i.e. "twitter", "facebook"
 	*/
 	std::string source_;
+        
+        /**
+         * Shared count of the information.
+         */
+        int sharedCount_;
+        
+        /**
+         * Likes count of the information.
+         */
+        int likesCount_;
 
 	/***
 	* Dictionary to provide extra information such as
