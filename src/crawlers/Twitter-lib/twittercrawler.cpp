@@ -120,7 +120,7 @@ SocialInformationList TwitterCrawler::parse(const char* jsonFile)
             info.message_ =  tweet["text"].asCString();
             Json::Value location = tweet["coordinates"]["coordinates"];
             info.location_.longitude_ = location[0u].asDouble();
-            info.location_.latitude_ = location[0u].asDouble();
+            info.location_.latitude_ = location[1u].asDouble();
             info.source_ = "twitter";
             tweets.push_back(info);
         }
