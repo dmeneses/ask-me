@@ -3,8 +3,11 @@ function ask()
     getLocation();
 }
 
-function connect(url)
+function connectToAskMeREST(postion)
 {
+    console.log("Connectiing with AskMe REST");
+    var request = buildURL(position.coords.latitude, position.coords.longitude);
+
     $.ajax({
         url: 'http://localhost:3000/askme',
         type: 'GET',
@@ -23,6 +26,7 @@ function connect(url)
         },
 
         error: function(xhr, status) {
+            console.log('Connection Fail!');
             alert(xhr.status + " " + xhr.statusText);
         }
     });
@@ -51,17 +55,11 @@ function getLocation()
 {
     if (navigator.geolocation) {
         
-        navigator.geolocation.getCurrentPosition(connnectToAskme, showError, {timeout:30000});
+        navigator.geolocation.getCurrentPosition(connectToAskMeREST, showError, {timeout:30000});
     }
     else {
         alert("Geolocation is not supported by this browser.");
     }
-}
-
-function connnectToAskme(position)
-{
-    var url = buildURL(position.coords.latitude, position.coords.longitude);
-    connect(url);
 }
 
 function showError(error)
