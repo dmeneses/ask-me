@@ -6,10 +6,10 @@ function ask()
 function connect(url)
 {
     $.ajax({
-        url: url,
+        url: 'http://localhost:3000/askme',
         type: 'GET',
         dataType: 'jsonp',
-        data: '',
+        data: 'word=de&latitude=-17.365978&longitude=-66.175486&radio=1',
 
         success: function(data, xhr, status) {
             console.log('Connection success');
@@ -51,13 +51,35 @@ function getLocation()
 {
     if (navigator.geolocation) {
         
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var url = buildURL(position.coords.latitude, position.coords.longitude);
-            connect(url);
-        }
-        );
+        navigator.geolocation.getCurrentPosition(connnectToAskme, showError, {timeout:30000});
     }
     else {
         alert("Geolocation is not supported by this browser.");
     }
 }
+
+function connnectToAskme(position)
+{
+    var url = buildURL(position.coords.latitude, position.coords.longitude);
+    connect(url);
+}
+
+function showError(error)
+{
+  switch(error.code) 
+    {
+    case error.PERMISSION_DENIED:
+      alert("User denied the request for Geolocation.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.");
+      break;
+    }
+}
+
