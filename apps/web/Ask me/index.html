@@ -14,16 +14,21 @@
 				<form onsubmit = "addSocialInfomation()">
 					<label>Word</label>
 					<input id = "word" required> </input>
-					<input class = "askButton" type = "submit" value = "Ask!">
+					<input id = "ask" class = "askButton" type = "submit" value = "Ask!">
 					<ul></ul>
 				<form>
 			</div>
 			<div id = "map">
 			</div>
 			<script>
-    			map = new OpenLayers.Map("map");
+				$("#ask").click(function () {
+   					$("#map").slideToggle("slow");
+				});
+
+				map = new OpenLayers.Map("map");
     			map.addLayer(new OpenLayers.Layer.OSM());
     			map.zoomToMaxExtent();
+
     			if (navigator.geolocation) {
         
      				navigator.geolocation.getCurrentPosition(function (position)
@@ -36,6 +41,8 @@
                 			map.setCenter (lonLat, 16);
      					});
     			}
+
+    			$("#map").slideUp("slow");
 			</script>
 		</div>
 	</body>
