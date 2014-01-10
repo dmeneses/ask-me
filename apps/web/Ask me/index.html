@@ -3,19 +3,40 @@
 		<title>Ask me!</title>
 		 <script type = "text/javascript" src = "include/jquery-2.0.2.js"></script>
 		 <script type = "text/javascript" src = "js/connection.js"></script>
+		 <script type = "text/javascript" src = "js/maplocation.js"></script>
+		 <script type = "text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
 		 <link href = "css/style.css" rel = "stylesheet" type = "text/css">
 	</head>
 	<body>
 		<div id = "main">
 			<h1 id = "title">Ask me!</h1>
 			<div id = "form">
-				<form onsubmit = "ask()">
+				<form onsubmit = "addSocialInfomation()">
 					<label>Word</label>
 					<input id = "word" required> </input>
 					<input class = "askButton" type = "submit" value = "Ask!">
 					<ul></ul>
 				<form>
 			</div>
+			<div id = "map">
+			</div>
+			<script>
+    			map = new OpenLayers.Map("map");
+    			map.addLayer(new OpenLayers.Layer.OSM());
+    			map.zoomToMaxExtent();
+    			if (navigator.geolocation) {
+        
+     				navigator.geolocation.getCurrentPosition(function (position)
+     					{ 
+     						var lonLat = new OpenLayers.LonLat(position.coords.longitude,position.coords.latitude)
+      						.transform(
+                				new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                				map.getProjectionObject() // to Spherical Mercator Projection
+                			);
+                			map.setCenter (lonLat, 16);
+     					});
+    			}
+			</script>
 		</div>
 	</body>
 </html>
