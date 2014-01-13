@@ -4,10 +4,15 @@ function showAdvancedSetting(box) {
 }
 
 function setLocation(position) {
-	var lonLat = new OpenLayers.LonLat(position.coords.longitude,position.coords.latitude)
+	setMapPosition(position.coords.longitude,position.coords.latitude);
+}
+
+function setMapPosition(latitude, longitude)
+{
+	var lonLat = new OpenLayers.LonLat(longitude, latitude)
 	.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
-	map.setCenter (lonLat, 16);
+	map.setCenter(lonLat, 16);
 }
 
 function loadMap() {
