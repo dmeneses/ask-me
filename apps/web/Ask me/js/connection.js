@@ -1,4 +1,4 @@
-function addSocialInfomation() {
+function ask() {
 
     if ($('#setting-checkbox').is(":checked")) {
         useAdvancedSetting();
