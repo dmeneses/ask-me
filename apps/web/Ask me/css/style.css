@@ -4,6 +4,11 @@ body
 	font-family: "Georgia";
 }
 
+div
+{
+	display: block;
+}
+
 #main
 {
 	background-color: #8fc400;
@@ -61,4 +66,14 @@ body
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+input
+{
+	margin: 5px;
+}
+
+#setting
+{
+	display: none;
 }

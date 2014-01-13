@@ -13,8 +13,16 @@
 			<div id = "form">
 				<form onsubmit = "addSocialInfomation()">
 					<label>Word</label>
-					<input id = "word" required> </input>
-					<input id = "ask" class = "askButton" type = "submit" value = "Ask!">
+					<input id = "word" type = "text" required> </input>
+					<input id = "ask" class = "askButton" type = "submit" value = "Ask!"><br>
+					<label>Advanced</label>
+					<input id = "checkSetting" type = "checkbox" onclick = "showAdvancedSetting(this)"><br>
+					<div id = "setting">
+						<label>Latitude</label>
+						<input id = "latitude" type = "text" required> </input><br>
+						<label>Longitude</label>
+						<input id = "longitude" type = "text" required> </input>
+					</div>
 					<ul></ul>
 				<form>
 			</div>
@@ -42,7 +50,7 @@
      					});
     			}
 
-    			$("#map").slideUp("slow");
+    			$("#map").slideUp("fast");
 			</script>
 		</div>
 	</body>
