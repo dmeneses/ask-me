@@ -1,16 +1,17 @@
-body
-{
+body {
 	background-color:#eeeeee;
 	font-family: "Georgia";
 }
 
-div
-{
+input {
+	margin: 5px;
+}
+
+div {
 	display: block;
 }
 
-#main
-{
+#main-div {
 	margin: auto;
 	background-color: #8fc400;
 	width: 800px;
@@ -21,33 +22,28 @@ div
 	display: block;
 }
 
-#form
-{
+#ask-div {
 	width: 50%;
     margin: 0 auto;
 }
 
-#title
-{
+#title {
 	font-size: 100px;
 	margin: 0px;
 }
 
-#title, label
-{
+#title, label {
 	color: #eeeeee;
 	text-align: center;
 	text-shadow:2px 2px #7d7e7d;
 }
 
-#map
-{
+#map-div {
 	height: 400px;
-	width: 700px;
+	width: 780px;
 }
 
-.askButton
-{
+.askButton {
 	padding: 5px 12px 5px;
 	background-color: #9C32F2;
 	font-weight: bold;
@@ -62,12 +58,6 @@ div
 	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 }
 
-input
-{
-	margin: 5px;
-}
-
-#setting
-{
+#setting-div {
 	display: none;
 }
