@@ -16,12 +16,12 @@
 					<input id = "word" type = "text" required> </input>
 					<input id = "ask" class = "askButton" type = "submit" value = "Ask!"><br>
 					<label>Advanced</label>
-					<input id = "checkSetting" type = "checkbox" onclick = "showAdvancedSetting(this)"><br>
+					<input id = "checkSetting" type = "checkbox" onclick = "showAdvancedSetting(this)"checked = "false"><br>
 					<div id = "setting">
 						<label>Latitude</label>
-						<input id = "latitude" type = "text" required> </input><br>
+						<input id = "latitude" type = "text"> </input><br>
 						<label>Longitude</label>
-						<input id = "longitude" type = "text" required> </input>
+						<input id = "longitude" type = "text"> </input>
 					</div>
 					<ul></ul>
 				<form>
@@ -32,6 +32,8 @@
 				$("#ask").click(function () {
    					$("#map").slideToggle("slow");
 				});
+
+				document.getElementById("checkSetting").checked = false
 
 				map = new OpenLayers.Map("map");
     			map.addLayer(new OpenLayers.Layer.OSM());
