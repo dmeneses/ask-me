@@ -33,11 +33,12 @@ function loadMap() {
 
 function loadSocialInfo(socialInfoList)
 {
+	console.log('Loading social information list');
 	markers = new OpenLayers.Layer.Markers( "Markers" );
 	map.addLayer(markers);
 
-	for(info in socialInfoList) {
-		addMarker(indo);
+	for(var i = 0; i < socialInfoList.length; i++) {
+		addMarker(socialInfoList[i]);
 	}
 }
 
@@ -51,7 +52,8 @@ function addMarker(socialInformation)
     		new OpenLayers.Size(200, 200), socialInformation.message, null, true);
     	map.addPopup(popup);
     }); 
-    markers.addMarker(marker);      
+    markers.addMarker(marker);
+    console.log('Social info message : ' + socialInformation.message);    
 }
 
 loadMap();
