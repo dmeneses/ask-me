@@ -20,13 +20,8 @@ function connectToAskMeREST(latitude, longitude) {
 
         success: function(data, xhr, status) {
             console.log('Connection success');
-            var array = $.parseJSON(data);
-            var items = new Array();
-            array.forEach(function(item){
-                items.push("<li>" + item.message + "</li>");
-            });
-            
-            $("ul").html(items.join(" "));
+            var socialInfoList = $.parseJSON(data);
+            loadSocialInfo(socialInfoList);
         },
 
         error: function(xhr, status) {
