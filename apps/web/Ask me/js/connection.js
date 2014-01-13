@@ -16,12 +16,13 @@ function connectToAskMeREST(latitude, longitude) {
         url: 'http://localhost:3000/askme',
         type: 'GET',
         dataType: 'jsonp',
-        data: 'word=de&latitude=-17.365978&longitude=-66.175486&radio=1',
+        data: request,
 
         success: function(data, xhr, status) {
             console.log('Connection success');
             var socialInfoList = $.parseJSON(data);
             loadSocialInfo(socialInfoList);
+            setMapPosition(socialInfoList[0].latitude, socialInfoList[0].longitude);
         },
 
         error: function(xhr, status) {
@@ -33,20 +34,9 @@ function connectToAskMeREST(latitude, longitude) {
 
 function buildURL(latitude, longitude) {
     var word = document.getElementById("word-input").value;
-    var url = format("word={0}&latitude={1}&longitude={2}&radio=1", word, latitude, longitude);
+    var url = "word=" + word + "&latitude=" + latitude + "&longitude=" + longitude +"&radio=1";
 
     return url;
-}
-
-function format() {
-    var format = arguments[0];
-
-    for (var i = 0; i < arguments.length - 1; i++) {
-        var reg = new RegExp("\\{" + i + "\\}", "gm");             
-        format = format.replace(reg, arguments[i + 1]);
-    }
-
-    return format;
 }
 
 function useGPS(position)
@@ -59,6 +49,6 @@ function useAdvancedSetting()
 {
     console.log("Using advanced");
     var latitude = $('#latitude').val();
-    var longitude = $('#latitude').val();
+    var longitude = $('#longitude').val();
     connectToAskMeREST(latitude, longitude);
 }
