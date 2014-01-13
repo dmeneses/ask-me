@@ -1,9 +1,9 @@
-function ask()
+function addSocialInfomation()
 {
-    getLocation();
+    getLocation(connectToAskMeREST);
 }
 
-function connectToAskMeREST(postion)
+function connectToAskMeREST(position)
 {
     console.log("Connectiing with AskMe REST");
     var request = buildURL(position.coords.latitude, position.coords.longitude);
@@ -51,33 +51,4 @@ function format() {
     return format;
 }
 
-function getLocation()
-{
-    if (navigator.geolocation) {
-        
-        navigator.geolocation.getCurrentPosition(connectToAskMeREST, showError, {timeout:30000});
-    }
-    else {
-        alert("Geolocation is not supported by this browser.");
-    }
-}
-
-function showError(error)
-{
-  switch(error.code) 
-    {
-    case error.PERMISSION_DENIED:
-      alert("User denied the request for Geolocation.");
-      break;
-    case error.POSITION_UNAVAILABLE:
-      alert("Location information is unavailable.");
-      break;
-    case error.TIMEOUT:
-      alert("The request to get user location timed out.");
-      break;
-    case error.UNKNOWN_ERROR:
-      alert("An unknown error occurred.");
-      break;
-    }
-}
 
