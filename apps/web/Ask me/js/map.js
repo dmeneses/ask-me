@@ -17,7 +17,8 @@ function setMapPosition(latitude, longitude)
 
 function loadMap() {
 	$("#ask-form").submit(function () {
-		$("#map-div").slideToggle("slow");
+		$("#map-div").slideDown("slow");
+		markers.destroy();
 		return false;
 	});
 
