@@ -1,10 +1,8 @@
-function addSocialInfomation()
-{
+function addSocialInfomation() {
     getLocation(connectToAskMeREST);
 }
 
-function connectToAskMeREST(position)
-{
+function connectToAskMeREST(position) {
     console.log("Connectiing with AskMe REST");
     var request = buildURL(position.coords.latitude, position.coords.longitude);
 
@@ -32,9 +30,8 @@ function connectToAskMeREST(position)
     });
 }
 
-function buildURL(latitude, longitude)
-{
-    var word = document.getElementById("word").value;
+function buildURL(latitude, longitude) {
+    var word = document.getElementById("word-input").value;
     var url = format("word={0}&latitude={1}&longitude={2}&radio=1", word, latitude, longitude);
 
     return url;

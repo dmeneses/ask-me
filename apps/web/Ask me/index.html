@@ -8,16 +8,16 @@
 		 <link href = "css/style.css" rel = "stylesheet" type = "text/css">
 	</head>
 	<body>
-		<div id = "main">
+		<div id = "main-div">
 			<h1 id = "title">Ask me!</h1>
-			<div id = "form">
-				<form id = "askform" onsubmit = "addSocialInfomation(); return false;">
+			<div id = "ask-div">
+				<form id = "ask-form" onsubmit = "addSocialInfomation(); return false;">
 					<label>Word</label>
-					<input id = "word" type = "text" required> </input>
-					<input id = "ask" class = "askButton" type = "submit" value = "Ask!"><br>
+					<input id = "word-input" type = "text" required> </input>
+					<input class = "askButton" type = "submit" value = "Ask!"><br>
 					<label>Advanced</label>
-					<input id = "checkSetting" type = "checkbox" onclick = "showAdvancedSetting(this)"checked = "false"><br>
-					<div id = "setting">
+					<input id = "setting-checkbox" type = "checkbox" onclick = "showAdvancedSetting(this)" checked = "false"><br>
+					<div id = "setting-div">
 						<label>Latitude</label>
 						<input id = "latitude" type = "text"> </input><br>
 						<label>Longitude</label>
@@ -26,7 +26,7 @@
 					<ul></ul>
 				<form>
 			</div>
-			<div id = "map">
+			<div id = "map-div">
 			</div>
 			<script type = "text/javascript" src = "js/map.js"></script>
 		</div>

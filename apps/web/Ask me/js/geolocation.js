@@ -1,18 +1,15 @@
-function getLocation(pointerToFunction)
-{
+function getLocation(pointerToFunction) {
     if (navigator.geolocation) {
         
         navigator.geolocation.getCurrentPosition(pointerToFunction, showError, {timeout:30000});
-    }
-    else {
+    } else {
         alert("Geolocation is not supported by this browser.");
     }
 }
 
 function showError(error)
 {
-  switch(error.code) 
-    {
+  switch(error.code) {
     case error.PERMISSION_DENIED:
       alert("User denied the request for Geolocation.");
       break;
@@ -25,5 +22,5 @@ function showError(error)
     case error.UNKNOWN_ERROR:
       alert("An unknown error occurred.");
       break;
-    }
+  }
 }
