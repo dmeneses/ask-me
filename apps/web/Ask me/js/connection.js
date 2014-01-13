@@ -1,10 +1,16 @@
 function addSocialInfomation() {
-    getLocation(connectToAskMeREST);
+
+    if ($('#setting-checkbox').is(":checked")) {
+        useAdvancedSetting();
+    } else {
+        getLocation(useGPS);
+    }
+    
 }
 
-function connectToAskMeREST(position) {
+function connectToAskMeREST(latitude, longitude) {
     console.log("Connectiing with AskMe REST");
-    var request = buildURL(position.coords.latitude, position.coords.longitude);
+    var request = buildURL(latitude, longitude);
 
     $.ajax({
         url: 'http://localhost:3000/askme',
@@ -48,4 +54,16 @@ function format() {
     return format;
 }
 
+function useGPS(position)
+{
+    console.log("Using GPS");
+    connectToAskMeREST(position.coords.latitude, position.coords.longitude);
+}
 
+function useAdvancedSetting()
+{
+    console.log("Using advanced");
+    var latitude = $('#latitude').val();
+    var longitude = $('#latitude').val();
+    connectToAskMeREST(latitude, longitude);
+}
