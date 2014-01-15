@@ -1,7 +1,5 @@
 function ask() {
-
    connectToAskMeREST(actualPosition.lonlat.lat, actualPosition.lonlat.lon);
-    
 }
 
 function connectToAskMeREST(latitude, longitude) {
