@@ -22,8 +22,6 @@ function loadMap() {
 		return false;
 	});
 
-	document.getElementById("setting-checkbox").checked = false;
-
 	map = new OpenLayers.Map("map-div");
 	map.addLayer(new OpenLayers.Layer.OSM());
 	map.zoomToMaxExtent();
