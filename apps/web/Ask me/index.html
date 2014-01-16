@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title>Ask me!</title>
+		 <script type = "text/javascript" src = "include/jquery-2.0.2.js"></script>
+		 <script type = "text/javascript" src = "js/connection.js"></script>
+		 <script type = "text/javascript" src = "js/maplocation.js"></script>
+		 <script type = "text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+		 <link href = "css/style.css" rel = "stylesheet" type = "text/css">
+	</head>
+	<body>
+		<div id = "main">
+			<h1 id = "title">Ask me!</h1>
+			<div id = "form">
+				<form onsubmit = "addSocialInfomation()">
+					<label>Word</label>
+					<input id = "word" type = "text" required> </input>
+					<input id = "ask" class = "askButton" type = "submit" value = "Ask!"><br>
+					<label>Advanced</label>
+					<input id = "checkSetting" type = "checkbox" onclick = "showAdvancedSetting(this)"><br>
+					<div id = "setting">
+						<label>Latitude</label>
+						<input id = "latitude" type = "text" required> </input><br>
+						<label>Longitude</label>
+						<input id = "longitude" type = "text" required> </input>
+					</div>
+					<ul></ul>
+				<form>
+			</div>
+			<div id = "map">
+			</div>
+			<script>
+				$("#ask").click(function () {
+   					$("#map").slideToggle("slow");
+				});
+
+				map = new OpenLayers.Map("map");
+    			map.addLayer(new OpenLayers.Layer.OSM());
+    			map.zoomToMaxExtent();
+
+    			if (navigator.geolocation) {
+        
+     				navigator.geolocation.getCurrentPosition(function (position)
+     					{ 
+     						var lonLat = new OpenLayers.LonLat(position.coords.longitude,position.coords.latitude)
+      						.transform(
+                				new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                				map.getProjectionObject() // to Spherical Mercator Projection
+                			);
+                			map.setCenter (lonLat, 16);
+     					});
+    			}
+
+    			$("#map").slideUp("fast");
+			</script>
+		</div>
+	</body>
+</html>
