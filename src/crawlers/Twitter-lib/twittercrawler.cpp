@@ -116,7 +116,7 @@ SocialInformationList TwitterCrawler::parse(const char* jsonFile)
         for ( unsigned int index = 0; index < plugins.size(); ++index )
         {
             tweet = plugins[index];
-            SocialInformation info;
+            TweetInfo info;
             info.message_ =  tweet["text"].asCString();
             Json::Value location = tweet["coordinates"]["coordinates"];
             info.location_.longitude_ = location[0u].asDouble();
