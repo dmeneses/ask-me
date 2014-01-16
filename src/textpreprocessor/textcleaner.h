@@ -15,7 +15,7 @@ class TextCleaner
 {
 public:
     
-    TextCleaner();
+    TextCleaner(const std::string& language);
     
     std::string clean(std::string text);
     
@@ -27,7 +27,7 @@ private:
     
     Trie* stopWords_;
     
-    void loadStopWords();
+    void loadStopWords(const std::string& language);
 };
 
 
