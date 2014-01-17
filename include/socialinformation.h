@@ -48,7 +48,11 @@ struct SocialInformation
 };
 
 struct TweetInfo : public SocialInformation
-{       
+{
+    TweetInfo() : sharedCount_(0), likesCount_(0)
+    {
+    }
+    
     /**
      * Shared count of the information.
      */

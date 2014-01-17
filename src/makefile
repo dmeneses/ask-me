@@ -7,6 +7,7 @@ SRC = structs/trienode.cpp \
       textpreprocessor/matcher.cpp \
       stemmer/stemmer.cpp \
       crawlers/ConceptNet/conceptnetcrawler.cpp \
+      crawlers/foursquare/foursquarecrawler.cpp \
       answer.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
