@@ -53,11 +53,11 @@
           <executablePath></executablePath>
           <ccTool>
             <incDir>
+              <pElem>/usr/include/curl</pElem>
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
               <pElem>../include</pElem>
               <pElem>crawlers/Twitter-lib</pElem>
-              <pElem>/usr/include/curl</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
             <preprocessorList>

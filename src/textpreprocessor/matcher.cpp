@@ -33,7 +33,7 @@ int Matcher::match(const std::string& sentence,
             int partialMatch = 0;
             unsigned int index = 0;
             unsigned int newIndex = 0;
-            while ((newIndex = sentence.find(*word, index)) != std::string::npos)
+            while ((newIndex = sentence.find(*word, index)) != std::string::npos && newIndex < sentence.size())
             {
                 //TODO: Match whole word.
                 index += newIndex + word->size();
