@@ -1,6 +1,7 @@
 SRC = structs/trietest.cpp \
       textpreprocessor/textcleanertest.cpp \
       textpreprocessor/textpreprocessortest.cpp \
+      textpreprocessor/wordnetinterfacetest.cpp \
       stemmer/stemmertests.cpp \
       testrunner.cpp 
 
@@ -16,7 +17,8 @@ INCLUDES = -I../src \
 	   -I../third-party/libstemmer/include \
 	   -I../include \
 	   -I../../../third-party/curl-7.33.0/include \
-	   -I../../../third-party/jsoncpp-src-0.5.0/include
+	   -I../../../third-party/jsoncpp-src-0.5.0/include \
+	   -I../third-party/jsoncpp-src-0.5.0/include \
 	
 #library paths
 LIBS = -L/user/local/lib -L../src/lib -laskme -lcurl \
@@ -24,8 +26,8 @@ LIBS = -L/user/local/lib -L../src/lib -laskme -lcurl \
        -L../third-party/GMock-1.7.0/Lib64 -L../third-party/GTest-1.7.0/Lib64 -lgtest -lgmock -lm -lpthread \
        -L../third-party/boost_1_54_0/lib/regex/ -L../third-party/boost_1_54_0/lib64/regex/ -lboost_regex \
        -L../third-party/libstemmer/lib -L../third-party/libstemmer/lib64 -lstemmer  \
-       -L../third-party/jsoncpp-src-0.5.0/lib -L../third-party/jsoncpp-src-0.5.0/lib64 -ljson 
-	
+       -L../third-party/jsoncpp-src-0.5.0/lib -L../third-party/jsoncpp-src-0.5.0/lib64 -ljson \
+       -L../third-party/wnb-0.6/lib -lwnb
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall
 LDFLAGS = rcs

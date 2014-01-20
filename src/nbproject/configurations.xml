@@ -59,6 +59,7 @@
               <pElem>../include</pElem>
               <pElem>crawlers/Twitter-lib</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
+              <pElem>../third-party/wnb-0.6/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>
@@ -77,12 +78,16 @@
       <item path="crawlers/ConceptNet/conceptnetcrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="crawlers/foursquare/foursquarecrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <folder path="0/crawlers">
         <ccTool>
@@ -130,6 +135,53 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="textpreprocessor/wordnet.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/curl</pElem>
+            <pElem>../third-party/boost_1_54_0</pElem>
+            <pElem>../third-party/libstemmer/include</pElem>
+            <pElem>../include</pElem>
+            <pElem>crawlers/Twitter-lib</pElem>
+            <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
+            <pElem>../third-party/wnb-0.6/include</pElem>
+            <pElem>.</pElem>
+            <pElem>../third-party/curl-7.33.0/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
+          <undefinedList>
+            <Elem>__GCC_HAVE_DWARF2_CFI_ASM=1</Elem>
+            <Elem>__GCC_HAVE_DWARF2_CFI_ASM=1</Elem>
+          </undefinedList>
+        </ccTool>
+      </item>
+      <item path="textpreprocessor/wordnetinterface.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/curl</pElem>
+            <pElem>../third-party/boost_1_54_0</pElem>
+            <pElem>../third-party/libstemmer/include</pElem>
+            <pElem>../include</pElem>
+            <pElem>crawlers/Twitter-lib</pElem>
+            <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
+            <pElem>../third-party/wnb-0.6/include</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
+          <undefinedList>
+            <Elem>__GCC_HAVE_DWARF2_CFI_ASM=1</Elem>
+          </undefinedList>
+        </ccTool>
       </item>
     </conf>
   </confs>
