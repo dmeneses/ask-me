@@ -6,9 +6,9 @@
         <df name="ConceptNet">
           <in>conceptnetcrawler.cpp</in>
         </df>
-      </df>
-      <df name="resources">
-        <in>stopwords-english.txt</in>
+        <df name="foursquare">
+          <in>foursquarecrawler.cpp</in>
+        </df>
       </df>
       <df name="stemmer">
         <in>stemmer.cpp</in>
@@ -57,7 +57,7 @@
               <pElem>../third-party/libstemmer/include</pElem>
               <pElem>../include</pElem>
               <pElem>crawlers/Twitter-lib</pElem>
-              <pElem>../third-party/curl-7.33.0/include</pElem>
+              <pElem>/usr/include/curl</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
             <preprocessorList>
@@ -75,6 +75,11 @@
         </ccTool>
       </item>
       <item path="crawlers/ConceptNet/conceptnetcrawler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="crawlers/foursquare/foursquarecrawler.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -107,8 +112,6 @@
           </incDir>
         </ccTool>
       </folder>
-      <item path="resources/stopwords-english.txt" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="stemmer/stemmer.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>

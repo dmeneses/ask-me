@@ -19,20 +19,19 @@ INCLUDES = -I../src \
 	   -I../../../third-party/jsoncpp-src-0.5.0/include
 	
 #library paths
-LIBS = -L/user/local/lib -L../src/lib -L../third-party/GMock-1.7.0/Lib \
-	-L../third-party/GTest-1.7.0/Lib -L../third-party/GMock-1.7.0/Lib64 \
-	-L../third-party/GTest-1.7.0/Lib64 -laskme -lgtest -lgmock -lm -lpthread \
-	-L../third-party/boost_1_54_0/lib/regex/ -lboost_regex-gcc-1_53 \
-	-L../third-party/libstemmer/lib -lstemmer \
-	-L../third-party/curl-7.33.0/lib -lcurl \
-	-L../third-party/jsoncpp-src-0.5.0/lib -ljson 
+LIBS = -L/user/local/lib -L../src/lib -laskme -lcurl \
+       -L../third-party/GMock-1.7.0/Lib -L../third-party/GTest-1.7.0/Lib \
+       -L../third-party/GMock-1.7.0/Lib64 -L../third-party/GTest-1.7.0/Lib64 -lgtest -lgmock -lm -lpthread \
+       -L../third-party/boost_1_54_0/lib/regex/ -L../third-party/boost_1_54_0/lib64/regex/ -lboost_regex \
+       -L../third-party/libstemmer/lib -L../third-party/libstemmer/lib64 -lstemmer  \
+       -L../third-party/jsoncpp-src-0.5.0/lib -L../third-party/jsoncpp-src-0.5.0/lib64 -ljson 
 	
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall
 LDFLAGS = rcs
 
 #compiler
-CCC = g++ -m32
+CCC = g++
 
 default: $(OUT)
 
