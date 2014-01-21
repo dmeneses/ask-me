@@ -7,6 +7,7 @@
 
 #include "matcher.h"
 #include <stdio.h>
+#include <math.h>
 
 Matcher::Matcher()
 {
@@ -23,7 +24,7 @@ Matcher::~Matcher()
 int Matcher::match(const std::string& sentence,
                    const std::vector< std::set<std::string> >& wordsToMatch)
 {
-    int res = 0;
+    double res = 0;
 
     for (std::vector< std::set<std::string> >::const_iterator wordSet = wordsToMatch.begin();       
             wordSet != wordsToMatch.end(); wordSet++)
@@ -45,6 +46,6 @@ int Matcher::match(const std::string& sentence,
         }
     }
 
-    return res / wordsToMatch.size();
+    return ceil(res / wordsToMatch.size());
 }
 
