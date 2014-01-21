@@ -53,6 +53,7 @@
               <pElem>../../../third-party/curl-7.33.0/include</pElem>
               <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
+              <pElem>../third-party/wnb-0.6/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>

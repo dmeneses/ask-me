@@ -11,11 +11,12 @@
 #include <set>
 #include <string>
 #include <vector>
+#include "../semanticcrawler.h"
 
 using namespace std;
 
 
-class ConceptNetCrawler {
+class ConceptNetCrawler : public SemanticCrawler {
 public:
     ConceptNetCrawler(const std::string& language);
     ~ConceptNetCrawler();
