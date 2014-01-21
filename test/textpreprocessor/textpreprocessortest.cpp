@@ -129,8 +129,8 @@ TEST(TextPreprocessor, RelatedWordsWithTwoWordsSearch)
     std::vector<Result> results = processor->process(tweets, "tostada PAN");
     int size = results.size();
     EXPECT_EQ(2, size);
-    EXPECT_EQ(tweets.at(0).message_, results.at(0).information.message_);
-    EXPECT_EQ(tweets.at(1).message_, results.at(1).information.message_);
+    EXPECT_EQ(tweets.at(0).message_, results.at(1).information.message_);
+    EXPECT_EQ(tweets.at(1).message_, results.at(0).information.message_);
     delete processor;
 }
 
@@ -138,8 +138,8 @@ TEST(TextPreprocessor, AssociatedWordsWithTwoWordsSearch)
 {
     TextPreprocessor* processor = new TextPreprocessor("english");
     std::vector<SocialInformation> tweets;
-    tweets.push_back(SocialInformation("Keep in cage your animals if they bite.", 17, 64));
-    tweets.push_back(SocialInformation("All kind of animals need food to survive.", 17, 65));
+    tweets.push_back(SocialInformation("The dog chase its tail.", 17, 64));
+    tweets.push_back(SocialInformation("the cat is black.", 17, 65));
     tweets.push_back(SocialInformation("Somewhat that doesn't seem to match.", 17, 64));
     
     std::vector<Result> results = processor->process(tweets, "DOG cat");
