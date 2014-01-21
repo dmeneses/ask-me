@@ -5,7 +5,7 @@ SRC = structs/trienode.cpp \
       textpreprocessor/textcleaner.cpp \
       textpreprocessor/textpreprocessor.cpp \
       textpreprocessor/matcher.cpp \
-      textpreprocessor/wordnetinterface.cpp \
+      crawlers/Wordnet/wordnetinterface.cpp \
       stemmer/stemmer.cpp \
       crawlers/ConceptNet/conceptnetcrawler.cpp \
       crawlers/foursquare/foursquarecrawler.cpp \

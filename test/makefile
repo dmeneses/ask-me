@@ -19,6 +19,7 @@ INCLUDES = -I../src \
 	   -I../../../third-party/curl-7.33.0/include \
 	   -I../../../third-party/jsoncpp-src-0.5.0/include \
 	   -I../third-party/jsoncpp-src-0.5.0/include \
+	   -I../third-party/wnb-0.6/include
 	
 #library paths
 LIBS = -L/user/local/lib -L../src/lib -laskme -lcurl \
@@ -28,6 +29,7 @@ LIBS = -L/user/local/lib -L../src/lib -laskme -lcurl \
        -L../third-party/libstemmer/lib -L../third-party/libstemmer/lib64 -lstemmer  \
        -L../third-party/jsoncpp-src-0.5.0/lib -L../third-party/jsoncpp-src-0.5.0/lib64 -ljson \
        -L../third-party/wnb-0.6/lib -lwnb
+
 #Compiler flags
 CCFLAGS = -fPIC -g -Wall
 LDFLAGS = rcs
