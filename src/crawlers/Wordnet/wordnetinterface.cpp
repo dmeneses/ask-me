@@ -93,7 +93,6 @@ std::list<std::string> WordnetInterface::getWordsForSimilarSenses(std::list<Proc
                 if (std::find(secondarySynset.glossWords_.begin(), secondarySynset.glossWords_.end(),
                               mainSynset.glossWords_.at(index)) != secondarySynset.glossWords_.end())
                 {
-                    res.insert(resIterator, secondarySynset.terms_.begin(), secondarySynset.terms_.end());
                     res.insert(resIterator, mainSynset.terms_.begin(), mainSynset.terms_.end());
                     notFound = false;
                 }
