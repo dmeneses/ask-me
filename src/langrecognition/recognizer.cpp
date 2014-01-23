@@ -6,15 +6,30 @@
  */
 
 #include "recognizer.h"
+#include "fann.h"
 #include <vector>
 #include <ctype.h>
 
-Recognizer::Recognizer(const std::string& trainingFile) {
+
+Recognizer::Recognizer(const std::string& trainingFile) 
+{
+    this->ann_ = fann_create_from_file(trainingFile.c_str());
 }
 
-LANG Recognizer::recognize(const std::string& text)
+Lang Recognizer::recognize(const std::string& text)
 {
-    return ENGLISH;
+    float frequencies[26];
+    generateFrequencies(text, frequencies);
+    float *output = fann_run(this->ann_, frequencies);
+    
+    if(output[0] > output[1])
+    {
+        return ENGLISH;
+    } 
+    else 
+    {
+        return SPANISH;
+    }
 }
 
 void Recognizer::generateFrequencies(const std::string& text, float *frequencies)
