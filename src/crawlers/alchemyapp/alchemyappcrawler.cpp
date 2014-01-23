@@ -9,14 +9,15 @@
 #include <string.h>
 
 //#define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/"
-#define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/TextGetNamedEntities?outputMode=json&apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&text="
-#define ENTITY_EXTRACTION_KEYWORD "TextGetNamedEntities?"
+#define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/SEARCHPARAMETER?outputMode=json&apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&text="
+#define ENTITY_EXTRACTION_KEYWORD "TextGetNamedEntities"
 #define JSON_OUTPUT_MODE "outputMode=json&"
 #define API_KEY "apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&"
 #define JSON_FILE_NAMED_ENTITY "namedentities.json"
 #define QUERY_SPACE_TOKEN "%20"
 #define JSON_FILE_NAME_LENGTH 19
-
+#define SEARCH_PARAMETER_POSITION 40
+#define SEARCH_PARAMETER_SIZE 15
 AlchemyAppCrawler::AlchemyAppCrawler()
 {
     this->namedEntitiesFile_ = new char[JSON_FILE_NAME_LENGTH];
@@ -34,8 +35,9 @@ AlchemyAppCrawler::~AlchemyAppCrawler()
 set<string> AlchemyAppCrawler::collectAllNamedEntities(std::string& text)
 {
     string request(ALCHEMYAPP_URL);
-    //request += ENTITY_EXTRACTION_KEYWORD + JSON_OUTPUT_MODE +API_KEY+ "text=" + text;
-    string processedText = processTextToMakeRequest(text);
+    
+    request.replace(SEARCH_PARAMETER_POSITION,SEARCH_PARAMETER_SIZE,ENTITY_EXTRACTION_KEYWORD);
+    string processedText =processTextToMakeRequest(text);
     request += processedText;
 
        set<string> collectedWords;
