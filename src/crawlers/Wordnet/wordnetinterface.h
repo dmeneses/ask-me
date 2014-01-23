@@ -44,6 +44,11 @@ struct ProcessedSynset
     ProcessedSynset(const std::string& gloss, const std::vector<std::string>& terms) : terms_(terms)
     {
         boost::split(glossWords_, gloss, boost::is_any_of(" "));
+
+        for (unsigned int i = 0; i < terms_.size(); i++)
+        {
+            std::replace(terms_.at(i).begin(), terms_.at(i).end(), '_', ' ');
+        }
     }
 
 };
