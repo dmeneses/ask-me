@@ -2,6 +2,7 @@
 #define _SOCIALINFORMATION_H
 
 #include <string>
+#include <vector>
 #include <map>
 
 struct Location
@@ -14,12 +15,11 @@ struct Location
 
 struct SocialInformation
 {
-        SocialInformation() : sharedCount_(0), likesCount_(0)
+        SocialInformation()
         {
         }
         
-        SocialInformation(std::string message, double latitude, double longitude) : message_(message),
-        sharedCount_(0), likesCount_(0)
+        SocialInformation(std::string message, double latitude, double longitude) : message_(message)
         {
             location_.latitude_ = latitude;
             location_.longitude_ = longitude;
@@ -38,16 +38,6 @@ struct SocialInformation
 	* Crawler soruce  i.e. "twitter", "facebook"
 	*/
 	std::string source_;
-        
-        /**
-         * Shared count of the information.
-         */
-        int sharedCount_;
-        
-        /**
-         * Likes count of the information.
-         */
-        int likesCount_;
 
 	/***
 	* Dictionary to provide extra information such as
@@ -55,6 +45,33 @@ struct SocialInformation
 	   picture : binary str representation of pic...
 	*/
 	std::map<std::string, std::string> extraInformation_;
+};
+
+struct TweetInfo : public SocialInformation
+{
+    TweetInfo() : sharedCount_(0), likesCount_(0)
+    {
+    }
+    
+    /**
+     * Shared count of the information.
+     */
+    int sharedCount_;
+
+    /**
+     * Likes count of the information.
+     */
+    int likesCount_;
+};
+
+struct VenueInfo : public SocialInformation
+{    
+    /**
+     * Categories where the place could be i.e. "Arts, Restaurant, Movies, Stadium"
+     */
+    std::vector<std::string> categories;
+    
+    
 };
 
 #endif //_SOCIALINFORMATION_H

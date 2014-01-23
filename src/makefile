@@ -5,19 +5,24 @@ SRC = structs/trienode.cpp \
       textpreprocessor/textcleaner.cpp \
       textpreprocessor/textpreprocessor.cpp \
       textpreprocessor/matcher.cpp \
+      crawlers/Wordnet/wordnetinterface.cpp \
       stemmer/stemmer.cpp \
       crawlers/ConceptNet/conceptnetcrawler.cpp \
+      crawlers/foursquare/foursquarecrawler.cpp \
       answer.cpp \
+      crawlers/alchemyapp/alchemyappcrawler.cpp \
       langrecognition/recognizer.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
 
 OUT = libaskme.a
 
-INCLUDES = -I../third-party/boost_1_54_0 -I../third-party/libstemmer/include \
+INCLUDES = -I/usr/include/curl -I../third-party/boost_1_54_0 \
+	   -I../third-party/libstemmer/include \
 	   -I../include -Icrawlers/Twitter-lib \
 	   -I../third-party/curl-7.33.0/include \
 	   -I../third-party/jsoncpp-src-0.5.0/include \
+	   -I../third-party/wnb-0.6/include \
 	   -I../third-party/FANN-2.2.0/include
 	
 #library paths
@@ -30,7 +35,7 @@ CCFLAGS = -fPIC -g -Wall
 LDFLAGS = rcs
 
 #compiler
-CCC = g++ -m32
+CCC = g++
 AR = ar
 
 default: $(OUT)

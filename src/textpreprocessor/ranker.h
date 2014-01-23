@@ -9,6 +9,7 @@
 #define	RANKER_H
 
 #include "textpreprocessor.h"
+#include <typeinfo>
 
 /**
  * Rank the social information by the matches or likes and shared counts
@@ -23,11 +24,20 @@ bool rank(const Result& result1, const Result& result2)
     if(result1.matchesCount != result2.matchesCount)
         return result1.matchesCount > result2.matchesCount;
     
-    if(result1.information.likesCount_ != result2.information.likesCount_)
-        return result1.information.likesCount_ > result2.information.likesCount_;
+    //To know if the information is a tweet.
+    if(typeid(result1.information) == typeid(TweetInfo) &&
+       typeid(result2.information) == typeid(TweetInfo))
+    {
+        //Casting the information to tweet infos.
+        const TweetInfo* tweet1 = reinterpret_cast<const TweetInfo*>(&result1.information);
+        const TweetInfo* tweet2 = reinterpret_cast<const TweetInfo*>(&result2.information);
+        
+        if(tweet1->likesCount_ != tweet2->likesCount_)
+            return tweet1->likesCount_ > tweet2->likesCount_;
     
-    if(result1.information.sharedCount_ != result2.information.sharedCount_)
-        return result1.information.sharedCount_ > result2.information.sharedCount_;
+        if(tweet1->sharedCount_ != tweet2->sharedCount_)
+            return tweet1->sharedCount_ > tweet2->sharedCount_;
+    }
     
     return result1.matchesCount > result2.matchesCount;
 }
