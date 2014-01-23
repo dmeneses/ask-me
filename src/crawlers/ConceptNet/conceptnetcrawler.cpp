@@ -47,7 +47,7 @@ ConceptNetCrawler::~ConceptNetCrawler()
         delete[] relationsFile_;
 }
 
-std::set<string> ConceptNetCrawler::collectAllRelatedWords(const std::string& word, const vector<string>& wordList)
+std::set<string> ConceptNetCrawler::collectAllRelatedWords(const std::string& word, const vector<string>& wordList) 
 {
     set<string> relations = collectRelationships(word);
     set<string> associations = collectAssociations(wordList);

@@ -16,7 +16,7 @@
 #include "matcher.h"
 #include "../stemmer/stemmer.h"
 #include "socialinformation.h"
-#include "../crawlers/ConceptNet/conceptnetcrawler.h"
+#include "../crawlers/semanticcrawler.h"
 
 /**
  * Wrapper for the information found
@@ -78,7 +78,7 @@ private:
     TextCleaner* cleaner_;
     Matcher* matcher_;
     Stemmer* stemmer_;
-    ConceptNetCrawler* conceptCrawler_;
+    SemanticCrawler* semanticCrawler_;
 };
 
 #endif	/* TEXTPREPROCESSOR_H */

@@ -11,6 +11,7 @@
       <df name="textpreprocessor">
         <in>textcleanertest.cpp</in>
         <in>textpreprocessortest.cpp</in>
+        <in>wordnetinterfacetest.cpp</in>
       </df>
       <in>testrunner.cpp</in>
     </df>
@@ -51,6 +52,8 @@
               <pElem>../include</pElem>
               <pElem>../../../third-party/curl-7.33.0/include</pElem>
               <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
+              <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
+              <pElem>../third-party/wnb-0.6/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>
@@ -95,6 +98,11 @@
             flavor2="0">
       </item>
       <item path="textpreprocessor/textpreprocessortest.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="textpreprocessor/wordnetinterfacetest.cpp"
             ex="false"
             tool="1"
             flavor2="0">

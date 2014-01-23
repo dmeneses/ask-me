@@ -4,15 +4,25 @@
 #include <stdio.h>
 #include <bits/stl_vector.h>     
 #include "ranker.h"
+#include "../crawlers/Wordnet/wordnetinterface.h"
+#include "../crawlers/ConceptNet/conceptnetcrawler.h"
 
 using namespace std;
 
 TextPreprocessor::TextPreprocessor(const std::string& language)
 {
-    cleaner_ = new TextCleaner();
+    cleaner_ = new TextCleaner(language);
     stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
-    conceptCrawler_ = new ConceptNetCrawler(language);
+
+    if (language.compare("english") == 0)
+    {
+        semanticCrawler_ = new WordnetInterface();
+    }
+    else
+    {
+        semanticCrawler_ = new ConceptNetCrawler(language);
+    }
 }
 
 TextPreprocessor::~TextPreprocessor()
@@ -26,8 +36,8 @@ TextPreprocessor::~TextPreprocessor()
     if (matcher_)
         delete matcher_;
 
-    if (conceptCrawler_)
-        delete conceptCrawler_;
+    if (semanticCrawler_)
+        delete semanticCrawler_;
 }
 
 std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages,
@@ -36,7 +46,7 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
     std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
-
+    
     for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
     {
         std::string textCleaned = cleaner_->clean(messagesIt->message_);
@@ -64,7 +74,7 @@ std::vector< std::set<std::string> > TextPreprocessor::getStemmedWordsToMatch(co
     for (unsigned int i = 0; i < keywords.size(); i++)
     {
         std::string keyword = keywords.at(i);
-        std::set<std::string> relatedWords = conceptCrawler_->collectAllRelatedWords(keyword, keywords);
+        std::set<std::string> relatedWords = semanticCrawler_->collectAllRelatedWords(keyword, keywords);
         relatedWords.insert(keyword);
 
         std::set<std::string> stemmedRelatedWords;
