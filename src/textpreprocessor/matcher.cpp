@@ -26,9 +26,11 @@ int Matcher::match(const std::string& sentence,
 {
     double res = 0;
 
-    for (std::vector< std::set<std::string> >::const_iterator wordSet = wordsToMatch.begin();       
+    for (std::vector< std::set<std::string> >::const_iterator wordSet = wordsToMatch.begin();
             wordSet != wordsToMatch.end(); wordSet++)
     {
+        printf("Words to find : %d\n", wordSet->size());
+
         for (std::set<std::string>::iterator word = wordSet->begin(); word != wordSet->end(); word++)
         {
             int partialMatch = 0;

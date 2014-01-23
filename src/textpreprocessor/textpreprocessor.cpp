@@ -46,7 +46,7 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
     std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
-
+    
     for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
     {
         std::string textCleaned = cleaner_->clean(messagesIt->message_);
@@ -82,7 +82,6 @@ std::vector< std::set<std::string> > TextPreprocessor::getStemmedWordsToMatch(co
         for (set<string>::iterator sentenceIt = relatedWords.begin();
                 sentenceIt != relatedWords.end(); sentenceIt++)
         {
-            cout << "KEYWORD: " << keyword << " | related: " << *sentenceIt << endl;
             string stemmedSentence = stemmer_->stemSentence(*sentenceIt);
             if (stemmedSentence.size() > 2)
                 stemmedRelatedWords.insert(stemmedSentence);
