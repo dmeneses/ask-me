@@ -10,7 +10,7 @@
 
 #include <string>
 
-enum LANG 
+enum Lang 
 {
     ENGLISH, SPANISH
 };
@@ -18,9 +18,11 @@ enum LANG
 class Recognizer {
 public:
     Recognizer(const std::string& trainingFile);
-    LANG recognize(const std::string& text);
+    Lang recognize(const std::string& text);
 private:
     void generateFrequencies(const std::string& text, float *frequencies);
+private:
+    struct fann *ann_;
 };
 
 #endif	/* RECOGNIZER_H */
