@@ -1,11 +1,5 @@
 function ask() {
-
-    if ($('#setting-checkbox').is(":checked")) {
-        useAdvancedSetting();
-    } else {
-        getLocation(useGPS);
-    }
-    
+   connectToAskMeREST(actualPosition.lonlat.lat, actualPosition.lonlat.lon);
 }
 
 function connectToAskMeREST(latitude, longitude) {
@@ -37,18 +31,4 @@ function buildURL(latitude, longitude) {
     var url = "word=" + word + "&latitude=" + latitude + "&longitude=" + longitude +"&radio=1";
 
     return url;
-}
-
-function useGPS(position)
-{
-    console.log("Using GPS");
-    connectToAskMeREST(position.coords.latitude, position.coords.longitude);
-}
-
-function useAdvancedSetting()
-{
-    console.log("Using advanced");
-    var latitude = $('#latitude').val();
-    var longitude = $('#longitude').val();
-    connectToAskMeREST(latitude, longitude);
 }
