@@ -8,12 +8,21 @@
 #include "answer.h"
 #include "twittercrawler.h"
 
-#define DEFAULT_LANGUAGE "english"
+Answer::Answer()
+{
+    this->reconizer_ = new Recognizer("langrecognition/language_classify.net");
+}
+
+Answer::~Answer()
+{
+    if(this->reconizer_)
+        delete this->reconizer_;
+}
 
 std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, SocialSource source)
 {
     std::vector<SocialInformation> info = recollect(location, radio, source);
-    TextPreprocessor processor(DEFAULT_LANGUAGE);
+    TextPreprocessor processor(this-> reconizer_->recognize(word));
     
     return processor.process(info, word);
 }

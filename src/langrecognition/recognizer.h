@@ -10,15 +10,14 @@
 
 #include <string>
 
-enum Lang 
-{
-    ENGLISH, SPANISH
-};
+#define ENGLISH "english"
+#define SPANISH "spanish"
 
 class Recognizer {
 public:
     Recognizer(const std::string& trainingFile);
-    Lang recognize(const std::string& text);
+    ~Recognizer();
+    const std::string recognize(const std::string& text);
 private:
     void generateFrequencies(const std::string& text, float *frequencies);
 private:
