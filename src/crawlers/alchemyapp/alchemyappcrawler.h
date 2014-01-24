@@ -28,6 +28,14 @@ public:
      */
     std::set<string> collectAllNamedEntities(std::string& text);
 
+     /**
+     * Process text to make sentiment analysis.
+     *
+     * @param text to be evaluated.
+     *
+     * @return float score made by the analysis.
+     */
+    float makeSentimentAnalysis(std::string& text);
 
 private:
 
@@ -50,6 +58,14 @@ private:
     std::set<string> parseNamedEntitiesFile();
 
     /**
+     * Function to parse the json file returned by the query to alchmyapp sentiment.
+     *
+     * @param path Json file path.
+     * @return score of the sentiment analysis.
+     */
+
+    float parseSentimentsFile();
+    /**
      * Delete the json file after parsing.
      *
      * @param filename File name to delete.
@@ -65,6 +81,7 @@ private:
     string processTextToMakeRequest(std::string& text);
 
     char* namedEntitiesFile_;
+    char* sentimentFile_;
 };
 
 #endif // ALCHEMYAPPCRAWLER_H
