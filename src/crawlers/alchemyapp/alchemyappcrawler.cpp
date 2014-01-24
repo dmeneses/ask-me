@@ -7,8 +7,8 @@
 #include <curl/easy.h>
 #include <cstdlib>
 #include <string.h>
+#include <algorithm>
 
-//#define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/"
 #define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/SEARCHPARAMETER?outputMode=json&apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&text="
 #define ENTITY_EXTRACTION_KEYWORD "TextGetNamedEntities"
 #define JSON_OUTPUT_MODE "outputMode=json&"
@@ -90,9 +90,10 @@ set<string> AlchemyAppCrawler::parseNamedEntitiesFile()
         {
             Json::Value entity = entities[i];
             Json::Value entityName = entity["text"];
-
-                    printf("NAMED ENTITY: %s\n", entityName.asString().c_str());
-                    namedEntityList.insert(entityName.asString());
+            printf("NAMED ENTITY: %s\n", entityName.asString().c_str());
+            string entityNameToLower = entityName.asString();
+            std::transform(entityNameToLower.begin(), entityNameToLower.end(), entityNameToLower.begin(), ::tolower);
+            namedEntityList.insert(entityNameToLower);
         }
     }
     else

@@ -2,6 +2,7 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <json/reader.h>
+#include <algorithm>
 
 #define CLIENT_ID "GESN13H3IDYIOCBBHVNJXYTLWSS5RVAJE0VLBS5IMKI1CBYL"
 #define SECRED_ID "OSYPDRESM0LZ434ULGO1EBFGQG13YN4PR1ROZJM03AW41EAK"
@@ -80,7 +81,9 @@ SocialInformationList FoursquareCrawler::parse(const string& information)
         {
             VenueInfo info;
             venue = venues[index];
-            info.message_ = venue["name"].asString();
+            string name = venue["name"].asString();
+            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+            info.message_ = name;
             info.location_.latitude_ = venue["location"]["lat"].asDouble();
             info.location_.longitude_ = venue["location"]["lng"].asDouble();
             Json::Value categories = venue["categories"];
@@ -90,6 +93,7 @@ SocialInformationList FoursquareCrawler::parse(const string& information)
             }
             info.source_ = "foursquare";
             places.push_back(info);
+            printf("PLACE NAME %s",info.message_.c_str());
         }
     }
     else
