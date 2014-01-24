@@ -20,7 +20,8 @@ enum SocialSource
 
 class Answer {
 public:
-    std::vector<Result> ask(const std::string word, const Location location, const float radio, SocialSource source);
+    std::vector<Result> ask(const std::string word, const Location location, const float radio, 
+            SocialSource source, bool enablePlacesLocation);
     
 private:
     SocialInformationList recollect(const Location location, const float radio, SocialSource& crawler);

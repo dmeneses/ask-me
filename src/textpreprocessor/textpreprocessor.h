@@ -36,6 +36,11 @@ struct Result
     {
     }
 
+    Result(SocialInformation information, int matchesCount) : information(information),
+    matchesCount(matchesCount)
+    {
+    }
+
     SocialInformation information;
     int matchesCount;
     std::vector<Entity> namedEntities;
@@ -61,6 +66,8 @@ public:
     /**
      * Clean all the resources to process the text.
      */
+    TextPreprocessor(AlchemyAppCrawler& alchemy);
+    
     ~TextPreprocessor();
 
     /**
@@ -73,8 +80,11 @@ public:
      * 
      * @return A ranked list with the results
      */
-    std::vector<Result> process(std::vector<SocialInformation> messages, std::string searchParam, 
+    std::vector<Result> process(std::vector<SocialInformation> messages, std::string searchParam);
+    
+    std::vector<Result> processWithPlaces(std::vector<SocialInformation> messages, std::string searchParam, 
     std::vector<SocialInformation> foursquareInformation);
+    
     
 private:
     std::vector< std::set<std::string> > getStemmedWordsToMatch(const std::string& keyword);

@@ -48,8 +48,30 @@ TextPreprocessor::~TextPreprocessor()
     if(foursquareCrawler_)
         delete foursquareCrawler_;
 }
-
 std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages, 
+        std::string searchParam)
+{
+    vector<Result> results;
+    vector<SocialInformation>::iterator messagesIt;
+    std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
+    
+    for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
+    {
+        std::string textCleaned = cleaner_->clean(messagesIt->message_);
+        std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
+        int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
+
+        if (matches > 0)
+        {
+            printf("Information found : %s\n", stemmedSentence.c_str());
+            results.push_back(Result(*messagesIt, matches));
+        }
+    }
+
+    sort(results.begin(), results.end(), rank);
+    return results;
+}
+std::vector<Result> TextPreprocessor::processWithPlaces(std::vector<SocialInformation> messages, 
         std::string searchParam, std::vector<SocialInformation> foursquareInformation)
 {
     vector<Result> results;
@@ -122,8 +144,6 @@ std::vector<Entity> TextPreprocessor::getAllNamedEntities(std::string& socialInf
             entities.push_back(Entity(info.location_,info.message_));
         }
     }
-    
-    
     
     return entities;
 }
