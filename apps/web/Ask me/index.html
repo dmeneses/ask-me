@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>Ask me!</title>
+		 <script type = "text/javascript" src = "include/jquery-2.0.2.js"></script>
+		 <script type = "text/javascript" src = "js/connection.js"></script>
+		 <script type = "text/javascript" src = "js/geolocation.js"></script>
+		 <script type = "text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+		 <link href = "css/style.css" rel = "stylesheet" type = "text/css">
+	</head>
+	<body>
+		<div id = "main-div">
+			<h1 id = "title">Ask me!</h1>
+			<div id = "ask-div">
+				<form id = "ask-form" onsubmit = "ask(); return false;">
+					<label>Word</label>
+					<input id = "word-input" type = "text" required> </input>
+					<input class = "askButton" type = "submit" value = "Ask!"><br>
+					<label>Language : </label>
+					<select>
+					  <option>Spanish</option>
+					  <option>English</option>
+					</select>
+				<form>
+			</div>
+			<div id = "map-div">
+			</div>
+			<script type = "text/javascript" src = "js/map.js"></script>
+		</div>
+	</body>
+</html>
