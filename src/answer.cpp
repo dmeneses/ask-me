@@ -11,14 +11,20 @@
 
 #define DEFAULT_LANGUAGE "english"
 
-std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, SocialSource source)
+std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, 
+        SocialSource source,bool enablePlacesLocation)
 {
     std::vector<SocialInformation> info = recollect(location, radio, source);
-    std::vector<SocialInformation> foursquareInfo = recollectFromFoursquare(location,radio);
     TextPreprocessor processor(DEFAULT_LANGUAGE);
     
-    return processor.process(info, word, foursquareInfo);
+    if(enablePlacesLocation){
+        std::vector<SocialInformation> foursquareInfo = recollectFromFoursquare(location,radio);
+        return processor.processWithPlaces(info, word, foursquareInfo);
+    }
+    
+    return processor.process(info, word);
 }
+
 
 
 SocialInformationList Answer::recollect(const Location location, const float radio, SocialSource& source)

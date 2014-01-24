@@ -20,6 +20,7 @@
 #define JSON_FILE_NAME_LENGTH 19
 #define SEARCH_PARAMETER_POSITION 40
 #define SEARCH_PARAMETER_SIZE 15
+
 AlchemyAppCrawler::AlchemyAppCrawler()
 {
     this->namedEntitiesFile_ = new char[JSON_FILE_NAME_LENGTH];
