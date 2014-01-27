@@ -1,6 +1,5 @@
 #include "alchemyappcrawler.h"
 #include <json/reader.h>
-#include <cstdio>
 #include <stdio.h>
 #include <fstream>
 #include <curl/curl.h>
@@ -59,10 +58,9 @@ set<string> AlchemyAppCrawler::collectAllNamedEntities(std::string& text)
        return collectedWords;
 }
 
-float AlchemyAppCrawler::makeSentimentAnalysis(std::string& text){
-    float score = 0;
+SentimentAnalysis AlchemyAppCrawler::makeSentimentAnalysis(std::string& text){
     string request(ALCHEMYAPP_URL);
-
+    SentimentAnalysis sentimentAnalysis;
     request.replace(SEARCH_PARAMETER_POSITION,SEARCH_PARAMETER_SIZE,SENTIMENT_EXTRACTION_KEYWORD);
     string processedText =processTextToMakeRequest(text);
     request += processedText;
@@ -70,11 +68,11 @@ float AlchemyAppCrawler::makeSentimentAnalysis(std::string& text){
        if (retrieve(request, sentimentFile_))
 
        {
-           score = parseSentimentsFile();
+           sentimentAnalysis = parseSentimentsFile();
            deleteCreatedFile(sentimentFile_);
        }
 
-       return score;
+       return sentimentAnalysis;
 }
 
 bool AlchemyAppCrawler::retrieve(const string& request, const char* filename)
@@ -127,8 +125,8 @@ set<string> AlchemyAppCrawler::parseNamedEntitiesFile()
     return namedEntityList;
 }
 
-float AlchemyAppCrawler::parseSentimentsFile(){
-    float score = 0;
+SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(){
+    SentimentAnalysis analysis;
     Json::Value root;
     Json::Reader reader;
     std::ifstream jsonContent(sentimentFile_, std::ifstream::binary);
@@ -137,18 +135,19 @@ float AlchemyAppCrawler::parseSentimentsFile(){
     if (parsingSuccessful)
     {
         Json::Value sentimentAnalysis = root["docSentiment"];
-            Json::Value score1 = sentimentAnalysis["score"];
-            printf("SCORE: %s\n", score1.asString().c_str());
-            score = ::atof(score1.asString().c_str());
+            Json::Value retrievedStringScore = sentimentAnalysis["score"];
+            printf("SCORE: %s\n", retrievedStringScore.asString().c_str());
+            analysis.score_ = ::atof(retrievedStringScore.asString().c_str());
+            Json::Value retrievedLabel = sentimentAnalysis["type"];
+            string label =retrievedLabel.asString();
+            analysis.parseLabel(label);
     }
     else
     {
         printf("Error while parsing JSON file");
     }
 
-    return score;
-
-
+    return analysis;
 }
 void AlchemyAppCrawler::deleteCreatedFile(const char* filename)
 {

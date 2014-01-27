@@ -10,9 +10,41 @@
 
 #include <set>
 #include <string>
+#include <cstdio>
 
 using namespace std;
 
+enum SentimentLabel{
+    POSITIVE,NEGATIVE,NEUTRAL
+};
+
+struct SentimentAnalysis{
+
+    SentimentAnalysis(){
+        
+    }
+    SentimentAnalysis(SentimentLabel label, float score): score_(score){
+        this->label_ = label;
+    }
+    SentimentLabel label_;
+    float score_;
+    
+
+    void parseLabel(std::string& label){
+        if(label.compare("positive")){
+            this->label_ = POSITIVE;
+        }
+        else if(label.compare("negative")){
+            this->label_ = NEGATIVE;
+        }
+        else if(label.compare("neutral")){
+             this->label_ = NEUTRAL;
+        }
+        else{
+            printf("ERROR INCORRECT LABEL");
+        }
+    }
+};
 class AlchemyAppCrawler
 {
 public:
@@ -33,9 +65,9 @@ public:
      *
      * @param text to be evaluated.
      *
-     * @return float score made by the analysis.
+     * @return SentimentAnalysis that contains label and a score made by the analysis.
      */
-    float makeSentimentAnalysis(std::string& text);
+    SentimentAnalysis makeSentimentAnalysis(std::string& text);
 
 private:
 
@@ -61,10 +93,10 @@ private:
      * Function to parse the json file returned by the query to alchmyapp sentiment.
      *
      * @param path Json file path.
-     * @return score of the sentiment analysis.
+     * @return SentimentAnalysis struct.
      */
 
-    float parseSentimentsFile();
+    SentimentAnalysis parseSentimentsFile();
     /**
      * Delete the json file after parsing.
      *
