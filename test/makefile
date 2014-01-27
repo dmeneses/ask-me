@@ -1,7 +1,6 @@
 SRC = structs/trietest.cpp \
       textpreprocessor/textcleanertest.cpp \
       textpreprocessor/textpreprocessortest.cpp \
-      textpreprocessor/wordnetinterfacetest.cpp \
       stemmer/stemmertests.cpp \
       testrunner.cpp 
 

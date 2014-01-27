@@ -81,9 +81,7 @@
       <item path="crawlers/ConceptNet/conceptnetcrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
+            flavor2="0">
       </item>
       <item path="crawlers/Wordnet/wordnetinterface.cpp"
             ex="false"
@@ -93,9 +91,7 @@
       <item path="crawlers/foursquare/foursquarecrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="4">
-        <ccTool>
-        </ccTool>
+            flavor2="0">
       </item>
       <folder path="0/crawlers">
         <ccTool>
