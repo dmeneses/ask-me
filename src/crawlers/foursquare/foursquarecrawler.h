@@ -32,7 +32,7 @@ public:
      * @return A social information list with the venues found.
      */
     SocialInformationList collect(Location location, float radius);
-    
+
 private:
     
     /**

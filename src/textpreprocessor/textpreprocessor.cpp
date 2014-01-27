@@ -7,6 +7,7 @@
 #include "../crawlers/Wordnet/wordnetinterface.h"
 #include "../crawlers/ConceptNet/conceptnetcrawler.h"
 
+
 using namespace std;
 
 TextPreprocessor::TextPreprocessor(const std::string& language)
@@ -14,6 +15,8 @@ TextPreprocessor::TextPreprocessor(const std::string& language)
     cleaner_ = new TextCleaner(language);
     stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
+    this->foursquareCrawler_ = new FoursquareCrawler();
+    this->alchemyCrawler_ = new AlchemyAppCrawler();
 
     if (language.compare("english") == 0)
     {
@@ -38,10 +41,15 @@ TextPreprocessor::~TextPreprocessor()
 
     if (semanticCrawler_)
         delete semanticCrawler_;
+    
+    if(alchemyCrawler_)
+        delete alchemyCrawler_;
+    
+    if(foursquareCrawler_)
+        delete foursquareCrawler_;
 }
-
-std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages,
-                                              std::string searchParam)
+std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages, 
+        std::string searchParam)
 {
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
@@ -57,6 +65,30 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
         {
             printf("Information found : %s\n", stemmedSentence.c_str());
             results.push_back(Result(*messagesIt, matches));
+        }
+    }
+
+    sort(results.begin(), results.end(), rank);
+    return results;
+}
+std::vector<Result> TextPreprocessor::processWithPlaces(std::vector<SocialInformation> messages, 
+        std::string searchParam, std::vector<SocialInformation> foursquareInformation)
+{
+    vector<Result> results;
+    vector<SocialInformation>::iterator messagesIt;
+    std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
+    
+    for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
+    {
+        std::string textCleaned = cleaner_->clean(messagesIt->message_);
+        std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
+        int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
+
+        if (matches > 0)
+        {
+            std::vector<Entity> namedEntities = getAllNamedEntities(messagesIt->message_,foursquareInformation);
+            printf("Information found : %s\n", stemmedSentence.c_str());
+            results.push_back(Result(*messagesIt, matches,namedEntities));
         }
     }
 
@@ -98,3 +130,21 @@ std::vector<std::string> TextPreprocessor::preprocessSearchParameter(const std::
     std::string textCleaned = cleaner_->clean(searchParam);
     return stemmer_->split(textCleaned);
 }
+
+std::vector<Entity> TextPreprocessor::getAllNamedEntities(std::string& socialInformationText,
+        std::vector<SocialInformation> foursquareInformation)
+{
+    std::vector<Entity> entities;
+    std::set<std::string> namedEntities = this->alchemyCrawler_->collectAllNamedEntities(socialInformationText);
+    
+    for (std::vector<SocialInformation>::iterator it= foursquareInformation.begin(); it!=foursquareInformation.end(); ++it){
+        SocialInformation info = (*it);
+        if(std::find(namedEntities.begin(), namedEntities.end(), info.message_) != namedEntities.end()) 
+        {
+            entities.push_back(Entity(info.location_,info.message_));
+        }
+    }
+    
+    return entities;
+}
+
