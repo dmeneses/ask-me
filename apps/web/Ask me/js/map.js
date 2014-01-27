@@ -22,12 +22,19 @@ function loadMap() {
 		return false;
 	});
 
-	document.getElementById("setting-checkbox").checked = false;
-	$("#map-div").slideUp("fast");
-
 	map = new OpenLayers.Map("map-div");
 	map.addLayer(new OpenLayers.Layer.OSM());
 	map.zoomToMaxExtent();
+
+   	markers = new OpenLayers.Layer.Markers("Markers");
+	map.addLayer(markers);
+
+	actualPosition = new OpenLayers.Marker(new OpenLayers.LonLat(-98, 35));
+	markers.addMarker(actualPosition);
+
+	map.events.register("click", map, function(e) {
+   		actualPosition.moveTo(e.xy);
+   	});
 
 	getLocation(setLocation);
 }
@@ -35,8 +42,7 @@ function loadMap() {
 function loadSocialInfo(socialInfoList)
 {
 	console.log('Loading social information list');
-	markers = new OpenLayers.Layer.Markers( "Markers" );
-	map.addLayer(markers);
+	markers.clearMarkers();
 
 	for(var i = 0; i < socialInfoList.length; i++) {
 		addMarker(socialInfoList[i]);

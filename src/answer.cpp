@@ -7,16 +7,24 @@
 
 #include "answer.h"
 #include "twittercrawler.h"
+#include "crawlers/foursquare/foursquarecrawler.h"
 
 #define DEFAULT_LANGUAGE "english"
 
-std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, SocialSource source)
+std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, 
+        SocialSource source,bool enablePlacesLocation)
 {
     std::vector<SocialInformation> info = recollect(location, radio, source);
     TextPreprocessor processor(DEFAULT_LANGUAGE);
     
+    if(enablePlacesLocation){
+        std::vector<SocialInformation> foursquareInfo = recollectFromFoursquare(location,radio);
+        return processor.processWithPlaces(info, word, foursquareInfo);
+    }
+    
     return processor.process(info, word);
 }
+
 
 
 SocialInformationList Answer::recollect(const Location location, const float radio, SocialSource& source)
@@ -37,4 +45,9 @@ SocialInformationList Answer::recollect(const Location location, const float rad
             return std::vector<SocialInformation>();
         }
     }
+}
+
+SocialInformationList Answer::recollectFromFoursquare(Location location, const float radio){
+     FoursquareCrawler foursquare;
+     return foursquare.collect(location,radio);
 }

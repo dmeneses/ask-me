@@ -74,4 +74,17 @@ struct VenueInfo : public SocialInformation
     
 };
 
+struct Entity 
+{
+     /**
+      * Places with locations and Name
+      */ 
+    Entity(Location location,std::string name) :location_(location),name_(name)
+    {
+        
+    }
+      Location  location_;
+      std::string name_;
+};
+
 #endif //_SOCIALINFORMATION_H
