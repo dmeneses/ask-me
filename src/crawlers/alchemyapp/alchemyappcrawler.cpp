@@ -129,6 +129,7 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(){
     SentimentAnalysis analysis;
     Json::Value root;
     Json::Reader reader;
+    float score = 0;
     std::ifstream jsonContent(sentimentFile_, std::ifstream::binary);
     bool parsingSuccessful = reader.parse(jsonContent, root);
 
@@ -137,7 +138,8 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(){
         Json::Value sentimentAnalysis = root["docSentiment"];
             Json::Value retrievedStringScore = sentimentAnalysis["score"];
             printf("SCORE: %s\n", retrievedStringScore.asString().c_str());
-            analysis.score_ = ::atof(retrievedStringScore.asString().c_str());
+            score = ::atof(retrievedStringScore.asString().c_str());
+            analysis.makeScorePercentage(score);
             Json::Value retrievedLabel = sentimentAnalysis["type"];
             string label =retrievedLabel.asString();
             analysis.parseLabel(label);
