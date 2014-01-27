@@ -1,18 +1,9 @@
 #include "conceptnetcrawler.h"
-#include <json/reader.h>
-#include <cstdio>
-#include <stdio.h>
-#include <fstream>
 #include <curl/curl.h>
-#include <curl/easy.h>
-#include <cstdlib>
-#include <string.h>
+#include <json/reader.h>
 #include <algorithm>
+#include "utils.h"
 
-#define JSON_FILE_REL "retrievedRelations.json"
-#define JSON_FILE_ASSO "retrievedAssociations.json"
-#define JSON_PATH getJsonFilePath()
-#define HOME "HOME"
 #define CONCEPT_NET_URL "http://conceptnet5.media.mit.edu/data/5.1/"
 #define ENGLISH "english"
 #define SPANISH "spanish"
@@ -21,13 +12,6 @@
 
 ConceptNetCrawler::ConceptNetCrawler(const std::string& language)
 {
-    const char* text = getJsonFilePath(JSON_FILE_REL);
-    this->relationsFile_ = new char[strlen(text) + 1];
-    strcpy(relationsFile_, text);
-
-    const char* text2 = getJsonFilePath(JSON_FILE_ASSO);
-    this->associationsFile_ = new char[strlen(text2) + 1];
-    strcpy(associationsFile_, text2);
     //TODO: if no language found throw an exception.
     languageCode_ = getLanguageCode(language);
 }
@@ -41,53 +25,35 @@ std::string ConceptNetCrawler::getLanguageCode(const std::string& language)
 
 ConceptNetCrawler::~ConceptNetCrawler()
 {
-    if (this->associationsFile_)
-        delete[] associationsFile_;
-    if (this->relationsFile_)
-        delete[] relationsFile_;
 }
 
-std::set<string> ConceptNetCrawler::collectAllRelatedWords(const std::string& word, const vector<string>& wordList) 
+std::set<std::string> ConceptNetCrawler::collectAllRelatedWords(const std::string& word, const std::vector<std::string>& wordList)
 {
-    set<string> relations = collectRelationships(word);
-    set<string> associations = collectAssociations(wordList);
+    std::set<std::string> relations = collectRelationships(word);
+    std::set<std::string> associations = collectAssociations(wordList);
     relations.insert(associations.begin(), associations.end());
     return relations;
 }
 
-set<string> ConceptNetCrawler::collectRelationships(const std::string& word)
+std::set<std::string> ConceptNetCrawler::collectRelationships(const std::string& word)
 {
-    string request(CONCEPT_NET_URL);
+    std::string request(CONCEPT_NET_URL);
     request += "c/" + languageCode_ + "/" + word;
-    set<string> collectedWords;
-
-    if (retrieve(request, relationsFile_))
-    {
-        collectedWords = parseRelationsFile();
-        deleteCreatedFile(relationsFile_);
-    }
-
-    return collectedWords;
+    const char* jsonResult = retrieve(request);
+    return parseRelationsData(jsonResult);
 }
 
-set<string> ConceptNetCrawler::collectAssociations(const vector<string>& words)
+std::set<std::string> ConceptNetCrawler::collectAssociations(const std::vector<std::string>& words)
 {
-    string request(CONCEPT_NET_URL);
+    std::string request(CONCEPT_NET_URL);
     request += "assoc/list/" + languageCode_ + "/" + getWordsAsSentence(words);
-    set<string> collectedWords;
-
-    if (retrieve(request, associationsFile_))
-    {
-        collectedWords = parseAssociationsFile();
-        deleteCreatedFile(associationsFile_);
-    }
-
-    return collectedWords;
+    const char* jsonResult = retrieve(request);
+    return parseAssociationsData(jsonResult);
 }
 
-std::string ConceptNetCrawler::getWordsAsSentence(const vector<string>& words)
+std::string ConceptNetCrawler::getWordsAsSentence(const std::vector<std::string>& words)
 {
-    string res;
+    std::string res;
     for (unsigned int index = 0; index < words.size(); index++)
     {
         if (index != 0)
@@ -101,35 +67,35 @@ std::string ConceptNetCrawler::getWordsAsSentence(const vector<string>& words)
     return res;
 }
 
-bool ConceptNetCrawler::retrieve(const string& request, const char* filename)
+const char* ConceptNetCrawler::retrieve(const std::string& request)
 {
-    bool res = false;
-    FILE *file;
-    CURLcode curlRes;
+    string readData;
+    init_string(&readData);
     CURL* curl = curl_easy_init();
 
     if (curl)
     {
-        file = fopen(filename, "wb");
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &readData);
         curl_easy_setopt(curl, CURLOPT_URL, request.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, file);
-        curlRes = curl_easy_perform(curl);
+        CURLcode res = curl_easy_perform(curl);
+
+        if (res != CURLE_OK)
+            printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+
         curl_easy_cleanup(curl);
-        fclose(file);
-        res = true;
     }
 
-    return res;
+    return readData.ptr;
 }
 
-set<string> ConceptNetCrawler::parseRelationsFile()
+std::set<std::string> ConceptNetCrawler::parseRelationsData(const char* relationsInfo)
 {
 
-    set<string> wordsList;
+    std::set<std::string> wordsList;
     Json::Value root;
     Json::Reader reader;
-    std::ifstream jsonContent(relationsFile_, std::ifstream::binary);
-    bool parsingSuccessful = reader.parse(jsonContent, root);
+    bool parsingSuccessful = reader.parse(relationsInfo, root);
 
     if (parsingSuccessful)
     {
@@ -158,13 +124,12 @@ set<string> ConceptNetCrawler::parseRelationsFile()
     return wordsList;
 }
 
-set<string> ConceptNetCrawler::parseAssociationsFile()
+std::set<std::string> ConceptNetCrawler::parseAssociationsData(const char* associationsInfo)
 {
-    set<string> wordsList;
+    std::set<std::string> wordsList;
     Json::Value root;
     Json::Reader reader;
-    std::ifstream jsonContent(associationsFile_, std::ifstream::binary);
-    bool parsingSuccessful = reader.parse(jsonContent, root);
+    bool parsingSuccessful = reader.parse(associationsInfo, root);
 
     if (parsingSuccessful)
     {
@@ -172,9 +137,9 @@ set<string> ConceptNetCrawler::parseAssociationsFile()
         for (unsigned int i = 0; i < associations.size(); ++i)
         {
             Json::Value edge = associations[i];
-            string association = edge[(Json::Value::UInt)0].asString().c_str();
+            std::string association = edge[(Json::Value::UInt)0].asString().c_str();
             double percentage = edge[(Json::Value::UInt)1].asDouble();
-            string assocWord;
+            std::string assocWord;
             if (!(assocWord = processAssociation(association, percentage)).empty())
             {
                 printf("ASSOC: %s\n", assocWord.c_str());
@@ -205,20 +170,4 @@ std::string ConceptNetCrawler::processAssociation(const std::string& association
     }
 
     return "";
-}
-
-void ConceptNetCrawler::deleteCreatedFile(const char* filename)
-{
-    if (remove(filename) != 0)
-        perror("Error deleting file");
-    else
-        puts("File successfully deleted");
-}
-
-const char* ConceptNetCrawler::getJsonFilePath(const char* filename)
-{
-    string res = getenv(HOME);
-    res.append("/");
-    res.append(filename);
-    return res.c_str();
 }
