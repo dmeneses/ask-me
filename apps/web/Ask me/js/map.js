@@ -4,7 +4,7 @@ function showAdvancedSetting(box) {
 }
 
 function setLocation(position) {
-	setMapPosition(position.coords.longitude,position.coords.latitude);
+	setMapPosition(position.coords.latitude, position.coords.longitude);
 }
 
 function setMapPosition(latitude, longitude)
