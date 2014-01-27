@@ -13,7 +13,7 @@ using namespace std;
 TextPreprocessor::TextPreprocessor(const std::string& language)
 {
     language_ = language;
-    recognizer_ = new Recognizer("../langrecognition/language_classify.net");
+    recognizer_ = new Recognizer("../src/langrecognition/language_classify.net");
     cleaner_ = new TextCleaner(language);
     stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
