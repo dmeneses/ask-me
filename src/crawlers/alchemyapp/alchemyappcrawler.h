@@ -44,6 +44,9 @@ struct SentimentAnalysis{
             printf("ERROR INCORRECT LABEL");
         }
     }
+    void makeScorePercentage(float score){
+        this->score_ = score*100;
+    }
 };
 class AlchemyAppCrawler
 {
