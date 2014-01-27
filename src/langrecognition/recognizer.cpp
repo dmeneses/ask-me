@@ -16,7 +16,13 @@ Recognizer::Recognizer(const std::string& trainingFile)
     this->ann_ = fann_create_from_file(trainingFile.c_str());
 }
 
-Lang Recognizer::recognize(const std::string& text)
+Recognizer::~Recognizer()
+{
+    if(this->ann_)
+        fann_destroy(this->ann_);
+}
+
+const std::string Recognizer::recognize(const std::string& text)
 {
     float frequencies[26];
     generateFrequencies(text, frequencies);
@@ -24,10 +30,12 @@ Lang Recognizer::recognize(const std::string& text)
     
     if(output[0] > output[1])
     {
+        printf("Recognizer : English");
         return ENGLISH;
     } 
     else 
     {
+        printf("Recognizer : Spanish");
         return SPANISH;
     }
 }
