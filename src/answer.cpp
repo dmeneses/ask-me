@@ -10,7 +10,7 @@
 
 Answer::Answer()
 {
-    this->reconizer_ = new Recognizer("langrecognition/language_classify.net");
+    this->reconizer_ = new Recognizer("../langrecognition/language_classify.net");
 }
 
 Answer::~Answer()
