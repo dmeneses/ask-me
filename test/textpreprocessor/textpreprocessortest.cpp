@@ -21,7 +21,7 @@ TEST(TextPreProcessor, GivenASeveralTweets)
     tweets.push_back(SocialInformation("La comida de doña elena esta rica!!!", 17, 65));
     tweets.push_back(SocialInformation("Hay bloqueos en el prado", 17, 64));
     tweets.push_back(SocialInformation("Hubo un accidente en la terminal... es un caos!!", 17, 64));
-    tweets.push_back(SocialInformation("Hoy juega Bilstermann", 17, 64));
+    tweets.push_back(SocialInformation("Hoy juega mi amigo", 17, 64));
     
     std::vector<Result> results = processor->process(tweets, "comida");
     int size = results.size();

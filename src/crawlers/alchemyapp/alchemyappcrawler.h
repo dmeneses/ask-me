@@ -113,7 +113,7 @@ private:
      * @param text to be processed.
      */
 
-    string processTextToMakeRequest(std::string& text);
+    string processTextToMakeRequest(std::string text);
 
     char* namedEntitiesFile_;
     char* sentimentFile_;

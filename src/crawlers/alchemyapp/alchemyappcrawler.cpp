@@ -164,7 +164,7 @@ void AlchemyAppCrawler::deleteCreatedFile(const char* filename)
         puts("File successfully deleted");
 }
 
-string AlchemyAppCrawler::processTextToMakeRequest(std::string& text){
+string AlchemyAppCrawler::processTextToMakeRequest(std::string text){
 
     for(int i=0; i< text.size(); i++) {
            if(text.at(i) == ' ') {
