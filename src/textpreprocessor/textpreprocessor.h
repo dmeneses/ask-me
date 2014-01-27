@@ -19,6 +19,7 @@
 #include "../crawlers/semanticcrawler.h"
 #include "../crawlers/alchemyapp/alchemyappcrawler.h"
 #include "../crawlers/foursquare/foursquarecrawler.h"
+#include "../langrecognition/recognizer.h"
 /**
  * Wrapper for the information found
  */
@@ -61,7 +62,7 @@ public:
     /**
      * Creates a preprocessor for the defined language in lower case.
      * For example: "spanish"
-     */
+     */    
     TextPreprocessor(const std::string& language);
     /**
      * Clean all the resources to process the text.
@@ -96,7 +97,9 @@ private:
     Stemmer* stemmer_;
     SemanticCrawler* semanticCrawler_;
     AlchemyAppCrawler* alchemyCrawler_;
-    FoursquareCrawler* foursquareCrawler_;    
+    FoursquareCrawler* foursquareCrawler_;
+    std::string language_;
+    Recognizer* recognizer_;
 };
 
 #endif	/* TEXTPREPROCESSOR_H */

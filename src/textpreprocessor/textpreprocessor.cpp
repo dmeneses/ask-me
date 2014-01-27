@@ -12,6 +12,8 @@ using namespace std;
 
 TextPreprocessor::TextPreprocessor(const std::string& language)
 {
+    language_ = language;
+    recognizer_ = new Recognizer("../langrecognition/language_classify.net");
     cleaner_ = new TextCleaner(language);
     stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
@@ -48,6 +50,7 @@ TextPreprocessor::~TextPreprocessor()
     if(foursquareCrawler_)
         delete foursquareCrawler_;
 }
+
 std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages, 
         std::string searchParam)
 {
@@ -57,17 +60,22 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
     
     for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
     {
-        std::string textCleaned = cleaner_->clean(messagesIt->message_);
-        std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
-        int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
-
-        if (matches > 0)
+        std::string tweetLanguage = recognizer_->recognize(messagesIt->message_);
+        
+        if(tweetLanguage == language_)
         {
-            printf("Information found : %s\n", stemmedSentence.c_str());
-            results.push_back(Result(*messagesIt, matches));
+            std::string textCleaned = cleaner_->clean(messagesIt->message_);
+            std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
+            int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
+
+            if (matches > 0)
+            {
+                printf("Information found : %s\n", stemmedSentence.c_str());
+                results.push_back(Result(*messagesIt, matches));
+            }
         }
     }
-
+    
     sort(results.begin(), results.end(), rank);
     return results;
 }
