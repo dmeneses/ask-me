@@ -135,6 +135,7 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(){
 
     if (parsingSuccessful)
     {
+        if(root["status"].asString().compare("OK") == 0){
         Json::Value sentimentAnalysis = root["docSentiment"];
             Json::Value retrievedStringScore = sentimentAnalysis["score"];
             printf("SCORE: %s\n", retrievedStringScore.asString().c_str());
@@ -143,6 +144,10 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(){
             Json::Value retrievedLabel = sentimentAnalysis["type"];
             string label =retrievedLabel.asString();
             analysis.parseLabel(label);
+            
+        }else{
+            printf("RETRIEVED DATA ERROR STATUS");
+        }
     }
     else
     {

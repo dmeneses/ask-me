@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <../src/crawlers/alchemyapp/alchemyappcrawler.h>
 
 struct Location
 {
@@ -15,14 +16,18 @@ struct Location
 
 struct SocialInformation
 {
+
         SocialInformation()
         {
+            if(this->message_.size() > 1)
+            makeMessageSentimentAnalysis();
         }
         
         SocialInformation(std::string message, double latitude, double longitude) : message_(message)
         {
             location_.latitude_ = latitude;
             location_.longitude_ = longitude;
+            makeMessageSentimentAnalysis();
         }
 	/***
 	* Infomartion message i.e. "Delighting a piece of chessecake on Dumbo"
@@ -45,6 +50,18 @@ struct SocialInformation
 	   picture : binary str representation of pic...
 	*/
 	std::map<std::string, std::string> extraInformation_;
+        
+        /***
+	* Sentiment analysis of the message
+	
+         */
+        SentimentAnalysis sentiment_;	
+
+        void makeMessageSentimentAnalysis(){
+           AlchemyAppCrawler alchemy;
+           this->sentiment_= alchemy.makeSentimentAnalysis(this->message_);
+        }        
+
 };
 
 struct TweetInfo : public SocialInformation
