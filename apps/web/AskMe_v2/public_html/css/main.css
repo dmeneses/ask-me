@@ -6,8 +6,8 @@
 
 
 #map-div {
-    height: 450px;
-    width: 66%;
+    height: 500px;
+    width: 65%;
 }
 
 /* Pad the edges of the mobile views a bit */
@@ -51,4 +51,9 @@
 .headingstyle .navbar-brand {
     color: #fff; 
     font-weight: bolder;
+}
+
+.test {
+    max-height: 200px;
+    overflow-y:scroll; 
 }
