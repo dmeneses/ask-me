@@ -20,7 +20,6 @@ OUT = libaskme.a
 INCLUDES = -I/usr/include/curl -I../third-party/boost_1_54_0 \
 	   -I../third-party/libstemmer/include \
 	   -I../include -Icrawlers/Twitter-lib \
-	   -I../third-party/curl-7.33.0/include \
 	   -I../third-party/jsoncpp-src-0.5.0/include \
 	   -I../third-party/wnb-0.6/include \
 	   -I../third-party/FANN-2.2.0/include

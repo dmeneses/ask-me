@@ -34,6 +34,7 @@ LIBS = -L/user/local/lib -lm -lpthread \
        -L../third-party/jsoncpp-src-0.5.0/lib -ljson \
        -L../third-party/jsoncpp-src-0.5.0/lib64 -ljson \
        -L../third-party/wnb-0.6/lib -lwnb \
+       -L../third-party/wnb-0.6/lib64 -lwnb \
        -L../third-party/curl-7.33.0/lib -lcurl \
        -L../third-party/FANN-2.2.0/lib -lfann
 
