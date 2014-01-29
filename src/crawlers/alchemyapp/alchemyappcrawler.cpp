@@ -115,14 +115,14 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(const char* sentimentIn
 
         } else if(root["language"].asString().compare("english") != 0){
             
-            printf("LANGUAGE NOT SUPPORTED BY SENTIMENT ANALYSIS");
+            printf("LANGUAGE NOT SUPPORTED BY SENTIMENT ANALYSIS\n");
             analysis.score_ = 0;
         }
         else{
-            printf("RETRIEVED DATA ERROR");
+            printf("RETRIEVED DATA ERROR\n");
         }
     } else {
-        printf("Error while parsing JSON file");
+        printf("Error while parsing JSON file\n");
     }
 
     return analysis;
