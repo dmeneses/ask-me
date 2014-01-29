@@ -1,6 +1,7 @@
 # source files
 
 SRC = twittercrawler.cpp \
+      utils.cpp \
       base64.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))
