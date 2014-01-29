@@ -182,7 +182,26 @@
                     </div>
                 </div>
             </div>
-            <div id="map-div" class="panel panel-default col-lg-6"></div>
+            <div id="map-div" class="panel panel-default col-lg-6">
+                <div class="panel-heading">
+                    <script type="text/javascript">
+                        $(function() {
+                            $("#clean").tooltip();
+                        });
+                    </script>
+                    <button id="clean" title="Cleans all data from previous searches" class="btn btn-primary">Clean All</button>
+
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="checkbox"> Show Tweets
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox"> Show Places
+                        </label>
+                    </div>
+
+                </div>
+            </div>
             <script type = "text/javascript" src = "js/map.js"></script>
         </div>
 
