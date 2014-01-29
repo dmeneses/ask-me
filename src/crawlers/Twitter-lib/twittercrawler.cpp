@@ -79,7 +79,7 @@ SocialInformationList TwitterCrawler::search(Location location, float radio)
     std::string authoization = stringFormat("Authorization: %s %s", this->token_->type_.c_str(), this->token_->token_.c_str());
     chunk = curl_slist_append(chunk, authoization.c_str());
 
-    string readData;
+    iostring readData;
     init_string(&readData);
     CURL* curl = curl_easy_init();
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
