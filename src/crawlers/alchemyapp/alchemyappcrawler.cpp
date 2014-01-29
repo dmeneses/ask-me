@@ -1,10 +1,8 @@
 #include "alchemyappcrawler.h"
 #include <json/reader.h>
-#include <stdio.h>
 #include <fstream>
 #include <curl/curl.h>
 #include <curl/easy.h>
-#include <cstdlib>
 #include <string.h>
 #include <algorithm>
 #include "utils.h"

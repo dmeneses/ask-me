@@ -4,6 +4,7 @@
     <df root="." name="0">
       <in>base64.cpp</in>
       <in>twittercrawler.cpp</in>
+      <in>utils.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -54,6 +55,8 @@
         </ccTool>
       </item>
       <item path="twittercrawler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="utils.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

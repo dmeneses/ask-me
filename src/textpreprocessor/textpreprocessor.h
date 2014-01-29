@@ -17,7 +17,6 @@
 #include "../stemmer/stemmer.h"
 #include "socialinformation.h"
 #include "../crawlers/semanticcrawler.h"
-#include "../crawlers/alchemyapp/alchemyappcrawler.h"
 #include "../crawlers/foursquare/foursquarecrawler.h"
 #include "../langrecognition/recognizer.h"
 /**
