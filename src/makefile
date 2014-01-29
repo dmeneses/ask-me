@@ -11,6 +11,7 @@ SRC = structs/trienode.cpp \
       crawlers/foursquare/foursquarecrawler.cpp \
       answer.cpp \
       crawlers/alchemyapp/alchemyappcrawler.cpp \
+      crawlers/Twitter-lib/utils.cpp \
       langrecognition/recognizer.cpp
 
 OBJ = $(patsubst %.cpp,obj/%.o,$(SRC))

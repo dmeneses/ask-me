@@ -90,6 +90,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="crawlers/Twitter-lib/utils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="crawlers/Wordnet/wordnetinterface.cpp"
             ex="false"
             tool="1"
