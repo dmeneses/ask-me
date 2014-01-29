@@ -113,8 +113,13 @@ SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(const char* sentimentIn
             std::string label = retrievedLabel.asString();
             analysis.parseLabel(label);
 
-        } else {
-            printf("RETRIEVED DATA ERROR STATUS");
+        } else if(root["language"].asString().compare("english") != 0){
+            
+            printf("LANGUAGE NOT SUPPORTED BY SENTIMENT ANALYSIS");
+            analysis.score_ = 0;
+        }
+        else{
+            printf("RETRIEVED DATA ERROR");
         }
     } else {
         printf("Error while parsing JSON file");
