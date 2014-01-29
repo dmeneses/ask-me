@@ -15,7 +15,7 @@
 using namespace std;
 
 enum SentimentLabel{
-    POSITIVE,NEGATIVE,NEUTRAL
+    POSITIVE,NEGATIVE,NEUTRAL,NOTFOUND
 };
 
 struct SentimentAnalysis{
@@ -41,7 +41,7 @@ struct SentimentAnalysis{
              this->label_ = NEUTRAL;
         }
         else{
-            printf("ERROR INCORRECT LABEL");
+            this->label_ = NOTFOUND;
         }
     }
     void makeScorePercentage(float score){
