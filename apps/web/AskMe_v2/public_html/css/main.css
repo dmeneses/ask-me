@@ -7,7 +7,7 @@
 
 #map-div {
     height: 500px;
-    width: 65%;
+    width: 66%;
 }
 
 /* Pad the edges of the mobile views a bit */
@@ -48,12 +48,20 @@
     border-color: #428bca;
 }
 
+.headingstyle .navbar-form {
+    border-color: #428bca;
+}
+.headingstyle .navbar-inverse .navbar-form{
+    border-color: #428bca;
+}
+
 .headingstyle .navbar-brand {
     color: #fff; 
     font-weight: bolder;
 }
 
-.test {
-    max-height: 200px;
+.scrollableList {
+    min-height: 400px;
+    max-height: 400px;
     overflow-y:scroll; 
 }
