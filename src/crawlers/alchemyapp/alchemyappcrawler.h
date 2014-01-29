@@ -9,8 +9,8 @@
 #define ALCHEMYAPPCRAWLER_H
 
 #include <set>
-#include <string>
 #include <cstdio>
+#include <string>
 
 using namespace std;
 
@@ -61,7 +61,7 @@ public:
      *
      * @return Collection of named entities from the text.
      */
-    std::set<string> collectAllNamedEntities(std::string& text);
+    std::set<std::string> collectAllNamedEntities(std::string& text);
 
      /**
      * Process text to make sentiment analysis.
@@ -78,11 +78,10 @@ private:
      * Retrieve the given request and save the answer content in the given file.
      *
      * @param request Url to make the request and retrieve information.
-     * @param filename Filename where the retrieved information will be saved.
      *
      * @return True if the request was successful in other case will return false.
      */
-    bool retrieve(const string& request, const char* filename);
+    const char* retrieve(const std::string& request);
 
     /**
      * Function to parse the json file returned by the query to alchmyapp.
@@ -90,7 +89,7 @@ private:
      * @param path Json file path.
      * @return Set of named entities found in the file.
      */
-    std::set<string> parseNamedEntitiesFile();
+    std::set<std::string> parseNamedEntitiesFile(const char* namedEntitiesInfo);
 
     /**
      * Function to parse the json file returned by the query to alchmyapp sentiment.
@@ -99,13 +98,8 @@ private:
      * @return SentimentAnalysis struct.
      */
 
-    SentimentAnalysis parseSentimentsFile();
-    /**
-     * Delete the json file after parsing.
-     *
-     * @param filename File name to delete.
-     */
-    void deleteCreatedFile(const char* filename);
+    SentimentAnalysis parseSentimentsFile(const char* sentimentInfo);
+    
 
     /**
      * Process text to make the query to alchemyapp
@@ -113,10 +107,8 @@ private:
      * @param text to be processed.
      */
 
-    string processTextToMakeRequest(std::string text);
+    std::string processTextToMakeRequest(std::string text);
 
-    char* namedEntitiesFile_;
-    char* sentimentFile_;
 };
 
 #endif // ALCHEMYAPPCRAWLER_H
