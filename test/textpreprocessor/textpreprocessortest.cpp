@@ -152,7 +152,7 @@ TEST(TextPreprocessor, WordnetRelationshipWithoutAmbiguity)
 {
     TextPreprocessor* processor = new TextPreprocessor("english");
     std::vector<SocialInformation> tweets;
-    tweets.push_back(SocialInformation("Cancer disease is also called malignant neoplastic disease", 17, 64));
+    tweets.push_back(SocialInformation("My father has a  malignant neoplastic disease", 17, 64));
     tweets.push_back(SocialInformation("the cat is black.", 17, 65));
     tweets.push_back(SocialInformation("Somewhat that doesn't seem to match.", 17, 64));
     
