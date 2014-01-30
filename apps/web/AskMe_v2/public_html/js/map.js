@@ -36,7 +36,6 @@ function loadMap() {
 function loadSocialInfo(socialInfoList)
 {
 	console.log('Loading social information list');
-	markers.clearMarkers();
 
 	for(var i = 0; i < socialInfoList.length; i++) {
 		addMarker(socialInfoList[i]);
