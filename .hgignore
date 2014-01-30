@@ -1,0 +1,12 @@
+syntax: glob
+*/**/*.o
+src/nbproject/private/configurations.xml
+test/nbproject/private/private.xml
+test/nbproject/private/launcher.properties
+test/nbproject/private/configurations.xml
+test/nbproject/private/Default.properties
+test/nbproject/private/CodeAssistancePathMapper.properties
+src/nbproject/private/private.xml
+src/nbproject/private/launcher.properties
+src/nbproject/private/Default.properties
+src/nbproject/private/CodeAssistancePathMapper.properties
