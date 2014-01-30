@@ -1,5 +1,8 @@
 function ask() {
-   connectToAskMeREST(actualPosition.lonlat.lat, actualPosition.lonlat.lon);
+    var position = actualPosition.lonlat
+      .transform(
+        map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+    connectToAskMeREST(position.lat, position.lon);
 }
 
 function connectToAskMeREST(latitude, longitude) {

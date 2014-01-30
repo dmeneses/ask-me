@@ -16,12 +16,6 @@ function setMapPosition(latitude, longitude)
 }
 
 function loadMap() {
-	$("#ask-form").submit(function () {
-		$("#map-div").slideDown("slow");
-		markers.destroy();
-		return false;
-	});
-
 	map = new OpenLayers.Map("map-div");
 	map.addLayer(new OpenLayers.Layer.OSM());
 	map.zoomToMaxExtent();
@@ -42,7 +36,6 @@ function loadMap() {
 function loadSocialInfo(socialInfoList)
 {
 	console.log('Loading social information list');
-	markers.clearMarkers();
 
 	for(var i = 0; i < socialInfoList.length; i++) {
 		addMarker(socialInfoList[i]);
@@ -61,6 +54,13 @@ function addMarker(socialInformation)
     }); 
     markers.addMarker(marker);
     console.log('Social info message : ' + socialInformation.message);    
+}
+
+function clearMarkers()
+{
+	actualPosition = new OpenLayers.Marker(actualPosition.lonlat);
+	markers.clearMarkers();
+	markers.addMarker(actualPosition);
 }
 
 loadMap();
