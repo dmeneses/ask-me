@@ -3,6 +3,9 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="crawlers">
+        <df name="alchemyapp">
+          <in>alchemyappcrawler.cpp</in>
+        </df>
         <df name="ConceptNet">
           <in>conceptnetcrawler.cpp</in>
         </df>
@@ -12,6 +15,9 @@
         <df name="Wordnet">
           <in>wordnetinterface.cpp</in>
         </df>
+      </df>
+      <df name="langrecognition">
+        <in>recognizer.cpp</in>
       </df>
       <df name="stemmer">
         <in>stemmer.cpp</in>
@@ -63,6 +69,7 @@
               <pElem>crawlers/Twitter-lib</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
               <pElem>../third-party/wnb-0.6/include</pElem>
+              <pElem>../third-party/FANN-2.2.0/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>
@@ -83,19 +90,40 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="crawlers/Twitter-lib/utils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="crawlers/Wordnet/wordnetinterface.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
+      <item path="crawlers/alchemyapp/alchemyappcrawler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="crawlers/foursquare/foursquarecrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <folder path="0/crawlers">
         <ccTool>
           <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/langrecognition">
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -121,6 +149,10 @@
           </incDir>
         </ccTool>
       </folder>
+      <item path="langrecognition/recognizer.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <item path="stemmer/stemmer.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
         </ccTool>

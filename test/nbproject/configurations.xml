@@ -14,6 +14,14 @@
       </df>
       <in>testrunner.cpp</in>
     </df>
+    <df root="." name="1">
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
@@ -23,6 +31,7 @@
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
+    <Elem>.</Elem>
     <Elem>.</Elem>
   </sourceRootList>
   <projectmakefile>makefile</projectmakefile>
@@ -44,15 +53,16 @@
           <ccTool>
             <incDir>
               <pElem>../src</pElem>
+              <pElem>../include</pElem>
               <pElem>../third-party/GMock-1.7.0/Include</pElem>
               <pElem>../third-party/GTest-1.7.0/Include</pElem>
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
-              <pElem>../include</pElem>
-              <pElem>../../../third-party/curl-7.33.0/include</pElem>
-              <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
+              <pElem>../third-party/curl-7.33.0/include</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
               <pElem>../third-party/wnb-0.6/include</pElem>
+              <pElem>../third-party/FANN-2.2.0/include</pElem>
+              <pElem>../third-party/FANN-2.2.0/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>__PIC__=2</Elem>
