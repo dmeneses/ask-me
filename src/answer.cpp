@@ -11,7 +11,7 @@
 
 Answer::Answer()
 {
-    this->reconizer_ = new Recognizer("../src/langrecognition/language_classify.net");
+    this->reconizer_ = new Recognizer("../../src/langrecognition/language_classify.net");
 }
 
 Answer::~Answer()
@@ -21,7 +21,7 @@ Answer::~Answer()
 }
 
 std::vector<Result> Answer::ask(const std::string word, const Location location, const float radio, 
-        SocialSource source,bool enablePlacesLocation)
+        SocialSource source, bool enablePlacesLocation)
 {
     std::vector<SocialInformation> info = recollect(location, radio, source);
     TextPreprocessor processor(this-> reconizer_->recognize(word));

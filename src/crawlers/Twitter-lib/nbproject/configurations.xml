@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="." name="Twitter-lib">
+    <df root="." name="0">
       <in>base64.cpp</in>
-      <in>base64.h</in>
       <in>twittercrawler.cpp</in>
-      <in>twittercrawler.h</in>
-      <in>utils.h</in>
+      <in>utils.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -23,7 +21,6 @@
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -40,21 +37,26 @@
             <incDir>
               <pElem>.</pElem>
               <pElem>../../../include</pElem>
-              <pElem>../../../third-party/curl-7.33.0/include</pElem>
+              <pElem>/usr/include/curl</pElem>
               <pElem>../../../third-party/jsoncpp-src-0.5.0/include</pElem>
             </incDir>
+            <preprocessorList>
+              <Elem>__PIC__=2</Elem>
+              <Elem>__pic__=2</Elem>
+            </preprocessorList>
+            <undefinedList>
+              <Elem>__GCC_HAVE_DWARF2_CFI_ASM=1</Elem>
+            </undefinedList>
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="base64.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="base64.h" ex="false" tool="3" flavor2="0">
+      <item path="base64.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
       <item path="twittercrawler.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="twittercrawler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="utils.h" ex="false" tool="3" flavor2="0">
+      <item path="utils.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

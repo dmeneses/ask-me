@@ -70,16 +70,16 @@ void TwitterCrawler::connect()
 
 SocialInformationList TwitterCrawler::search(Location location, float radio)
 {
-    std::string url = stringFormat("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es&count=100", 
+    std::string url = formatString("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es&count=100", 
             location.latitude_, location.longitude_, radio);
     struct curl_slist *chunk = 0;
     chunk = curl_slist_append(chunk, "GET /1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es");
     chunk = curl_slist_append(chunk, "Host: api.twitter.com");
     chunk = curl_slist_append(chunk, "User-Agent: TweetsFound App v0.1");
-    std::string authoization = stringFormat("Authorization: %s %s", this->token_->type_.c_str(), this->token_->token_.c_str());
+    std::string authoization = formatString("Authorization: %s %s", this->token_->type_.c_str(), this->token_->token_.c_str());
     chunk = curl_slist_append(chunk, authoization.c_str());
 
-    string readData;
+    iostring readData;
     init_string(&readData);
     CURL* curl = curl_easy_init();
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);

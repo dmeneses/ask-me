@@ -39,7 +39,7 @@ v8::Handle<v8::Value> AnswerJS::Reply(const v8::Arguments& args)
 	location.longitude_ = Handle<Number>::Cast(args[2])->Value();
 	float radio = Handle<Number>::Cast(args[3])->Value();
 	Answer answer;
-	std::vector<Result> results = answer.ask(word, location, radio, TWITTER);	
+	std::vector<Result> results = answer.ask(word, location, radio, TWITTER, true);	
 	
 	Handle<Array> messages = Array::New(results.size());
 

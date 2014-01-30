@@ -69,7 +69,7 @@ std::string ConceptNetCrawler::getWordsAsSentence(const std::vector<std::string>
 
 const char* ConceptNetCrawler::retrieve(const std::string& request)
 {
-    string readData;
+    iostring readData;
     init_string(&readData);
     CURL* curl = curl_easy_init();
 
