@@ -20,6 +20,16 @@ function setMapPosition(latitude, longitude)
 	map.setCenter(lonLat, 16);
 }
 
+function createCurrentMarker()
+{
+	var size = new OpenLayers.Size(21,25);
+	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+	var icon = new OpenLayers.Icon(
+		'http://www.members1st.org/EntityLocator_prod/Content/images/current_position.png', 
+		size, offset);
+	actualPosition = new OpenLayers.Marker(new OpenLayers.LonLat(-98, 35), icon);
+}
+
 function loadMap() {
 	map = new OpenLayers.Map("map-div");
 	map.addLayer(new OpenLayers.Layer.OSM());
@@ -28,9 +38,9 @@ function loadMap() {
    	markers = new OpenLayers.Layer.Markers("Markers");
 	map.addLayer(markers);
 
-	actualPosition = new OpenLayers.Marker(new OpenLayers.LonLat(-98, 35));
+	createCurrentMarker();
 	markers.addMarker(actualPosition);
-
+	
 	map.events.register("click", map, function(e) {
    		actualPosition.moveTo(e.xy);
    	});
