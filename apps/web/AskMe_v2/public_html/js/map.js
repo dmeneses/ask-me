@@ -4,7 +4,12 @@ function showAdvancedSetting(box) {
 }
 
 function setLocation(position) {
-	setMapPosition(position.coords.latitude, position.coords.longitude);
+	var lon = position.coords.longitude;
+	var lat = position.coords.latitude;
+	setMapPosition(lat, lon);
+	var lonLat = new OpenLayers.LonLat(lon, lat)
+	.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+	actualPosition.moveTo(map.getPixelFromLonLat(lonLat));
 }
 
 function setMapPosition(latitude, longitude)
