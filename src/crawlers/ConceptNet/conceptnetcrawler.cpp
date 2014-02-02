@@ -2,7 +2,7 @@
 #include <curl/curl.h>
 #include <json/reader.h>
 #include <algorithm>
-#include "utils.h"
+#include "../utils.h"
 
 #define CONCEPT_NET_URL "http://conceptnet5.media.mit.edu/data/5.1/"
 #define ENGLISH "english"

@@ -1,6 +1,6 @@
 #include "twittercrawler.h"
 #include "base64.h"
-#include "utils.h"
+#include "../utils.h"
 #include <curl/curl.h>
 #include <json/reader.h>
 

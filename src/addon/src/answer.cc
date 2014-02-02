@@ -52,7 +52,7 @@ v8::Handle<v8::Value> AnswerJS::Reply(const v8::Arguments& args)
         jsobject->Set(String::NewSymbol("latitude"), Number::New(info.location_.latitude_));
         jsobject->Set(String::NewSymbol("longitude"), Number::New(info.location_.longitude_));
         jsobject->Set(String::NewSymbol("source"), String::New(info.source_.c_str()));
-        jsobject->Set(String::NewSymbol("sentiment"), Number::New(info.sentiment_.label_));
+        jsobject->Set(String::NewSymbol("sentiment"), Number::New(info.sentiment_));
         messages->Set(i, jsobject);
     }
 

@@ -17,8 +17,8 @@ TextPreprocessor::TextPreprocessor(const std::string& language)
     cleaner_ = new TextCleaner(language);
     stemmer_ = new Stemmer(language);
     matcher_ = new Matcher();
-    this->foursquareCrawler_ = new FoursquareCrawler();
-    this->alchemyCrawler_ = new AlchemyAppCrawler();
+    foursquareCrawler_ = new FoursquareCrawler();
+    alchemyCrawler_ = new AlchemyAppCrawler();
 
     if (language.compare("english") == 0)
     {

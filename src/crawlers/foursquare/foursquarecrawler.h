@@ -8,7 +8,7 @@
 #ifndef FOURSQUARECRAWLER_H
 #define	FOURSQUARECRAWLER_H
 
-#include "crawler.h"
+#include "../crawler.h"
 #include <string>
 
 /**

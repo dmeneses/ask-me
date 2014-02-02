@@ -12,9 +12,14 @@
         <df name="foursquare">
           <in>foursquarecrawler.cpp</in>
         </df>
+        <df name="Twitter">
+          <in>base64.cpp</in>
+          <in>twittercrawler.cpp</in>
+        </df>
         <df name="Wordnet">
           <in>wordnetinterface.cpp</in>
         </df>
+        <in>utils.cpp</in>
       </df>
       <df name="langrecognition">
         <in>recognizer.cpp</in>
@@ -65,8 +70,6 @@
               <pElem>/usr/include/curl</pElem>
               <pElem>../third-party/boost_1_54_0</pElem>
               <pElem>../third-party/libstemmer/include</pElem>
-              <pElem>../include</pElem>
-              <pElem>crawlers/Twitter-lib</pElem>
               <pElem>../third-party/jsoncpp-src-0.5.0/include</pElem>
               <pElem>../third-party/wnb-0.6/include</pElem>
               <pElem>../third-party/FANN-2.2.0/include</pElem>
@@ -88,9 +91,16 @@
       <item path="crawlers/ConceptNet/conceptnetcrawler.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
+            flavor2="4">
+        <ccTool>
+        </ccTool>
       </item>
-      <item path="crawlers/Twitter-lib/utils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="crawlers/Twitter/base64.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="crawlers/Twitter/twittercrawler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="crawlers/Wordnet/wordnetinterface.cpp"
             ex="false"
@@ -113,6 +123,10 @@
         <ccTool>
         </ccTool>
       </item>
+      <item path="crawlers/utils.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool>
+        </ccTool>
+      </item>
       <folder path="0/crawlers">
         <ccTool>
           <incDir>
@@ -123,7 +137,6 @@
       <folder path="0/langrecognition">
         <ccTool>
           <incDir>
-            <pElem>.</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
