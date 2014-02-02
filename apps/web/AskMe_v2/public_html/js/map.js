@@ -50,6 +50,7 @@ function loadMap() {
 
 function loadSocialInfo(socialInfoList)
 {
+    
     console.log('Loading social information list');
     var tweetList = document.getElementById("tweetList").innerHTML;
 
@@ -60,16 +61,16 @@ function loadSocialInfo(socialInfoList)
 
         switch (social.sentiment) {
             case -1:
-                tweetList += '<span class="glyphicon glyphicon-thumbs-down"></span></li>';
+                tweetList += '<span class="badge"><span class="glyphicon glyphicon-thumbs-down"></span></span></li>';
                 break;
             case 0:
-                tweetList += '<span class="glyphicon glyphicon-hand-left"></span></li>';
+                tweetList += '<span class="badge"><span class="glyphicon glyphicon-hand-left"></span></span></li>';
                 break;
             case 1:
-                tweetList += '<span class="glyphicon glyphicon-thumbs-up"></span></li>';
+                tweetList += '<span class="badge"><span class="glyphicon glyphicon-thumbs-up"></span></span></li>';
                 break;
             case 2:
-                tweetList += '<span class="glyphicon glyphicon-minus"></span></li>';
+                tweetList += '<span class="badge"><span class="glyphicon glyphicon-minus"></span></span></li>';
                 break;
             default:
                 tweetList += '</li>';
