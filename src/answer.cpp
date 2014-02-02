@@ -6,7 +6,7 @@
  */
 
 #include "answer.h"
-#include "twittercrawler.h"
+#include "crawlers/Twitter/twittercrawler.h"
 #include "crawlers/foursquare/foursquarecrawler.h"
 
 Answer::Answer()

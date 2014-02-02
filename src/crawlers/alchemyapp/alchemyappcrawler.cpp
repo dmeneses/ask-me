@@ -5,7 +5,7 @@
 #include <curl/easy.h>
 #include <string.h>
 #include <algorithm>
-#include "utils.h"
+#include "../utils.h"
 
 #define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/SEARCHPARAMETER?outputMode=json&apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&text="
 #define ENTITY_EXTRACTION_KEYWORD "TextGetNamedEntities"

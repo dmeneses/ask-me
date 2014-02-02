@@ -10,7 +10,7 @@
 
 #include <vector>
 #include "textpreprocessor/textpreprocessor.h"
-#include "crawler.h"
+#include "crawlers/crawler.h"
 #include "langrecognition/recognizer.h"
 
 enum SocialSource

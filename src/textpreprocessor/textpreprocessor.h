@@ -14,10 +14,11 @@
 
 #include "textcleaner.h"
 #include "matcher.h"
+#include "../crawlers/socialinformation.h"
 #include "../stemmer/stemmer.h"
-#include "socialinformation.h"
 #include "../crawlers/semanticcrawler.h"
 #include "../crawlers/foursquare/foursquarecrawler.h"
+#include "../crawlers/alchemyapp/alchemyappcrawler.h"
 #include "../langrecognition/recognizer.h"
 /**
  * Wrapper for the information found
@@ -63,10 +64,6 @@ public:
      * For example: "spanish"
      */    
     TextPreprocessor(const std::string& language);
-    /**
-     * Clean all the resources to process the text.
-     */
-    TextPreprocessor(AlchemyAppCrawler& alchemy);
     
     ~TextPreprocessor();
 
