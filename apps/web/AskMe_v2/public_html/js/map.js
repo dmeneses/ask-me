@@ -54,11 +54,29 @@ function loadSocialInfo(socialInfoList)
     var tweetList = document.getElementById("tweetList").innerHTML;
 
     for (var i = 0; i < socialInfoList.length; i++) {
-        addMarker(socialInfoList[i]);
-        tweetList += '<li class="list-group-item">' + socialInfoList[i].message + 
-                '<span class="glyphicon glyphicon-thumbs-up"></span></li>';
+        var social = socialInfoList[i];
+        addMarker(social);
+        tweetList += '<li class="list-group-item">' + social.message
+
+        switch (social.sentiment) {
+            case -1:
+                tweetList += '<span class="glyphicon glyphicon-thumbs-down"></span></li>';
+                break;
+            case 0:
+                tweetList += '<span class="glyphicon glyphicon-hand-left"></span></li>';
+                break;
+            case 1:
+                tweetList += '<span class="glyphicon glyphicon-thumbs-up"></span></li>';
+                break;
+            case 2:
+                tweetList += '<span class="glyphicon glyphicon-minus"></span></li>';
+                break;
+            default:
+                tweetList += '</li>';
+        }
+
     }
-    
+
     document.getElementById("tweetList").innerHTML = tweetList;
 }
 
