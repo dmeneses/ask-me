@@ -88,7 +88,7 @@ struct Entity
 
     Entity(const std::string& name) : name_(name)
     {
-        hasLocation = false;
+        hasLocation_ = false;
     }
 
     /**
@@ -96,12 +96,12 @@ struct Entity
      */
     Entity(Location location, const std::string& name) : location_(location), name_(name)
     {
-        hasLocation = true;
+        hasLocation_ = true;
     }
     
     Location location_;
     std::string name_;
-    bool hasLocation;
+    bool hasLocation_;
 
 };
 

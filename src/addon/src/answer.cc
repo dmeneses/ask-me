@@ -63,6 +63,7 @@ v8::Handle<v8::Value> AnswerJS::Reply(const v8::Arguments& args)
             ent->Set(String::NewSymbol("name"), String::New(entities.at(j).name_.c_str()));
             ent->Set(String::NewSymbol("latitude"), Number::New(entities.at(j).location_.latitude_));
             ent->Set(String::NewSymbol("longitude"), Number::New(entities.at(j).location_.longitude_));
+            ent->Set(String::NewSymbol("hasLocation"), Boolean::New(entities.at(j).hasLocation_));
             places->Set(j, ent);
         }
 

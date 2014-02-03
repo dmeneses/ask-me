@@ -94,7 +94,10 @@ function buildPlaceItem(placesInfo) {
 
     for (var i = 0; i < placesInfo.length; i++) {
         var place = placesInfo[i];
-        placesList += '<li class="list-group-item">' + place.name + '</li>'
+        placesList += '<li class="list-group-item">' + place.name + '</li>';
+        if(place.hasLocation){
+            addPlaceMarker(place);
+        }
     }
 
     return placesList;
@@ -112,6 +115,25 @@ function addMarker(socialInformation)
     });
     markers.addMarker(marker);
     console.log('Social info message : ' + socialInformation.message);
+}
+
+function addPlaceMarker(place)
+{
+    var size = new OpenLayers.Size(20, 20);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    var icon = new OpenLayers.Icon(
+            'placeicon.png',
+            size, offset);
+    var lonLat = new OpenLayers.LonLat(place.longitude, place.latitude)
+            .transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    var marker = new OpenLayers.Marker(lonLat, icon);
+    marker.events.register("click", marker, function(e) {
+        popup = new OpenLayers.Popup.FramedCloud("place", marker.lonlat,
+                new OpenLayers.Size(100, 50), place.name, null, true);
+        map.addPopup(popup);
+    });
+    markers.addMarker(marker);
+    console.log('Place name : ' + place.name);
 }
 
 function clearMarkers()
