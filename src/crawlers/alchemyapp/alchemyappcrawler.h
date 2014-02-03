@@ -75,7 +75,7 @@ public:
      *
      * @return Collection of named entities from the text.
      */
-    std::set<std::string> collectAllNamedEntities(std::string& text);
+    std::set<std::string> collectAllNamedEntities(const std::string& text);
 
     /**
      * Process text to make sentiment analysis.

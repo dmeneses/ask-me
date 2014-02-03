@@ -52,7 +52,8 @@ TextPreprocessor::~TextPreprocessor()
 }
 
 std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> messages,
-                                              std::string searchParam)
+                                        std::string searchParam,
+                                        const std::vector<SocialInformation>& foursquareInformation)
 {
     vector<Result> results;
     vector<SocialInformation>::iterator messagesIt;
@@ -60,45 +61,24 @@ std::vector<Result> TextPreprocessor::process(std::vector<SocialInformation> mes
 
     for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
     {
-        //  std::string tweetLanguage = recognizer_->recognize(messagesIt->message_);
-
-        //if(tweetLanguage == language_)
-        //{
         std::string textCleaned = cleaner_->clean(messagesIt->message_);
         std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
         int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
-        
+
         if (matches > 0)
         {
             printf("Information found : %s\n", stemmedSentence.c_str());
+            Result res;
             alchemyCrawler_->makeSentimentAnalysis(*messagesIt);
-            results.push_back(Result(*messagesIt, matches));
-        }
-        //}
-    }
+            res.information = *messagesIt;
+            res.matchesCount = matches;
 
-    sort(results.begin(), results.end(), rank);
-    return results;
-}
+            if (!foursquareInformation.empty())
+            {
+                res.namedEntities = getAllNamedEntities(messagesIt->message_, stemmedSentence, foursquareInformation);
+            }
 
-std::vector<Result> TextPreprocessor::processWithPlaces(std::vector<SocialInformation> messages,
-                                                        std::string searchParam, std::vector<SocialInformation> foursquareInformation)
-{
-    vector<Result> results;
-    vector<SocialInformation>::iterator messagesIt;
-    std::vector< std::set<std::string> > stemmedWordsToMatch = getStemmedWordsToMatch(searchParam);
-
-    for (messagesIt = messages.begin(); messagesIt != messages.end(); messagesIt++)
-    {
-        std::string textCleaned = cleaner_->clean(messagesIt->message_);
-        std::string stemmedSentence = stemmer_->stemSentence(textCleaned);
-        int matches = matcher_->match(stemmedSentence, stemmedWordsToMatch);
-
-        if (matches > 0)
-        {
-            std::vector<Entity> namedEntities = getAllNamedEntities(messagesIt->message_, foursquareInformation);
-            printf("Information found: %s\n", stemmedSentence.c_str());
-            results.push_back(Result(*messagesIt, matches, namedEntities));
+            results.push_back(res);
         }
     }
 
@@ -141,21 +121,31 @@ std::vector<std::string> TextPreprocessor::preprocessSearchParameter(const std::
     return stemmer_->split(textCleaned);
 }
 
-std::vector<Entity> TextPreprocessor::getAllNamedEntities(std::string& socialInformationText,
-                                                          std::vector<SocialInformation> foursquareInformation)
+std::vector<Entity> TextPreprocessor::getAllNamedEntities(const std::string& message, const std::string stemmedMessage,
+                                                          std::vector<SocialInformation> places)
 {
     std::vector<Entity> entities;
-    std::set<std::string> namedEntities = this->alchemyCrawler_->collectAllNamedEntities(socialInformationText);
+    std::set<std::string> namedEntities = this->alchemyCrawler_->collectAllNamedEntities(message);
 
-    for (std::vector<SocialInformation>::iterator it = foursquareInformation.begin(); it != foursquareInformation.end(); ++it)
+    for (std::vector<SocialInformation>::iterator place = places.begin(); place != places.end(); ++place)
     {
-        SocialInformation info = (*it);
-        if (std::find(namedEntities.begin(), namedEntities.end(), info.message_) != namedEntities.end())
+        SocialInformation info = (*place);
+        if (stemmedMessage.find(place->message_) != std::string::npos)
         {
             entities.push_back(Entity(info.location_, info.message_));
+            std::set<std::string>::iterator entityName;
+            if ((entityName = std::find(namedEntities.begin(), namedEntities.end(), place->message_)) != namedEntities.end())
+            {
+                namedEntities.erase(entityName);
+            }
         }
     }
 
+    for (std::set<std::string>::iterator entityName = namedEntities.begin(); entityName != namedEntities.end(); entityName++)
+    {
+        entities.push_back(Entity(*entityName));
+    }
+    
     return entities;
 }
 

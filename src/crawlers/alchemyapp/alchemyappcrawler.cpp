@@ -27,7 +27,7 @@ AlchemyAppCrawler::~AlchemyAppCrawler()
 
 }
 
-set<std::string> AlchemyAppCrawler::collectAllNamedEntities(std::string& text)
+set<std::string> AlchemyAppCrawler::collectAllNamedEntities(const std::string& text)
 {
     std::string request(ALCHEMYAPP_URL);
     request.replace(SEARCH_PARAMETER_POSITION, SEARCH_PARAMETER_SIZE, ENTITY_EXTRACTION_KEYWORD);
@@ -77,7 +77,7 @@ const char* AlchemyAppCrawler::retrieve(const std::string& request)
     return readData.ptr;
 }
 
-set<std::string> AlchemyAppCrawler::parseNamedEntitiesFile(const char* namedEntitiesInfo)
+        set<std::string> AlchemyAppCrawler::parseNamedEntitiesFile(const char* namedEntitiesInfo)
 {
     set<std::string> namedEntityList;
     Json::Value root;

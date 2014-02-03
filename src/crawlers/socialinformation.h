@@ -51,7 +51,7 @@ struct SocialInformation
        picture : binary str representation of pic...
      */
     std::map<std::string, std::string> extraInformation_;
-    
+
     int sentiment_;
 };
 
@@ -86,15 +86,23 @@ struct VenueInfo : public SocialInformation
 struct Entity
 {
 
+    Entity(const std::string& name) : name_(name)
+    {
+        hasLocation = false;
+    }
+
     /**
      * Places with locations and Name
      */
-    Entity(Location location, std::string name) : location_(location), name_(name)
+    Entity(Location location, const std::string& name) : location_(location), name_(name)
     {
-
+        hasLocation = true;
     }
+    
     Location location_;
     std::string name_;
+    bool hasLocation;
+
 };
 
 #endif //_SOCIALINFORMATION_H
