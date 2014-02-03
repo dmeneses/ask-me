@@ -21,19 +21,19 @@ SocialInformationList FoursquareCrawler::collect(Location location, float radius
 
 static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
-    ((string*)userp)->append((char*)contents, size * nmemb);
+    ((string*) userp)->append((char*) contents, size * nmemb);
     return size * nmemb;
 }
 
 string FoursquareCrawler::buildUrl(Location location, float radius)
 {
     stringstream stream;
-    
+
     stream << "https://api.foursquare.com/v2/venues/search?";
     stream << "ll=" << location.latitude_ << "," << location.longitude_ << "&";
     stream << "radius=" << radius << "&";
-    stream << "client_id=" << CLIENT_ID << "&"; 
-    stream << "client_secret=" << SECRED_ID << "&"; 
+    stream << "client_id=" << CLIENT_ID << "&";
+    stream << "client_secret=" << SECRED_ID << "&";
     stream << "v=20140113";
     return stream.str();
 }
@@ -45,7 +45,7 @@ string FoursquareCrawler::search(Location location, float radius)
     CURLcode res;
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
-    
+
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, buildUrl(location, radius).c_str());
@@ -54,30 +54,30 @@ string FoursquareCrawler::search(Location location, float radius)
     }
 
     res = curl_easy_perform(curl);
-    
+
     if (res != CURLE_OK)
-        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+        fprintf(stderr, "Foursquare: curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
     curl_global_cleanup();
-    
+
     return data;
 }
 
 SocialInformationList FoursquareCrawler::parse(const string& information)
 {
     SocialInformationList places;
-    
+
     Json::Value root;
     Json::Reader reader;
     bool parsingSuccessful = reader.parse(information, root);
-    if(parsingSuccessful)
+    if (parsingSuccessful)
     {
         Json::Value response = root["response"];
         Json::Value venues = response["venues"];
         Json::Value venue;
 
-        for(unsigned int index = 0; index < venues.size(); ++index)
+        for (unsigned int index = 0; index < venues.size(); ++index)
         {
             VenueInfo info;
             venue = venues[index];
@@ -93,14 +93,13 @@ SocialInformationList FoursquareCrawler::parse(const string& information)
             }
             info.source_ = "foursquare";
             places.push_back(info);
-            printf("PLACE NAME %s",info.message_.c_str());
+            printf("Foursquare: place-%s\n", info.message_.c_str());
         }
     }
     else
     {
-        printf("Error while parsing JSON file");
+        printf("Foursquare: Error while parsing JSON file\n");
     }
-    
-    printf("Places size : %d\n", places.size());
+
     return places;
 }
