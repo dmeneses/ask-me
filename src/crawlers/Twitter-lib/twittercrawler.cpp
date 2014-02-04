@@ -70,7 +70,7 @@ void TwitterCrawler::connect()
 
 SocialInformationList TwitterCrawler::search(Location location, float radio)
 {
-    std::string url = formatString("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es&count=100", 
+    std::string url = formatString("https://api.twitter.com/1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&count=100", 
             location.latitude_, location.longitude_, radio);
     struct curl_slist *chunk = 0;
     chunk = curl_slist_append(chunk, "GET /1.1/search/tweets.json?q=&geocode=%f,%f,%fkm&lang=es");
