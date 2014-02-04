@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ask me!</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script type = "text/javascript" src = "include/jquery-2.0.2.js"></script>
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.js"><\/script>')</script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script type = "text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script type = "text/javascript" src = "js/connection.js"></script>
+    <script type = "text/javascript" src = "js/geolocation.js"></script>
+    <script>
+        var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+        (function(d, t) {
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = '//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top headingstyle">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ASK ME!</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right" role="form" id = "ask-form" onsubmit = "ask();
+                        return false;">
+
+                    <div class="form-group">
+                        <input id="word-input" type="text" class="form-control" id="word" placeholder="search">
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Ask!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="panel-group col-lg-4" id="accordion">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                Tweets
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <ul id="tweetList" class="list-group scrollableList">
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                Places
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <ul class="list-group scrollableList">
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="map-div" class="panel panel-default col-lg-6">
+                <div class="panel-heading">
+                    <script type="text/javascript">
+                        $(function() {
+                            $("#clean").tooltip();
+                        });
+                    </script>
+                    <button id="clean" title="Cleans all data from previous searches" class="btn btn-primary" onclick="cleanMarkers()">Clean All</button>
+
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="checkbox"> Show Tweets
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox"> Show Places
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <script type = "text/javascript" src = "js/map.js"></script>
+        </div>
+
+        <hr>
+        <div id="share-buttons">
+
+            <!-- Facebook -->
+            <a href="http://www.facebook.com/sharer.php?u=http://fundacion-jala.org/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+
+            <!-- Twitter -->
+            <a href="http://twitter.com/share?url=http://fundacion-jala.org/&text=Fundacion Jala" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
+
+            <!-- Google+ -->
+            <a href="https://plus.google.com/share?url=http://fundacion-jala.org/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+
+            <!-- Digg -->
+            <a href="http://www.digg.com/submit?url=http://fundacion-jala.org/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a>
+
+            <!-- Reddit -->
+            <a href="http://reddit.com/submit?url=http://fundacion-jala.org/&title=Fundacon Jala" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a>
+
+            <!-- LinkedIn -->
+            <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://fundacion-jala.org/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a>
+
+            <!-- Pinterest -->
+            <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><img src="http://www.simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" /></a>
+
+            <!-- StumbleUpon-->
+            <a href="http://www.stumbleupon.com/submit?url=http://www.simplesharebuttons.com&title=Simple Share Buttons" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" /></a>
+
+            <!-- Email -->
+            <a href="mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com"><img src="http://www.simplesharebuttons.com/images/somacro/email.png" alt="Email" /></a>
+
+        </div>
+        <footer>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>&copy; 2014 Softure, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </footer>
+    </div>         
+</body>
+</html>
