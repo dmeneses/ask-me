@@ -14,16 +14,22 @@
 
 #include "textcleaner.h"
 #include "matcher.h"
+#include "../crawlers/socialinformation.h"
 #include "../stemmer/stemmer.h"
-#include "socialinformation.h"
 #include "../crawlers/semanticcrawler.h"
 #include "../crawlers/foursquare/foursquarecrawler.h"
+#include "../crawlers/alchemyapp/alchemyappcrawler.h"
 #include "../langrecognition/recognizer.h"
+
 /**
  * Wrapper for the information found
  */
 struct Result
 {
+    Result()
+    {
+        
+    }
 
     /**
      * Constructor for the wrapper
@@ -31,11 +37,6 @@ struct Result
      * @param information Social information
      * @param matchesCount Matches count
      */
-    Result(SocialInformation information, int matchesCount,std::vector<Entity> namedEntities) : information(information),
-    matchesCount(matchesCount),namedEntities(namedEntities)
-    {
-    }
-
     Result(SocialInformation information, int matchesCount) : information(information),
     matchesCount(matchesCount)
     {
@@ -61,13 +62,9 @@ public:
     /**
      * Creates a preprocessor for the defined language in lower case.
      * For example: "spanish"
-     */    
-    TextPreprocessor(const std::string& language);
-    /**
-     * Clean all the resources to process the text.
      */
-    TextPreprocessor(AlchemyAppCrawler& alchemy);
-    
+    TextPreprocessor(const std::string& language);
+
     ~TextPreprocessor();
 
     /**
@@ -80,17 +77,17 @@ public:
      * 
      * @return A ranked list with the results
      */
-    std::vector<Result> process(std::vector<SocialInformation> messages, std::string searchParam);
-    
-    std::vector<Result> processWithPlaces(std::vector<SocialInformation> messages, std::string searchParam, 
-    std::vector<SocialInformation> foursquareInformation);
-    
-    
+    std::vector<Result> process(std::vector<SocialInformation> messages, std::string searchParam,
+                                const std::vector<SocialInformation>& foursquareInformation = vector<SocialInformation>());
+
+
 private:
     std::vector< std::set<std::string> > getStemmedWordsToMatch(const std::string& keyword);
     std::vector<std::string> preprocessSearchParameter(const std::string& searchParam);
-    std::vector<Entity> getAllNamedEntities(std::string& socialInformationText,std::vector<SocialInformation> foursquareInformation);
-    
+    std::vector<Entity> getAllNamedEntities(const std::string& message, 
+                const std::string stemmedMessage, std::vector<SocialInformation> foursquareInformation);
+
+
     TextCleaner* cleaner_;
     Matcher* matcher_;
     Stemmer* stemmer_;

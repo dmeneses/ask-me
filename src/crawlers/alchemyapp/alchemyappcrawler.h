@@ -11,43 +11,57 @@
 #include <set>
 #include <cstdio>
 #include <string>
+#include "../socialinformation.h"
 
 using namespace std;
 
-enum SentimentLabel{
-    POSITIVE,NEGATIVE,NEUTRAL,NOTFOUND
+enum SentimentLabel
+{
+    POSITIVE = 1, NEGATIVE = -1, NEUTRAL = 0, NOTFOUND = 2
 };
 
-struct SentimentAnalysis{
-
-    SentimentAnalysis(){
-        
-    }
-    SentimentAnalysis(SentimentLabel label, float score): score_(score){
-        this->label_ = label;
-    }
+struct SentimentAnalysis
+{
     SentimentLabel label_;
     float score_;
-    
 
-    void parseLabel(std::string& label){
-        if(label.compare("positive")){
+    SentimentAnalysis()
+    {
+        score_ = 0;
+        label_ = NOTFOUND;
+    }
+
+    SentimentAnalysis(SentimentLabel label, float score) : score_(score)
+    {
+        this->label_ = label;
+    }
+
+    void parseLabel(std::string& label)
+    {
+        if (label.compare("positive"))
+        {
             this->label_ = POSITIVE;
         }
-        else if(label.compare("negative")){
+        else if (label.compare("negative"))
+        {
             this->label_ = NEGATIVE;
         }
-        else if(label.compare("neutral")){
-             this->label_ = NEUTRAL;
+        else if (label.compare("neutral"))
+        {
+            this->label_ = NEUTRAL;
         }
-        else{
+        else
+        {
             this->label_ = NOTFOUND;
         }
     }
-    void makeScorePercentage(float score){
-        this->score_ = score*100;
+
+    void makeScorePercentage(float score)
+    {
+        this->score_ = score * 100;
     }
 };
+
 class AlchemyAppCrawler
 {
 public:
@@ -61,16 +75,16 @@ public:
      *
      * @return Collection of named entities from the text.
      */
-    std::set<std::string> collectAllNamedEntities(std::string& text);
+    std::set<std::string> collectAllNamedEntities(const std::string& text);
 
-     /**
+    /**
      * Process text to make sentiment analysis.
      *
      * @param text to be evaluated.
      *
      * @return SentimentAnalysis that contains label and a score made by the analysis.
      */
-    SentimentAnalysis makeSentimentAnalysis(std::string& text);
+    void makeSentimentAnalysis(SocialInformation& text);
 
 private:
 
@@ -99,7 +113,7 @@ private:
      */
 
     SentimentAnalysis parseSentimentsFile(const char* sentimentInfo);
-    
+
 
     /**
      * Process text to make the query to alchemyapp

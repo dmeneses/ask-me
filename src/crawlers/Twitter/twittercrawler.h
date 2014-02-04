@@ -1,7 +1,7 @@
 #ifndef _TWITTERCRAWLER_H
 #define _TWITTERCRAWLER_H
 
-#include "crawler.h"
+#include "../crawler.h"
 #include <string>
 
 struct BearerToken

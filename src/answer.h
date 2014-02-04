@@ -10,13 +10,14 @@
 
 #include <vector>
 #include "textpreprocessor/textpreprocessor.h"
-#include "crawler.h"
+#include "crawlers/crawler.h"
 #include "langrecognition/recognizer.h"
 
 enum SocialSource
 {
     TWITTER,
-    FACEBOOK
+    FACEBOOK,
+    FOURSQUARE
 };
 
 class Answer {
@@ -27,8 +28,7 @@ public:
     ~Answer();
     std::vector<Result> ask(const std::string word, const Location location, const float radio, SocialSource source);
 private:
-    SocialInformationList recollect(const Location location, const float radio, SocialSource& crawler);
-    SocialInformationList recollectFromFoursquare(Location location,const float radio);
+    SocialInformationList recollect(const Location location, const float radio, SocialSource crawler);
     Recognizer* reconizer_;
 };
 

@@ -4,12 +4,12 @@ function showAdvancedSetting(box) {
 }
 
 function setLocation(position) {
-	var lon = position.coords.longitude;
-	var lat = position.coords.latitude;
-	setMapPosition(lat, lon);
-	var lonLat = new OpenLayers.LonLat(lon, lat)
-	.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-	actualPosition.moveTo(map.getPixelFromLonLat(lonLat));
+    var lon = position.coords.longitude;
+    var lat = position.coords.latitude;
+    setMapPosition(lat, lon);
+    var lonLat = new OpenLayers.LonLat(lon, lat)
+            .transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    actualPosition.moveTo(map.getPixelFromLonLat(lonLat));
 }
 
 function setMapPosition(latitude, longitude)
@@ -22,12 +22,12 @@ function setMapPosition(latitude, longitude)
 
 function createCurrentMarker()
 {
-	var size = new OpenLayers.Size(21,25);
-	var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-	var icon = new OpenLayers.Icon(
-		'http://www.members1st.org/EntityLocator_prod/Content/images/current_position.png', 
-		size, offset);
-	actualPosition = new OpenLayers.Marker(new OpenLayers.LonLat(-98, 35), icon);
+    var size = new OpenLayers.Size(21, 25);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    var icon = new OpenLayers.Icon(
+            'http://www.members1st.org/EntityLocator_prod/Content/images/current_position.png',
+            size, offset);
+    actualPosition = new OpenLayers.Marker(new OpenLayers.LonLat(-98, 35), icon);
 }
 
 function loadMap() {
@@ -38,28 +38,69 @@ function loadMap() {
     markers = new OpenLayers.Layer.Markers("Markers");
     map.addLayer(markers);
 
-	createCurrentMarker();
-	markers.addMarker(actualPosition);
-	
-	map.events.register("click", map, function(e) {
-   		actualPosition.moveTo(e.xy);
-   	});
+    createCurrentMarker();
+    markers.addMarker(actualPosition);
+
+    map.events.register("click", map, function(e) {
+        actualPosition.moveTo(e.xy);
+    });
 
     getLocation(setLocation);
 }
 
 function loadSocialInfo(socialInfoList)
 {
+
     console.log('Loading social information list');
     var tweetList = document.getElementById("tweetList").innerHTML;
+    var placesList = document.getElementById("placesList").innerHTML;
 
     for (var i = 0; i < socialInfoList.length; i++) {
-        addMarker(socialInfoList[i]);
-        tweetList += '<li class="list-group-item">' + socialInfoList[i].message + 
-                '<span class="glyphicon glyphicon-thumbs-up"></span></li>';
+        var socialInfo = socialInfoList[i];
+        tweetList += buildTweetItem(socialInfo);
+        placesList += buildPlaceItem(socialInfo.places);
+        addMarker(socialInfo);
     }
-    
+
     document.getElementById("tweetList").innerHTML = tweetList;
+    document.getElementById("placesList").innerHTML = placesList;
+}
+
+function buildTweetItem(socialInfo) {
+    var tweet = '<li class="list-group-item">' + socialInfo.message
+
+    switch (socialInfo.sentiment) {
+        case -1:
+            tweet += '<span class="badge"><span class="glyphicon glyphicon-thumbs-down"></span></span></li>';
+            break;
+        case 0:
+            tweet += '<span class="badge"><span class="glyphicon glyphicon-hand-left"></span></span></li>';
+            break;
+        case 1:
+            tweet += '<span class="badge"><span class="glyphicon glyphicon-thumbs-up"></span></span></li>';
+            break;
+        case 2:
+            tweet += '<span class="badge"><span class="glyphicon glyphicon-minus"></span></span></li>';
+            break;
+        default:
+            tweet += '</li>';
+    }
+
+    return tweet;
+}
+
+function buildPlaceItem(placesInfo) {
+    var placesList = "";
+
+    for (var i = 0; i < placesInfo.length; i++) {
+        var place = placesInfo[i];
+        placesList += '<li class="list-group-item">' + place.name + '</li>';
+        if(place.hasLocation){
+            addPlaceMarker(place);
+        }
+    }
+
+    return placesList;
 }
 
 function addMarker(socialInformation)
@@ -74,6 +115,25 @@ function addMarker(socialInformation)
     });
     markers.addMarker(marker);
     console.log('Social info message : ' + socialInformation.message);
+}
+
+function addPlaceMarker(place)
+{
+    var size = new OpenLayers.Size(20, 20);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    var icon = new OpenLayers.Icon(
+            'placeicon.png',
+            size, offset);
+    var lonLat = new OpenLayers.LonLat(place.longitude, place.latitude)
+            .transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    var marker = new OpenLayers.Marker(lonLat, icon);
+    marker.events.register("click", marker, function(e) {
+        popup = new OpenLayers.Popup.FramedCloud("place", marker.lonlat,
+                new OpenLayers.Size(100, 50), place.name, null, true);
+        map.addPopup(popup);
+    });
+    markers.addMarker(marker);
+    console.log('Place name : ' + place.name);
 }
 
 function clearMarkers()

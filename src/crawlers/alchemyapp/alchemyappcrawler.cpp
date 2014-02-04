@@ -5,7 +5,7 @@
 #include <curl/easy.h>
 #include <string.h>
 #include <algorithm>
-#include "utils.h"
+#include "../utils.h"
 
 #define ALCHEMYAPP_URL "http://access.alchemyapi.com/calls/text/SEARCHPARAMETER?outputMode=json&apikey=0d752536a9762c9ae2fb868d57e4beaade74f1a2&text="
 #define ENTITY_EXTRACTION_KEYWORD "TextGetNamedEntities"
@@ -17,15 +17,18 @@
 #define SEARCH_PARAMETER_POSITION 40
 #define SEARCH_PARAMETER_SIZE 15
 
-AlchemyAppCrawler::AlchemyAppCrawler() {
+AlchemyAppCrawler::AlchemyAppCrawler()
+{
 
 }
 
-AlchemyAppCrawler::~AlchemyAppCrawler() {
+AlchemyAppCrawler::~AlchemyAppCrawler()
+{
 
 }
 
-set<std::string> AlchemyAppCrawler::collectAllNamedEntities(std::string& text) {
+set<std::string> AlchemyAppCrawler::collectAllNamedEntities(const std::string& text)
+{
     std::string request(ALCHEMYAPP_URL);
     request.replace(SEARCH_PARAMETER_POSITION, SEARCH_PARAMETER_SIZE, ENTITY_EXTRACTION_KEYWORD);
     string processedText = processTextToMakeRequest(text);
@@ -40,31 +43,33 @@ set<std::string> AlchemyAppCrawler::collectAllNamedEntities(std::string& text) {
     return collectedWords;
 }
 
-SentimentAnalysis AlchemyAppCrawler::makeSentimentAnalysis(std::string& text) {
+void AlchemyAppCrawler::makeSentimentAnalysis(SocialInformation& socialInfo)
+{
     std::string request(ALCHEMYAPP_URL);
     SentimentAnalysis sentimentAnalysis;
     request.replace(SEARCH_PARAMETER_POSITION, SEARCH_PARAMETER_SIZE, SENTIMENT_EXTRACTION_KEYWORD);
-    std::string processedText = processTextToMakeRequest(text);
+    std::string processedText = processTextToMakeRequest(socialInfo.message_);
     request += processedText;
 
     sentimentAnalysis = parseSentimentsFile(retrieve(request));
-
-    return sentimentAnalysis;
+    socialInfo.sentiment_ = (int) sentimentAnalysis.label_;
 }
 
-const char* AlchemyAppCrawler::retrieve(const std::string& request) {
+const char* AlchemyAppCrawler::retrieve(const std::string& request)
+{
     iostring readData;
     init_string(&readData);
     CURL* curl = curl_easy_init();
 
-    if (curl) {
+    if (curl)
+    {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &readData);
         curl_easy_setopt(curl, CURLOPT_URL, request.c_str());
         CURLcode res = curl_easy_perform(curl);
 
         if (res != CURLE_OK)
-            printf("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+            printf("Alchemy: curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
         curl_easy_cleanup(curl);
     }
@@ -72,66 +77,79 @@ const char* AlchemyAppCrawler::retrieve(const std::string& request) {
     return readData.ptr;
 }
 
-set<std::string> AlchemyAppCrawler::parseNamedEntitiesFile(const char* namedEntitiesInfo) {
+        set<std::string> AlchemyAppCrawler::parseNamedEntitiesFile(const char* namedEntitiesInfo)
+{
     set<std::string> namedEntityList;
     Json::Value root;
     Json::Reader reader;
     bool parsingSuccessful = reader.parse(namedEntitiesInfo, root);
 
-    if (parsingSuccessful) {
+    if (parsingSuccessful)
+    {
         Json::Value entities = root["entities"];
-        for (unsigned int i = 0; i < entities.size(); ++i) {
+        for (unsigned int i = 0; i < entities.size(); ++i)
+        {
             Json::Value entity = entities[i];
             Json::Value entityName = entity["text"];
-            printf("NAMED ENTITY: %s\n", entityName.asString().c_str());
+            printf("Alchemy: NAMED ENTITY: %s\n", entityName.asString().c_str());
             std::string entityNameToLower = entityName.asString();
             std::transform(entityNameToLower.begin(), entityNameToLower.end(), entityNameToLower.begin(), ::tolower);
             namedEntityList.insert(entityNameToLower);
         }
-    } else {
-        printf("Error while parsing JSON file");
+    }
+    else
+    {
+        printf("Alchemy: Error while parsing JSON file\n");
     }
 
     return namedEntityList;
 }
 
-SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(const char* sentimentInfo) {
+SentimentAnalysis AlchemyAppCrawler::parseSentimentsFile(const char* sentimentInfo)
+{
     SentimentAnalysis analysis;
     Json::Value root;
     Json::Reader reader;
-    float score = 0; 
+    float score = 0;
     bool parsingSuccessful = reader.parse(sentimentInfo, root);
 
-    if (parsingSuccessful) {
-        if (root["status"].asString().compare("OK") == 0) {
+    if (parsingSuccessful)
+    {
+        if (root["status"].asString().compare("OK") == 0)
+        {
             Json::Value sentimentAnalysis = root["docSentiment"];
             Json::Value retrievedStringScore = sentimentAnalysis["score"];
-            printf("SCORE: %s\n", retrievedStringScore.asString().c_str());
             score = ::atof(retrievedStringScore.asString().c_str());
             analysis.makeScorePercentage(score);
             Json::Value retrievedLabel = sentimentAnalysis["type"];
             std::string label = retrievedLabel.asString();
             analysis.parseLabel(label);
 
-        } else if(root["language"].asString().compare("english") != 0){
-            
-            printf("LANGUAGE NOT SUPPORTED BY SENTIMENT ANALYSIS\n");
-            analysis.score_ = 0;
         }
-        else{
-            printf("RETRIEVED DATA ERROR\n");
+        else if (root["language"].asString().compare("english") != 0)
+        {
+            printf("Alchemy: Language not supported %s\n", root["language"].asCString());           
         }
-    } else {
-        printf("Error while parsing JSON file\n");
+        else
+        {
+            printf("Alchemy: RETRIEVED DATA ERROR\n");
+        }
+    }
+    else
+    {
+        printf("Alchemy: Error while parsing JSON file\n");
     }
 
     return analysis;
 }
 
-std::string AlchemyAppCrawler::processTextToMakeRequest(std::string text) {
+std::string AlchemyAppCrawler::processTextToMakeRequest(std::string text)
+{
 
-    for (int i = 0; i < text.size(); i++) {
-        if (text.at(i) == ' ') {
+    for (int i = 0; i < text.size(); i++)
+    {
+        if (text.at(i) == ' ')
+        {
             text.replace(i, 1, QUERY_SPACE_TOKEN);
         }
     }
